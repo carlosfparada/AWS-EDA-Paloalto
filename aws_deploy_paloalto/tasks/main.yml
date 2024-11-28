@@ -1,0 +1,147 @@
+---
+
+- name: Create VPC {{ ec2_vpc_name }}
+  amazon.aws.ec2_vpc_net:
+    name: "{{ ec2_vpc_name }}"
+    cidr_block: "{{ ec2_vpc_cidr }}"
+    region: "{{ ec2_vpc_region }}"
+    state: present
+    tags:
+      Name: "{{ ec2_vpc_name }}"
+  register: vpc
+
+- name: Create Subnet default in VPC
+  amazon.aws.ec2_vpc_subnet:
+    vpc_id: "{{ vpc.vpc.id }}"
+    cidr: "{{ ec2_subnet_cidr }}"
+    region: "{{ ec2_vpc_region }}"
+    az: "{{ ec2_subnet_az }}"
+    state: present
+    tags:
+      Name: "{{ ec2_subnet_name }}"
+  register: subnet
+
+- name: Create Subnet 1 in VPC
+  amazon.aws.ec2_vpc_subnet:
+    vpc_id: "{{ vpc.vpc.id }}"
+    cidr: "{{ ec2_subnet_cidr1 }}"
+    region: "{{ ec2_vpc_region }}"
+    az: "{{ ec2_subnet_az }}"
+    state: present
+    tags:
+      Name: "{{ ec2_subnet_name1 }}"
+  register: subnet1
+
+- name: Create Subnet 2 in VPC
+  amazon.aws.ec2_vpc_subnet:
+    vpc_id: "{{ vpc.vpc.id }}"
+    cidr: "{{ ec2_subnet_cidr2 }}"
+    region: "{{ ec2_vpc_region }}"
+    az: "{{ ec2_subnet_az }}"
+    state: present
+    tags:
+      Name: "{{ ec2_subnet_name2 }}"
+  register: subnet2
+
+- name: Create Internet Gateway (IGW)
+  amazon.aws.ec2_vpc_igw:
+    vpc_id: "{{ vpc.vpc.id }}"
+    region: "{{ ec2_vpc_region }}"
+    state: present
+    tags:
+      Name: "{{ ec2_igw_name }}"
+  register: igw
+
+- name: Create Route Table and IGW route
+  amazon.aws.ec2_vpc_route_table:
+    vpc_id: "{{ vpc.vpc.id }}"
+    region: "{{ ec2_vpc_region }}"
+    state: present
+    tags:
+      Name: "{{ ec2_rt_name }}"
+    subnets:
+      - "{{ subnet.subnet.id }}"
+    routes:
+      - dest: 0.0.0.0/0
+        gateway_id: "{{ igw.gateway_id }}"
+
+- name: Create Security Group
+  amazon.aws.ec2_security_group:
+    name: "{{ ec2_sg_name }}"
+    description: Allow all on ports
+    state: present
+    rules:
+      - proto: tcp
+        ports: "{{ ec2_sg_openports }}"
+        cidr_ip: 0.0.0.0/0
+        rule_desc: Allow all on ports
+    region: "{{ ec2_vpc_region }}"
+    vpc_id: "{{ vpc.vpc.id }}"
+    tags:
+      Name: "{{ ec2_sg_name }}"
+
+# Paloalto
+- name: Get AMI by Name (Paloalto)
+  amazon.aws.ec2_ami_info:
+    filters:
+      #image_id: "{{ ec2_paloalto_image_id }}"
+      name: "{{ ec2_paloalto_image_name }}"
+    region: "{{ ec2_vpc_region }}"
+  register: ami_paloalto_find
+
+- name: Create Paloalto instance
+  amazon.aws.ec2_instance:
+    #image_id: "{{ ami_paloalto_find.images[-1].image_id | default('') }}"
+    image_id: "{{ ec2_paloalto_image_id }}"
+    instance_type: "{{ ec2_paloalto_flavor_name }}"
+    security_group: "{{ ec2_sg_name }}"
+    name: "{{ ec2_paloalto_instance_name }}"
+    key_name: "{{ ec2_paloalto_key_name }}"
+    region: "{{ ec2_vpc_region }}"
+    vpc_subnet_id: "{{ subnet.subnet.id }}"
+    network_interfaces:
+      - assign_public_ip: true
+    tags:
+      Name: "{{ ec2_paloalto_instance_name }}"
+    state: running
+  register: ec2_paloalto_instance
+
+- name: Create and Attach ENI 1
+  amazon.aws.ec2_eni:
+    name: "{{ ec2_eni_name1 }}"
+    region: "{{ ec2_vpc_region }}"
+    instance_id: "{{ ec2_paloalto_instance.instances[0].instance_id }}"
+    device_index: 2
+    subnet_id: "{{ subnet1.subnet.id }}"
+    delete_on_termination: true
+    attached: true
+    state: present
+
+- name: Create and Attach ENI 2
+  amazon.aws.ec2_eni:
+    name: "{{ ec2_eni_name2 }}"
+    region: "{{ ec2_vpc_region }}"
+    instance_id: "{{ ec2_paloalto_instance.instances[0].instance_id }}"
+    device_index: 3
+    subnet_id: "{{ subnet2.subnet.id }}"
+    delete_on_termination: true
+    attached: true
+    state: present
+
+- name: Print Paloalto instance details
+  ansible.builtin.debug:
+    msg: "Instance DNS name is: {{ ec2_paloalto_instance.instances[0].public_dns_name }} with IP address {{ ec2_paloalto_instance.instances[0].public_ip_address }}"
+
+# Wait for boot up
+- name: Wait until Paloalto boots up
+  wait_for:
+    port: 22
+    state: started
+    timeout: 600
+    delay: 30
+    host: "{{ ec2_paloalto_instance.instances[0].public_dns_name }}"
+  
+- name: Sleep for 30 seconds and continue with play
+  wait_for:
+    timeout: 30
+  delegate_to: localhost
