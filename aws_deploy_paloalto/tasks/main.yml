@@ -103,6 +103,7 @@
     #   - assign_public_ip: true
     network:
       assign_public_ip: true
+    ebs_optimized: true
     tags:
       Name: "{{ ec2_paloalto_instance_name }}"
     state: running
