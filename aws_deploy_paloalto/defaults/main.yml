@@ -29,8 +29,8 @@ ec2_sg_openports:
 
 # Paloalto
 # AMI
-ec2_paloalto_image_id: "ami-0d2e1dbd88cb90d88" # v...
-ec2_paloalto_image_name: ""
+ec2_paloalto_image_id: "ami-0fd5ac27c2061fcc9" # v10.1.14-h6
+ec2_paloalto_image_name: "PA-VM-AWS-10.1.14-h6-0825b781-215f-4686-8da2-b95275cc8dd0"
 # Flavour 
 ec2_paloalto_flavor_name: c6i.xlarge
 # Key Pair
