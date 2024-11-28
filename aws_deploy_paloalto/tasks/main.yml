@@ -120,7 +120,7 @@
     attached: true
     state: present
 
-- name: Create and Attach ENI 2
+- name: estCreate and Attach ENI 2
   amazon.aws.ec2_eni:
     name: "{{ ec2_eni_name2 }}"
     region: "{{ ec2_vpc_region }}"
