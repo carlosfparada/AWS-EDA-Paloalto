@@ -56,12 +56,6 @@
     filters:
       "tag:Name": "{{ ec2_paloalto_instance_name }}"
 
-- name: Delete Security Group
-  amazon.aws.ec2_group:
-    name: "{{ ec2_sg_name }}"
-    region: "{{ ec2_vpc_region }}"
-    state: absent
-
 - name: Delete ENI 1
   amazon.aws.ec2_eni:
     name: "{{ ec2_eni_name1 }}"
@@ -77,6 +71,12 @@
     region: "{{ ec2_vpc_region }}"
     state: absent
   when: subnet2.subnets | length > 0
+
+- name: Delete Security Group
+  amazon.aws.ec2_group:
+    name: "{{ ec2_sg_name }}"
+    region: "{{ ec2_vpc_region }}"
+    state: absent
 
 - name: Delete Subnet default in VPC
   amazon.aws.ec2_vpc_subnet:
