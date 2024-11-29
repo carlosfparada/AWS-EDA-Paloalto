@@ -36,7 +36,6 @@
         # admin@PA-VM# set mgt-config users admin password
         # Enter password   : 
         # Confirm password : 
-
         # [edit]                                                                                                       
         # admin@PA-VM#
         'admin@PA-VM>':
@@ -47,7 +46,7 @@
           - "{{ new_password }}" 
         'Confirm password':
           - "{{ new_password }}"
-        'admin@PA-VM#':
+        '[edit]':
           - exit
           - exit
     no_log: false # hide passwords on logs
