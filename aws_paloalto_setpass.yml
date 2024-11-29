@@ -16,7 +16,7 @@
   tasks:
 
   - name: Run command
-    ansible.builtin.command: configure
+    ansible.builtin.shell: configure
 
   - name: Run command
     ansible.builtin.command: exit
