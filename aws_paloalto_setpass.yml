@@ -9,6 +9,9 @@
   - include_role: 
       name: utils_hosts_aws
 
+- debug:
+    var: ansible_ssh_private_key_file
+
 - name: Run command if /path/to/database does not exist (without 'args')
   ansible.builtin.command: "{{ item }}"
   loop:
