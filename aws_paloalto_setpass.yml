@@ -10,41 +10,44 @@
       name: utils_hosts_aws
 
 - name: Change Paloalto password
-  hosts: "{{ groups['paloalto'][0] }}"
-  connection: ssh
+  hosts: localhost
+  connection: local
   gather_facts: no
   tasks:
 
-  - name: Run command
-    ansible.builtin.raw: configure
-
-  - name: Run command
-    ansible.builtin.command: exit
-
-  - name: Run command to change password
-    ansible.builtin.command: "{{ item }}"
-    loop:
-      - configure
-      # - set mgt-config users admin password
-      # #- "set mgt-config users admin phash {{ password_hash }}"
-      # - "Admin123$%&
-      # - "Admin123$%&"
-      - "exit"
-      - "exit"
+  - debug:
+      msg: "{{ lookup('ansible.builtin.unvault', 'files/private-key.vault') | string | trim }}"
 
   # https://docs.paloaltonetworks.com/vm-series/11-1/vm-series-deployment/set-up-the-vm-series-firewall-on-aws/deploy-the-vm-series-firewall-on-aws/launch-the-vm-series-firewall-on-aws
-  # - name: Set admin initial password
-  #   ansible.builtin.expect:
-  #     command: "ssh -o StrictHostKeyChecking=no admin@{{ groups['paloalto'][0] }}"
-  #     responses:
-  #       # 'Are you sure you want to continue connecting (yes/no/[fingerprint])': "yes"
-  #       # 'You are forced to change your password. Please input a new password.'
-  #       's password:':
-  #         - "{{ hostvars[groups['fortigate'][0]].instance_id }}"
-  #         - "{{ new_password }}"  # in case setup was already run
-  #       'New Password:': "{{ new_password }}" 
-  #       'Confirm Password:': "{{ new_password }}"
-  #       'FGT': "exit"
-  #   no_log: false # hide passwords on logs
-  #   ignore_errors: true
+  - name: Set admin initial password
+    ansible.builtin.expect:
+      command: "ssh -o StrictHostKeyChecking=no admin@{{ groups['paloalto'][0] }}"
+      responses:
+        # 'Are you sure you want to continue connecting (yes/no/[fingerprint])': "yes"
+        # 'You are forced to change your password. Please input a new password.'
+        's password:':
+          - "{{ hostvars[groups['fortigate'][0]].instance_id }}"
+          - "{{ new_password }}"  # in case setup was already run
+        'New Password:': "{{ new_password }}" 
+        'Confirm Password:': "{{ new_password }}"
+        'FGT': "exit"
+    no_log: false # hide passwords on logs
+    ignore_errors: true
 
+
+  # - name: Run command
+  #   ansible.builtin.raw: configure
+
+  # - name: Run command
+  #   ansible.builtin.command: exit
+
+  # - name: Run command to change password
+  #   ansible.builtin.command: "{{ item }}"
+  #   loop:
+  #     - configure
+  #     # - set mgt-config users admin password
+  #     # #- "set mgt-config users admin phash {{ password_hash }}"
+  #     # - "Admin123$%&
+  #     # - "Admin123$%&"
+  #     - "exit"
+  #     - "exit"
