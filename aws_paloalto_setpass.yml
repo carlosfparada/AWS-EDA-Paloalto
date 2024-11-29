@@ -11,7 +11,7 @@
 
 - name: Change Paloalto password
   hosts: "{{ groups['paloalto'][0] }}"
-  connection: local
+  connection: ssh
   gather_facts: no
   tasks:
 
