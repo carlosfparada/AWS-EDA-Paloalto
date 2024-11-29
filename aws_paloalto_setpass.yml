@@ -18,6 +18,9 @@
   - name: Run command
     ansible.builtin.command: configure
 
+  - name: Run command
+    ansible.builtin.command: exit
+
   - name: Run command to change password
     ansible.builtin.command: "{{ item }}"
     loop:
