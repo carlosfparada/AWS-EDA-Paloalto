@@ -16,7 +16,7 @@
   tasks:
 
   - debug:
-      msg: "{{ lookup('ansible.builtin.file', 'files/private-key.vault') | unvault('carlos12') | trim }}"
+      msg: "{{ lookup('ansible.builtin.file', 'files/private-key.vault') | unvault('carlos12') }}"
 
   - debug:
       msg: "{{ lookup('ansible.builtin.unvault', 'files/private-key.vault') }}"
