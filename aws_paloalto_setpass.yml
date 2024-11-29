@@ -22,9 +22,11 @@
     ansible.builtin.command: "{{ item }}"
     loop:
       - "configure"
-      - "set mgt-config users admin password"
-      - "Admin123$%&"
-      - "Admin123$%&"
+#      - "set mgt-config users admin password"
+#      - "Admin123$%&"
+#      - "Admin123$%&"
+      - "exit"
+      - "exit"
 
   # https://docs.paloaltonetworks.com/vm-series/11-1/vm-series-deployment/set-up-the-vm-series-firewall-on-aws/deploy-the-vm-series-firewall-on-aws/launch-the-vm-series-firewall-on-aws
   # - name: Set admin initial password
