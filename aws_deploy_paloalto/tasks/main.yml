@@ -122,7 +122,7 @@
     instance_id: "{{ ec2_paloalto_instance.instances[0].instance_id }}"
     device_index: 1
     subnet_id: "{{ subnet1.subnet.id }}"
-    security_groups: "{{ ec2_sg_name }}"
+    #security_groups: "{{ ec2_sg_name }}"
     delete_on_termination: true
     attached: true
     state: present
@@ -134,7 +134,7 @@
     instance_id: "{{ ec2_paloalto_instance.instances[0].instance_id }}"
     device_index: 2
     subnet_id: "{{ subnet2.subnet.id }}"
-    security_groups: "{{ ec2_sg_name }}"
+    #security_groups: "{{ ec2_sg_name }}"
     delete_on_termination: true
     attached: true
     state: present
