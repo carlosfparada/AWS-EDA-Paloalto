@@ -1,5 +1,10 @@
 ---
 
+- ansible.builtin.include_vars: private-key.vault
+
+- ansible.builtin.debug: 
+    var: private_key
+
 - name: Create VPC {{ ec2_vpc_name }}
   amazon.aws.ec2_vpc_net:
     name: "{{ ec2_vpc_name }}"
@@ -156,3 +161,4 @@
   wait_for:
     timeout: 30
   delegate_to: localhost
+
