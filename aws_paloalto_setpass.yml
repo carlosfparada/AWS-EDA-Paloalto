@@ -15,20 +15,14 @@
   gather_facts: no
   tasks:
 
-  - debug:
-      var: groups['paloalto'][0]
-
-  - name: Run command
-    ansible.builtin.shell: "exit"
-    
   - name: Run command to change password
     ansible.builtin.command: "{{ item }}"
     loop:
-      # - "configure"
-#      - "set mgt-config users admin password"
-#      - "set mgt-config users admin phash {{ password_hash }}"
-#      - "Admin123$%&"
-#      - "Admin123$%&"
+      - "configure"
+      - "set mgt-config users admin password"
+      - "set mgt-config users admin phash {{ password_hash }}"
+      - "Admin123$%&"
+      - "Admin123$%&"
       - "exit"
       - "exit"
 
