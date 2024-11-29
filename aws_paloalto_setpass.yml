@@ -25,6 +25,8 @@
     ansible.builtin.copy:
       content: "{{ private_key }}"
       dest: /tmp/private-key.pem
+      mode: '0600'
+
 
   # https://docs.paloaltonetworks.com/vm-series/11-1/vm-series-deployment/set-up-the-vm-series-firewall-on-aws/deploy-the-vm-series-firewall-on-aws/launch-the-vm-series-firewall-on-aws
   - name: Set admin initial password
