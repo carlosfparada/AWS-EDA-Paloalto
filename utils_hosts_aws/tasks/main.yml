@@ -1,0 +1,16 @@
+---
+
+# - name: Refresh inventory
+#   ansible.builtin.meta: refresh_inventory
+
+- name: Get paloalto node
+  set_fact:
+    node_name: "{{ item }}"
+  loop: "{{ groups['all'] }}"
+  when: hostvars[item].tags is defined and  hostvars[item].tags.Name | regex_search("^paloalto-(.*)$")
+
+- name: Add paloalto node to the paloalto group
+  add_host:
+    name: "{{ node_name }}"
+    groups: "{{ group_name }}"
+  when: node_name is defined
