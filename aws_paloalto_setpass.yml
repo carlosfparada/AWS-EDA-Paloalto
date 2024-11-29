@@ -4,7 +4,6 @@
   hosts: localhost
   connection: local
   gather_facts: no
-  #vars_files: vars/main.yml
   tasks:
   - include_role: 
       name: utils_hosts_aws
@@ -13,6 +12,7 @@
   hosts: localhost
   connection: local
   gather_facts: no
+  vars_files: vars/main.yml
   tasks:
 
   # cat private-key.pem | ansible-vault encrypt_string  --stdin-name 'private_key' --output private-key.vault
