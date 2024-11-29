@@ -1,6 +1,6 @@
 ---
 
-- ansible.builtin.include_vars: private-key.vault
+- ansible.builtin.include_vars: ../files/private-key.vault
 
 - ansible.builtin.debug: 
     var: private_key
