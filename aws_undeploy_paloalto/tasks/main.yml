@@ -54,6 +54,7 @@
     name: "{{ ec2_eni_name1 }}"
     subnet_id: "{{ subnet1.subnets[0].subnet_id }}"
     region: "{{ ec2_vpc_region }}"
+    device_index: 1
     state: absent
   when: subnet1.subnets | length > 0
 
@@ -62,6 +63,7 @@
     name: "{{ ec2_eni_name2 }}"
     subnet_id: "{{ subnet2.subnets[0].subnet_id }}"
     region: "{{ ec2_vpc_region }}"
+    device_index: 2
     state: absent
   when: subnet2.subnets | length > 0
 
