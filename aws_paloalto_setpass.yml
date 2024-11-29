@@ -31,8 +31,12 @@
     ansible.builtin.expect:
       command: "ssh -o StrictHostKeyChecking=no -i /tmp/private-key.pem admin@{{ groups['paloalto'][0] }}"
       responses:
-        # 'Are you sure you want to continue connecting (yes/no/[fingerprint])': "yes"
-        # 'You are forced to change your password. Please input a new password.'
+        # admin@PA-VM# set mgt-config users admin password
+        # Enter password   : 
+        # Confirm password : 
+
+        # [edit]                                                                                                       
+        # admin@PA-VM#
         'admin@PA-VM>':
           - configure
         'admin@PA-VM#':
