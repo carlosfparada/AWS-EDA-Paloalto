@@ -21,6 +21,11 @@
   - debug:
       msg: "{{ lookup('ansible.builtin.unvault', 'files/private-key.vault') }}"
 
+  - name: Copy using inline content
+    ansible.builtin.copy:
+      content: "{{ lookup('ansible.builtin.unvault', 'files/private-key.vault') }}"
+      dest: /tmp/private-key.pem
+
   # https://docs.paloaltonetworks.com/vm-series/11-1/vm-series-deployment/set-up-the-vm-series-firewall-on-aws/deploy-the-vm-series-firewall-on-aws/launch-the-vm-series-firewall-on-aws
   - name: Set admin initial password
     ansible.builtin.expect:
