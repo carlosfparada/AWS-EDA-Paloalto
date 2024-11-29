@@ -1,0 +1,27 @@
+---
+
+- name: Get nodes from Inventory and add to Groups
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars_files: vars/main.yml
+  tasks:
+  - include_role: 
+      name: utils_hosts_aws
+
+  # https://docs.paloaltonetworks.com/vm-series/11-1/vm-series-deployment/set-up-the-vm-series-firewall-on-aws/deploy-the-vm-series-firewall-on-aws/launch-the-vm-series-firewall-on-aws
+  - name: Set admin initial password
+    ansible.builtin.expect:
+      command: "ssh -o StrictHostKeyChecking=no admin@{{ groups['paloalto'][0] }}"
+      responses:
+        # 'Are you sure you want to continue connecting (yes/no/[fingerprint])': "yes"
+        # 'You are forced to change your password. Please input a new password.'
+        's password:':
+          - "{{ hostvars[groups['fortigate'][0]].instance_id }}"
+          - "{{ new_password }}"  # in case setup was already run
+        'New Password:': "{{ new_password }}" 
+        'Confirm Password:': "{{ new_password }}"
+        'FGT': "exit"
+    no_log: false # hide passwords on logs
+    ignore_errors: true
+
