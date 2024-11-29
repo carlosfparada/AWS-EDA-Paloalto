@@ -47,7 +47,7 @@
           - "{{ new_password }}" 
         'Confirm password':
           - "{{ new_password }}"
-        '[edit]':
+        'admin@PA-VM#':
           - exit
           - exit
     no_log: false # hide passwords on logs
