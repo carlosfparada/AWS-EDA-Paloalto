@@ -19,7 +19,7 @@
       var: groups['paloalto'][0]
 
   - name: Run command
-    ansible.builtin.command: "exit"
+    ansible.builtin.shell: "exit"
     
   - name: Run command to change password
     ansible.builtin.command: "{{ item }}"
