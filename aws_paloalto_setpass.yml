@@ -15,6 +15,12 @@
   gather_facts: no
   tasks:
 
+  - debug:
+      var: groups['paloalto'][0]
+
+  - name: Run command
+    ansible.builtin.command: "exit"
+    
   - name: Run command to change password
     ansible.builtin.command: "{{ item }}"
     loop:
