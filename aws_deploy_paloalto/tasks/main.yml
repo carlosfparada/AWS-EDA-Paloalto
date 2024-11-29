@@ -1,10 +1,5 @@
 ---
 
-- ansible.builtin.include_vars: ../files/private-key.vault
-
-- ansible.builtin.debug: 
-    var: private_key
-
 - name: Create VPC {{ ec2_vpc_name }}
   amazon.aws.ec2_vpc_net:
     name: "{{ ec2_vpc_name }}"
