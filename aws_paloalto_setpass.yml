@@ -9,19 +9,27 @@
   - include_role: 
       name: utils_hosts_aws
 
+- name: Run command if /path/to/database does not exist (without 'args')
+  ansible.builtin.command: "{{ item }}"
+  loop:
+    - "configure"
+    - "set mgt-config users admin password"
+    - "Admin123$%&"
+    - "Admin123$%&"
+
   # https://docs.paloaltonetworks.com/vm-series/11-1/vm-series-deployment/set-up-the-vm-series-firewall-on-aws/deploy-the-vm-series-firewall-on-aws/launch-the-vm-series-firewall-on-aws
-  - name: Set admin initial password
-    ansible.builtin.expect:
-      command: "ssh -o StrictHostKeyChecking=no admin@{{ groups['paloalto'][0] }}"
-      responses:
-        # 'Are you sure you want to continue connecting (yes/no/[fingerprint])': "yes"
-        # 'You are forced to change your password. Please input a new password.'
-        's password:':
-          - "{{ hostvars[groups['fortigate'][0]].instance_id }}"
-          - "{{ new_password }}"  # in case setup was already run
-        'New Password:': "{{ new_password }}" 
-        'Confirm Password:': "{{ new_password }}"
-        'FGT': "exit"
-    no_log: false # hide passwords on logs
-    ignore_errors: true
+  # - name: Set admin initial password
+  #   ansible.builtin.expect:
+  #     command: "ssh -o StrictHostKeyChecking=no admin@{{ groups['paloalto'][0] }}"
+  #     responses:
+  #       # 'Are you sure you want to continue connecting (yes/no/[fingerprint])': "yes"
+  #       # 'You are forced to change your password. Please input a new password.'
+  #       's password:':
+  #         - "{{ hostvars[groups['fortigate'][0]].instance_id }}"
+  #         - "{{ new_password }}"  # in case setup was already run
+  #       'New Password:': "{{ new_password }}" 
+  #       'Confirm Password:': "{{ new_password }}"
+  #       'FGT': "exit"
+  #   no_log: false # hide passwords on logs
+  #   ignore_errors: true
 
