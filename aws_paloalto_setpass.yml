@@ -15,6 +15,7 @@
   gather_facts: no
   tasks:
 
+  # cat private-key.pem | ansible-vault encrypt_string  --stdin-name 'private_key' --output private-key.vault
   - ansible.builtin.include_vars: files.private-key.vault
 
   - debug:
