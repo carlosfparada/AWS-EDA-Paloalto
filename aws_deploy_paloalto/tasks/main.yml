@@ -146,7 +146,7 @@
 # Wait for boot up
 - name: Wait until Paloalto boots up
   wait_for:
-    port: 22
+    port: 443
     state: started
     timeout: 1800
     delay: 30
