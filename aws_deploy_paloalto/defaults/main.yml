@@ -29,10 +29,10 @@ ec2_sg_openports:
 
 # Paloalto
 # AMI
-ec2_paloalto_image_id: "ami-0fd5ac27c2061fcc9" # v10.1.14-h6
-ec2_paloalto_image_name: "PA-VM-AWS-10.1.14-h6-0825b781-215f-4686-8da2-b95275cc8dd0"
+ec2_paloalto_image_id: "ami-0fd5ac27c2061fcc9" # v10.1.14-h6 ami-031c5c1c3673d4428
+ec2_paloalto_image_name: "PA-VM-AWS-10.1.14-h6-0825b781-215f-4686-8da2-b95275cc8dd0" # PA-VM-AWS-10.1.14-h6-f1260463-68e1-4bfb-bf2e-075c2664c1d7
 # Flavour 
-ec2_paloalto_flavor_name: c5.xlarge
+ec2_paloalto_flavor_name: c5n.xlarge
 # Key Pair
 ec2_paloalto_key_name: "KeyPair-Virginia"
 # Instance
