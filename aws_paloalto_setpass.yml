@@ -47,6 +47,7 @@
           - "{{ new_password }}" 
         'Confirm password':
           - "{{ new_password }}"
+        '[edit]':
           - exit
           - exit
     no_log: false # hide passwords on logs
