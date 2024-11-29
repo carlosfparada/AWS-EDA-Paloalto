@@ -9,16 +9,16 @@
   - include_role: 
       name: utils_hosts_aws
 
-- debug:
-    var: ansible_ssh_private_key_file
+  - debug:
+      var: ansible_ssh_private_key_file
 
-- name: Run command if /path/to/database does not exist (without 'args')
-  ansible.builtin.command: "{{ item }}"
-  loop:
-    - "configure"
-    - "set mgt-config users admin password"
-    - "Admin123$%&"
-    - "Admin123$%&"
+  - name: Run command to change password
+    ansible.builtin.command: "{{ item }}"
+    loop:
+      - "configure"
+      - "set mgt-config users admin password"
+      - "Admin123$%&"
+      - "Admin123$%&"
 
   # https://docs.paloaltonetworks.com/vm-series/11-1/vm-series-deployment/set-up-the-vm-series-firewall-on-aws/deploy-the-vm-series-firewall-on-aws/launch-the-vm-series-firewall-on-aws
   # - name: Set admin initial password
