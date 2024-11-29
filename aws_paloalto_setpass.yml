@@ -20,7 +20,7 @@
     loop:
       - "configure"
       - "set mgt-config users admin password"
-      - "set mgt-config users admin phash {{ password_hash }}"
+      #- "set mgt-config users admin phash {{ password_hash }}"
       - "Admin123$%&"
       - "Admin123$%&"
       - "exit"
