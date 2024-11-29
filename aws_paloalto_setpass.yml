@@ -43,8 +43,6 @@
           - configure
         'admin@PA-VM#':
           - set mgt-config users admin password
-          - exit
-          - exit
         'Enter password':
           - "{{ new_password }}" 
         'Confirm password':
