@@ -19,7 +19,7 @@
       msg: "{{ lookup('ansible.builtin.file', 'files/private-key.vault') | unvault('carlos12') | trim }}"
 
   - debug:
-      msg: "{{ lookup('ansible.builtin.', 'files/private-key.vault') | string | trim }}"
+      msg: "{{ lookup('ansible.builtin.unvault', 'files/private-key.vault') }}"
 
   # https://docs.paloaltonetworks.com/vm-series/11-1/vm-series-deployment/set-up-the-vm-series-firewall-on-aws/deploy-the-vm-series-firewall-on-aws/launch-the-vm-series-firewall-on-aws
   - name: Set admin initial password
