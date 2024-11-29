@@ -4,7 +4,7 @@
   hosts: localhost
   connection: local
   gather_facts: no
-  vars_files: vars/main.yml
+  #vars_files: vars/main.yml
   tasks:
   - include_role: 
       name: utils_hosts_aws
@@ -15,19 +15,15 @@
   gather_facts: no
   tasks:
 
-  - debug:
-      msg: "{{ lookup('ansible.builtin.file', 'files/private-key.vault') | unvault('carlos12') }}"
+  - ansible.builtin.include_vars: files.private-key.vault
 
   - debug:
-      msg: "{{ lookup('ansible.builtin.unvault', 'files/private-key.vault') }}"
+      msg: "{{ private_key }}"
 
   - name: Copy using inline content
     ansible.builtin.copy:
-      content: "{{ lookup('ansible.builtin.unvault', 'files/private-key.vault') }}"
+      content: "{{ private_key }}"
       dest: /tmp/private-key.pem
-
-  - debug:
-      msg: "{{ lookup('ansible.builtin.file', '/tmp/private-key.pem') }}"
 
   # https://docs.paloaltonetworks.com/vm-series/11-1/vm-series-deployment/set-up-the-vm-series-firewall-on-aws/deploy-the-vm-series-firewall-on-aws/launch-the-vm-series-firewall-on-aws
   - name: Set admin initial password
