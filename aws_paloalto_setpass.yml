@@ -24,11 +24,22 @@
       dest: /tmp/private-key.pem
       mode: '0600'
 
-  - name: Pass
-    debug:
-      msg: "{{ new_password | password_hash('sha-512') }}"
+  # https://docs.paloaltonetworks.com/vm-series/11-1/vm-series-deployment/set-up-the-vm-series-firewall-on-aws/deploy-the-vm-series-firewall-on-aws/launch-the-vm-series-firewall-on-aws
+  - name: Set admin initial password
+    ansible.builtin.expect:
+      command: "ssh -o StrictHostKeyChecking=no -i /tmp/private-key.pem admin@{{ groups['paloalto'][0] }}"
+      responses:
+        # request password-hash username admin password <password>
+        # admin@PA-VM# set mgt-config users admin phash <hashed_pass>
+        'admin@PA-VM>':
+          - configure
+        'admin@PA-VM#':
+          - "request password-hash username admin password {{ new_password }}"
+    no_log: false # hide passwords on logs
+    register: _output
 
-
+    - debug:
+        var: _output
 
   # https://docs.paloaltonetworks.com/vm-series/11-1/vm-series-deployment/set-up-the-vm-series-firewall-on-aws/deploy-the-vm-series-firewall-on-aws/launch-the-vm-series-firewall-on-aws
   - name: Set admin initial password
@@ -41,14 +52,16 @@
         # [edit]                                                                                                       
         # admin@PA-VM#
         # OR
+        # request password-hash username admin password
         # admin@PA-VM# set mgt-config users admin phash <hashed_pass>
-        # Request pass: request password-hash username admin password
         'admin@PA-VM>':
           - configure
         'admin@PA-VM#':
-          - set mgt-config users admin password
-        'Enter password':
-          - "{{ new_password }}" 
-        # 'Confirm password':
-        #   - "{{ new_password }}"
+          - "set mgt-config users admin phash {{ _output }}"
+        # 'admin@PA-VM#':
+        #   - "set mgt-config users admin password"
+        # 'Enter password':
+        #   - "{{ new_password }}" 
+        # # 'Confirm password':
+        # #   - "{{ new_password }}"
     no_log: false # hide passwords on logs
