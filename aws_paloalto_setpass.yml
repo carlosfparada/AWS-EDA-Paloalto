@@ -18,16 +18,11 @@
   # cat private-key.pem | ansible-vault encrypt_string  --stdin-name 'private_key' --output private-key.vault
   - ansible.builtin.include_vars: files/private-key.yml
 
-  - debug:
-      msg: "{{ private_key }}"
-
   - name: Copy using inline content
     ansible.builtin.copy:
       content: "{{ private_key }}"
       dest: /tmp/private-key.pem
       mode: '0600'
-
-  
 
   # https://docs.paloaltonetworks.com/vm-series/11-1/vm-series-deployment/set-up-the-vm-series-firewall-on-aws/deploy-the-vm-series-firewall-on-aws/launch-the-vm-series-firewall-on-aws
   - name: Set admin initial password
@@ -49,20 +44,3 @@
         # 'Confirm password':
         #   - "{{ new_password }}"
     no_log: false # hide passwords on logs
-
-  # - name: Run command
-  #   ansible.builtin.raw: configure
-
-  # - name: Run command
-  #   ansible.builtin.command: exit
-
-  # - name: Run command to change password
-  #   ansible.builtin.command: "{{ item }}"
-  #   loop:
-  #     - configure
-  #     # - set mgt-config users admin password
-  #     # #- "set mgt-config users admin phash {{ password_hash }}"
-  #     # - "Admin123$%&
-  #     # - "Admin123$%&"
-  #     - "exit"
-  #     - "exit"
