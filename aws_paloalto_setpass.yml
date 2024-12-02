@@ -46,8 +46,8 @@
         'Enter password':
           - "{{ new_password }}" 
           - "{{ new_password }}"
-        'Confirm password':
-          - "{{ new_password }}"
+        # 'Confirm password':
+        #   - "{{ new_password }}"
     no_log: false # hide passwords on logs
 
   # - name: Run command
