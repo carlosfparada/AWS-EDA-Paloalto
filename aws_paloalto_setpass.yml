@@ -25,48 +25,71 @@
       mode: '0600'
 
   # https://docs.paloaltonetworks.com/vm-series/11-1/vm-series-deployment/set-up-the-vm-series-firewall-on-aws/deploy-the-vm-series-firewall-on-aws/launch-the-vm-series-firewall-on-aws
-  - name: Set encode new password
-    ansible.builtin.expect:
-      command: "ssh -o StrictHostKeyChecking=no -i /tmp/private-key.pem admin@{{ groups['paloalto'][0] }}"
-      responses:
-        # request password-hash username admin password <password>
-        'admin@PA-VM>':
-          - "request password-hash username admin password {{ new_password }}"
-          - exit
-    no_log: false # hide passwords on logs
-    register: _output
-
-  
-  - name: Set hashed password var
-    set_fact:
-      hashed_password: "{{ item }}"
-    loop: "{{ _output.stdout_lines }}"
-    when: item is match("^\$5\$.*")
-
-  # https://docs.paloaltonetworks.com/vm-series/11-1/vm-series-deployment/set-up-the-vm-series-firewall-on-aws/deploy-the-vm-series-firewall-on-aws/launch-the-vm-series-firewall-on-aws
   - name: Set admin initial password
     ansible.builtin.expect:
       command: "ssh -o StrictHostKeyChecking=no -i /tmp/private-key.pem admin@{{ groups['paloalto'][0] }}"
       responses:
-        # admin@PA-VM# set mgt-config users admin password
+        # admin@PA-VM> configure
+        # admin@PA-VM# set mgt-config users admin password <password>
         # Enter password   : 
         # Confirm password : 
         # [edit]                                                                                                       
-        # admin@PA-VM#
-        # OR
-        # request password-hash username admin password
-        # admin@PA-VM# set mgt-config users admin phash <hashed_pass>
+        # admin@PA-VM# exit
         'admin@PA-VM>':
           - configure
           - exit
         'admin@PA-VM#':
-          - "set mgt-config users admin phash {{ hashed_password }}"
+          - "set mgt-config users admin password {{ new_password }}"
           - exit
-          # - exit
-        # 'admin@PA-VM#':
-        #   - "set mgt-config users admin password"
-        # 'Enter password':
-        #   - "{{ new_password }}" 
-        # # 'Confirm password':
-        # #   - "{{ new_password }}"
+        'Enter password':
+          - "{{ new_password }}" 
+        'Confirm password':
+          - "{{ new_password }}"
     no_log: false # hide passwords on logs
+
+  # # https://docs.paloaltonetworks.com/vm-series/11-1/vm-series-deployment/set-up-the-vm-series-firewall-on-aws/deploy-the-vm-series-firewall-on-aws/launch-the-vm-series-firewall-on-aws
+  # - name: Set encode new password
+  #   ansible.builtin.expect:
+  #     command: "ssh -o StrictHostKeyChecking=no -i /tmp/private-key.pem admin@{{ groups['paloalto'][0] }}"
+  #     responses:
+  #       # request password-hash username admin password <password>
+  #       'admin@PA-VM>':
+  #         - "request password-hash username admin password {{ new_password }}"
+  #         - exit
+  #   no_log: false # hide passwords on logs
+  #   register: _output
+
+  
+  # - name: Set hashed password var
+  #   set_fact:
+  #     hashed_password: "{{ item }}"
+  #   loop: "{{ _output.stdout_lines }}"
+  #   when: item is match("^\$5\$.*")
+
+  # # https://docs.paloaltonetworks.com/vm-series/11-1/vm-series-deployment/set-up-the-vm-series-firewall-on-aws/deploy-the-vm-series-firewall-on-aws/launch-the-vm-series-firewall-on-aws
+  # - name: Set admin initial password
+  #   ansible.builtin.expect:
+  #     command: "ssh -o StrictHostKeyChecking=no -i /tmp/private-key.pem admin@{{ groups['paloalto'][0] }}"
+  #     responses:
+  #       # admin@PA-VM# set mgt-config users admin password
+  #       # Enter password   : 
+  #       # Confirm password : 
+  #       # [edit]                                                                                                       
+  #       # admin@PA-VM#
+  #       # OR
+  #       # request password-hash username admin password
+  #       # admin@PA-VM# set mgt-config users admin phash <hashed_pass>
+  #       'admin@PA-VM>':
+  #         - configure
+  #         - exit
+  #       'admin@PA-VM#':
+  #         - "set mgt-config users admin phash {{ hashed_password }}"
+  #         - exit
+  #         # - exit
+  #       # 'admin@PA-VM#':
+  #       #   - "set mgt-config users admin password"
+  #       # 'Enter password':
+  #       #   - "{{ new_password }}" 
+  #       # # 'Confirm password':
+  #       # #   - "{{ new_password }}"
+  #   no_log: false # hide passwords on logs
