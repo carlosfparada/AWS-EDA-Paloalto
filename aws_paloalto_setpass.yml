@@ -36,8 +36,12 @@
     no_log: false # hide passwords on logs
     register: _output
 
-  - debug:
-      var: _output
+  
+  - name: Set hashed password var
+    set_fact:
+      hashed_password: "{{ item }}"
+    loop: "{{ _output.stdout_lines }}"
+    when: item is match("^\$5\$.*")
 
   # https://docs.paloaltonetworks.com/vm-series/11-1/vm-series-deployment/set-up-the-vm-series-firewall-on-aws/deploy-the-vm-series-firewall-on-aws/launch-the-vm-series-firewall-on-aws
   - name: Set admin initial password
@@ -55,7 +59,9 @@
         'admin@PA-VM>':
           - configure
         'admin@PA-VM#':
-          - "set mgt-config users admin phash {{ _output }}"
+          - "set mgt-config users admin phash {{ hashed_password }}"
+          - exit
+          - exit
         # 'admin@PA-VM#':
         #   - "set mgt-config users admin password"
         # 'Enter password':
