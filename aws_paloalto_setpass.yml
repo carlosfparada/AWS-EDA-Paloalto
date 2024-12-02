@@ -43,7 +43,6 @@
         # OR
         # admin@PA-VM# set mgt-config users admin phash <hashed_pass>
         # Request pass: request password-hash username admin password
-
         'admin@PA-VM>':
           - configure
         'admin@PA-VM#':
