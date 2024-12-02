@@ -31,7 +31,7 @@
       responses:
         # request password-hash username admin password <password>
         # admin@PA-VM# set mgt-config users admin phash <hashed_pass>
-        'admin@PA-VM>':
+        "admin@PA-VM>":
           - "request password-hash username admin password {{ new_password }}"
     no_log: false # hide passwords on logs
     register: _output
