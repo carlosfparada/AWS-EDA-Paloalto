@@ -45,7 +45,7 @@
           - set mgt-config users admin password
         'Enter password':
           - "{{ new_password }}" 
-        'Confirm password':
+#        'Confirm password':
           - "{{ new_password }}"
     no_log: false # hide passwords on logs
 
