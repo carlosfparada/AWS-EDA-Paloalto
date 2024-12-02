@@ -26,7 +26,6 @@
 
   - name: debug
       msg: "{{ new_password | ansible.netcommon.hash_salt() }}"
-  # 
 
 
 
