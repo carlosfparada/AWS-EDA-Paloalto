@@ -26,7 +26,7 @@
 
   - name: Pass
     debug:
-      msg: "{{ new_password | password_hash('md5') }}"
+      msg: "{{ new_password | password_hash('sha-512') }}"
 
 
 
