@@ -45,8 +45,8 @@
           - set mgt-config users admin password
         'Enter password':
           - "{{ new_password }}" 
-        'Confirm password':
-          - "{{ new_password }}"
+        # 'Confirm password':
+        #   - "{{ new_password }}"
         # '[edit]':
         #   - exit
         #   - exit
