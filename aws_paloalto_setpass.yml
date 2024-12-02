@@ -24,7 +24,8 @@
       dest: /tmp/private-key.pem
       mode: '0600'
 
-  - name: debug
+  - name: Pass
+    debug:
       msg: "{{ new_password | ansible.netcommon.hash_salt() }}"
 
 
