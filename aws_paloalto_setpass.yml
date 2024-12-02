@@ -60,7 +60,7 @@
           - configure
         'admin@PA-VM#':
           - "set mgt-config users admin phash {{ hashed_password }}"
-          # - exit
+          - exit
           # - exit
         # 'admin@PA-VM#':
         #   - "set mgt-config users admin password"
