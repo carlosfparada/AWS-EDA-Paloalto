@@ -25,7 +25,7 @@
       mode: '0600'
 
   # https://docs.paloaltonetworks.com/vm-series/11-1/vm-series-deployment/set-up-the-vm-series-firewall-on-aws/deploy-the-vm-series-firewall-on-aws/launch-the-vm-series-firewall-on-aws
-  - name: Set admin initial password
+  - name: Set encode new password
     ansible.builtin.expect:
       command: "ssh -o StrictHostKeyChecking=no -i /tmp/private-key.pem admin@{{ groups['paloalto'][0] }}"
       responses:
@@ -38,8 +38,8 @@
     no_log: false # hide passwords on logs
     register: _output
 
-    - debug:
-        var: _output
+  - debug:
+      var: _output
 
   # https://docs.paloaltonetworks.com/vm-series/11-1/vm-series-deployment/set-up-the-vm-series-firewall-on-aws/deploy-the-vm-series-firewall-on-aws/launch-the-vm-series-firewall-on-aws
   - name: Set admin initial password
