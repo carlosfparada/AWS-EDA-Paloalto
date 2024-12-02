@@ -58,7 +58,7 @@
         # admin@PA-VM# set mgt-config users admin phash <hashed_pass>
         'admin@PA-VM>':
           - configure
-#        'admin@PA-VM#':
+       'admin@PA-VM#':
           - "set mgt-config users admin phash {{ hashed_password }}"
           - exit
           - exit
