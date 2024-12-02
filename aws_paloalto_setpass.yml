@@ -32,6 +32,7 @@
         # request password-hash username admin password <password>
         'admin@PA-VM>':
           - "request password-hash username admin password {{ new_password }}"
+          - exit
     no_log: false # hide passwords on logs
     register: _output
 
