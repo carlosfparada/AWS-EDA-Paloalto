@@ -41,8 +41,8 @@
         # admin@PA-VM#
         'admin@PA-VM>':
           - configure
-        # 'admin@PA-VM#':
-        #   - set mgt-config users admin password
+        'admin@PA-VM#':
+          - set mgt-config users admin password
         # 'Enter password':
         #   - "{{ new_password }}" 
         # 'Confirm password':
