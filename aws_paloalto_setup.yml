@@ -9,7 +9,8 @@
       name: utils_hosts_aws
 
 - name: Setup Paloalto provisioning
-  hosts: localhost
+  hosts: "{{ groups['paloalto'][0] }}"
+  connection: local
   gather_facts: no
   vars_files: vars/main.yml
   tasks:
