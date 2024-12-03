@@ -50,7 +50,7 @@ http_server_name: 'EDA HTTP Server'
 http_address: "144.76.138.250" # "148.251.166.65" # "172.16.1.48"
 http_protocol: "HTTP"
 http_method: 'POST'
-http_port: 5000
+http_port: 50000
 forwarding_profile_name: 'EDA Config Forward Profile'
 forwarding_profile_name_match_list: 'EDA Config Forward Profile Match List'
 log_filter: "All Logs"
