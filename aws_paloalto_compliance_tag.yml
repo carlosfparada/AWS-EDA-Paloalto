@@ -127,7 +127,6 @@
             tag_name: "{{ tag_name_list }}"
             #state: replaced
             state: present
-
       when: payload.admin == "admin"
 
     # - name: COMPLIANCE TAG - COMMIT

@@ -1,0 +1,46 @@
+---
+
+- name: Get nodes from Inventory and add to Groups
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+  - include_role: 
+      name: utils_hosts_aws
+
+- name: Setup Paloalto provisioning
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars_files: vars/main.yml
+  tasks:
+
+    - name: Set provider
+      set_fact: 
+        panos_provider: 
+          ip_address: "{{ groups['paloalto'][0] }}"
+          username: "{{ ansible_user }}"
+          password: "{{ ansible_ssh_pass }}"
+
+    - name: REMEDIATION - DEBUG EVENT
+      debug:
+        var: ansible_eda.event
+
+    - name: Remediation - RESTORE DELETED RULES
+      include_tasks: rule_main.yml
+      when:
+        - payload.admin == "adminmanual"
+        - payload.cmd == "delete"
+        - payload.result == "Succeeded"
+        - '"rulebase security rules" in payload.path'
+
+    - name: REMEDIATION - DELETE ADDED RULES
+      paloaltonetworks.panos.panos_security_rule:
+        provider: '{{ panos_provider }}'
+        state: absent
+        rule_name: "{{ payload.path | regex_search('.*rulebase security rules  (.*)','\\1') | first}}"
+      when:
+        - payload.admin == "adminmanual"
+        - payload.cmd == "set"
+        - payload.result == "Succeeded"
+        - '"rulebase security rules" in payload.path'

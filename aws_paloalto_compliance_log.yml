@@ -86,7 +86,6 @@
             log_end: true
             #state: replaced
             state: present
-
       when: payload.admin == "admin"
 
     # - name: COMPLIANCE LOG - COMMIT
