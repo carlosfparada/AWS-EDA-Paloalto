@@ -10,7 +10,7 @@
 
 - name: Setup Paloalto provisioning
 #  hosts: "{{ groups['paloalto'][0] }}"
-  hosts: "localhost"
+  hosts: localhost
   connection: local
   gather_facts: no
   vars_files: vars/main.yml
