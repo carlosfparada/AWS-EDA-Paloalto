@@ -22,22 +22,42 @@
           username: "{{ ansible_user }}"
           password: "{{ ansible_ssh_pass }}"
           
-    - name: COMPLIANCE LOG - SET EVENT VAR
+    - name: COMPLIANCE TAG - SET EVENT VAR
       set_fact:
         payload: "{{ ansible_eda.event.payload }}"
 
-    - name: COMPLIANCE LOG - POLICY MANUAL CHANGE (adminmanual)
+    - name: COMPLIANCE TAG - POLICY MANUAL CHANGE (adminmanual)
       block:
 
-        - name: COMPLIANCE LOG - GET INFO ON ADDED RULES (adminmanual)
+        - name: COMPLIANCE TAG - GET INFO ON ADDED RULES (adminmanual)
           paloaltonetworks.panos.panos_security_rule:
             provider: '{{ panos_provider }}'
             rule_name: "{{ payload.path | regex_search('.*rulebase security rules  (.*)','\\1') | first}}"
             state: gathered
           register: _rules_result
-          when: payload.admin == "adminmanual"
 
-        - name: COMPLIANCE LOG - SET LOGS TO log_start AND log_end (adminmanual)
+        - name: COMPLIANCE TAG - SET manual TAG (adminmanual)
+          set_fact:
+            tag_name_list: "{{ _rules_result.gathered.tag_name | default([], true) }}"
+            tag_name: ['manual']
+
+        - name: COMPLIANCE TAG - ADD ansible TAG TO THE LIST (adminmanual)
+          set_fact: 
+            tag_name_list: "{{ tag_name_list + tag_name }}"
+          when: '"manual" not in tag_name_list'
+
+        - name: COMPLIANCE TAG - REMOVE ansible TAG (IF EXISTS) FROM THE LIST (adminmanual)
+          set_fact: 
+            tag_name_list: "{{ tag_name_list | reject ('search', 'ansible') }}"
+
+        - name: COMPLIANCE TAG - MAKE SURE manual TAG EXISTS (adminmanual)
+          paloaltonetworks.panos.panos_tag_object:
+            provider: "{{ panos_provider }}"
+            name: 'manual'
+            color: 'red'
+            comments: 'Manually created rule'
+
+        - name: COMPLIANCE TAG - ADD manual TAG TO ADDED RULES (adminmanual)
           paloaltonetworks.panos.panos_security_rule:
             provider: "{{ panos_provider }}"
             rule_name: "{{ _rules_result.gathered.rule_name }}"
@@ -50,25 +70,46 @@
             application: "{{ _rules_result.gathered.application }}"
             service: "{{ _rules_result.gathered.service }}"
             action: "{{ _rules_result.gathered.action }}"
-            tag_name: "{{ _rules_result.gathered.tag_name | default([], true) }}"            
-            log_start: true
-            log_end: true
+            log_start: "{{ _rules_result.gathered.log_start | default(false, true) }}"
+            log_end: "{{ _rules_result.gathered.log_end | default(true, true) }}"          
+            tag_name: "{{ tag_name_list }}"
             #state: replaced
             state: present
 
       when: payload.admin == "adminmanual"
 
-    - name: COMPLIANCE LOG - POLICY ANSIBLE CHANGE (admin)
+    - name: COMPLIANCE TAG - POLICY ANSIBLE CHANGE (admin)
       block:
 
-        - name: COMPLIANCE LOG - GET INFO ON ADDED RULES (admin)
+        - name: COMPLIANCE TAG - GET INFO ON ADDED RULES (admin)
           paloaltonetworks.panos.panos_security_rule:
             provider: '{{ panos_provider }}'
             rule_name: "{{ payload.after_change_detail.split(' ')[2] }}"
             state: gathered
           register: _rules_result
 
-        - name: COMPLIANCE LOG - SET LOGS TO log_start AND log_end (admin)
+        - name: COMPLIANCE TAG - SET ansible TAG (admin)
+          set_fact:
+            tag_name_list: "{{ _rules_result.gathered.tag_name | default([], true) }}"
+            tag_name: ['ansible']
+
+        - name: COMPLIANCE TAG - ADD ansible TAG TO THE LIST (admin)
+          set_fact: 
+            tag_name_list: "{{ tag_name_list + tag_name }}"
+          when: '"ansible" not in tag_name_list'
+
+        - name: COMPLIANCE TAG - REMOVE manual TAG (IF EXISTS) FROM THE LIST (admin)
+          set_fact: 
+            tag_name_list: "{{ tag_name_list | reject ('search', 'manual') }}"
+
+        - name: COMPLIANCE TAG - MAKE SURE ansible TAG EXISTS (admin)
+          paloaltonetworks.panos.panos_tag_object:
+            provider: "{{ panos_provider }}"
+            name: 'ansible'
+            color: 'green'
+            comments: 'Ansible created rule'
+
+        - name: COMPLIANCE TAG - ADD ansible TAG TO ADDED RULES (admin)
           paloaltonetworks.panos.panos_security_rule:
             provider: "{{ panos_provider }}"
             rule_name: "{{ _rules_result.gathered.rule_name }}"
@@ -81,14 +122,14 @@
             application: "{{ _rules_result.gathered.application }}"
             service: "{{ _rules_result.gathered.service }}"
             action: "{{ _rules_result.gathered.action }}"
-            tag_name: "{{ _rules_result.gathered.tag_name | default([], true) }}"
-            log_start: true
-            log_end: true
+            log_start: "{{ _rules_result.gathered.log_start | default(false, true) }}"
+            log_end: "{{ _rules_result.gathered.log_end | default(true, true) }}"
+            tag_name: "{{ tag_name_list }}"
             #state: replaced
             state: present
 
       when: payload.admin == "admin"
 
-    # - name: COMPLIANCE LOG - COMMIT
+    # - name: COMPLIANCE TAG - COMMIT
     #   paloaltonetworks.panos.panos_commit:
     #     provider: "{{ panos_provider }}"

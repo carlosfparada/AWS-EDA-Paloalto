@@ -8,7 +8,7 @@
   - include_role: 
       name: utils_hosts_aws
 
-- name: Setup Paloalto provisioning
+- name: Paloalto rule provisioning
   hosts: localhost
   connection: local
   gather_facts: no
