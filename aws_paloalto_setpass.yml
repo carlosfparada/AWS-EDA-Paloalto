@@ -45,4 +45,4 @@
           - "{{ new_password }}" 
         'Confirm password':
           - "{{ new_password }}"
-    no_log: false # hide passwords on logs
+    no_log: true # hide passwords on logs
