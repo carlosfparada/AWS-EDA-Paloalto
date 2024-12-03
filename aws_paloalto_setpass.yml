@@ -39,7 +39,7 @@
           - configure
           - exit
         'admin@PA-VM#':
-          - "set mgt-config users admin password {{ new_password }}"
+          - "set mgt-config users admin password"
           - exit
         'Enter password':
           - "{{ new_password }}" 
