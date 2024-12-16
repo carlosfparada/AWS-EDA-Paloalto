@@ -30,7 +30,7 @@
       command: "ssh -o StrictHostKeyChecking=no -i /tmp/private-key.pem admin@{{ groups['paloalto'][0] }}"
       responses:
         # admin@PA-VM> configure
-        # admin@PA-VM# set mgt-config users admin password <password>
+        # admin@PA-VM# set mgt-config users admin password
         # Enter password   : 
         # Confirm password : 
         # admin@PA-VM# exit
