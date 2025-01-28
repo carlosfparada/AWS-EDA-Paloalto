@@ -8,8 +8,8 @@
     #     port: 5000
     #     #type: config
     - ansible.eda.webhook:
-        host: 127.0.0.1
-        port: 6000
+        host: 0.0.0.0
+        port: 5000
   # Rule config logs
   rules:
     - name: "Handle Config Logs - Compliance"
