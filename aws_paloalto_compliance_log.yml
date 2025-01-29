@@ -25,6 +25,9 @@
     - name: COMPLIANCE LOG - SET EVENT VAR
       set_fact:
         payload: "{{ ansible_eda.event.payload }}"
+    
+    - debug:
+        var: hostvars['localhost']
 
     - name: COMPLIANCE LOG - POLICY MANUAL CHANGE (adminmanual)
       block:
