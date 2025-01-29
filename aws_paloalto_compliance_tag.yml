@@ -21,7 +21,10 @@
           ip_address: "{{ groups['paloalto'][0] }}"
           username: "{{ ansible_user }}"
           password: "{{ ansible_ssh_pass }}"
-          
+
+    - debug:
+        var: hostvars['localhost']
+                  
     - name: COMPLIANCE TAG - SET EVENT VAR
       set_fact:
         payload: "{{ ansible_eda.event.payload }}"
