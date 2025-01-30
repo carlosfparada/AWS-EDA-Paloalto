@@ -6,7 +6,7 @@
     - paloaltonetworks.panos.logs:
         host: 0.0.0.0
         port: 5000
-        type: config
+        #type: config
     # - ansible.eda.webhook:
     #     host: 0.0.0.0
     #     port: 5000
