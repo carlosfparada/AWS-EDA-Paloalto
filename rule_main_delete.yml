@@ -20,3 +20,4 @@
   with_items:
     - public
     - private
+  ignore_errors: true
