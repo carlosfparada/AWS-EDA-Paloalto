@@ -10,6 +10,11 @@
     loop_var: _rule
   when: fw_rules | length > 0 
 
+- name: Sleep for 5 seconds and continue with play
+  wait_for:
+    timeout: 5
+  delegate_to: localhost
+
 # Delete an L3 zone.
 - name: Delete private and public zone
   paloaltonetworks.panos.panos_zone:
