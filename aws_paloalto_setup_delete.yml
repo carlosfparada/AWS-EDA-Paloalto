@@ -105,7 +105,6 @@
         state: absent
 
     - name: Commit configuration
-      paloaltonetworks.panos.panos_commit:
-      # paloaltonetworks.panos.panos_commit_firewall:
+      paloaltonetworks.panos.panos_commit_firewall:
         provider: "{{ panos_provider }}"
       ignore_errors: true
