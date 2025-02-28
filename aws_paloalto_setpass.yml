@@ -46,3 +46,8 @@
         'Confirm password':
           - "{{ new_password }}"
     no_log: true # hide passwords on logs
+
+- name: Sleep for 10 seconds and continue with play
+  wait_for:
+    timeout: 10
+  delegate_to: localhost
