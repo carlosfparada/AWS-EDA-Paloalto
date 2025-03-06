@@ -110,7 +110,7 @@
       assign_public_ip: true
     ebs_optimized: true
     # volumes:
-    #   - device_name: "/dev/sda0"
+    #   - device_name: "{{ ec2_paloalto_instance_name }}"
     #     ebs:
     #       delete_on_termination: true
     #user_data: "{{ lookup('ansible.builtin.template', 'user_data.j2') }}"
