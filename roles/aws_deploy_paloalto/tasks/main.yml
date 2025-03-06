@@ -110,8 +110,8 @@
       assign_public_ip: true
     ebs_optimized: true
     volumes:
-      ebs:
-        delete_on_termination: true
+      - ebs:
+          delete_on_termination: true
     #user_data: "{{ lookup('ansible.builtin.template', 'user_data.j2') }}"
     tags:
       Name: "{{ ec2_paloalto_instance_name }}"
