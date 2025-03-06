@@ -74,6 +74,14 @@
     state: absent
   when: subnet2.subnets | length > 0
 
+- name: Delete EBS volume
+  ec2_vol:
+    region: "{{ ec2_region }}"
+    name: "{{ ec2_paloalto_instance_name }}"
+    filters:
+      "tag:Name": "{{ ec2_paloalto_instance_name }}"
+    state: absent
+
 - name: Delete Security Group
   amazon.aws.ec2_group:
     name: "{{ ec2_sg_name }}"
