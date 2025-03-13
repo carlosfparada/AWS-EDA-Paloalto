@@ -39,11 +39,11 @@ ec2_paloalto_key_name: "KeyPair-Virginia"
 ec2_paloalto_instance_name: paloalto-1
 
 # New Password
-new_password: "Admin123$%&"
+new_password: "{{ ansible_password }}"
 
 # Paloalto Configs
 admin_username: 'adminmanual'
-admin_password: 'Admin123$%&'
+admin_password: "{{ ansible_password }}"
 profile_name: "EDA HTTP Profile"
 config_profile_name: 'EDA Config HTTP Profile'
 http_server_name: 'EDA HTTP Server'
