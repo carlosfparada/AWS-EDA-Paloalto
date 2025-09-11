@@ -7,7 +7,8 @@
   set_fact:
     node_name: "{{ item }}"
   loop: "{{ groups['all'] }}"
-  when: hostvars[item].tags is defined and  hostvars[item].tags.Name | regex_search("^paloalto-(.*)$")
+  #when: hostvars[item].tags is defined and  hostvars[item].tags.Name | regex_search("^paloalto-(.*)$")
+  when: hostvars[item].tags is defined and hostvars[item].tags.Name is match("^paloalto-(.*)$")
 
 - name: Add paloalto node to the paloalto group
   add_host:
