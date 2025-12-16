@@ -94,11 +94,19 @@
         http_method: "{{ http_method }}"
         http_port: "{{ http_port }}"
 
-    - name: Add a HTTP header to HTTP Server Profile
+    - name: Add a HTTP header to Config HTTP Server Profile
       paloaltonetworks.panos.panos_http_profile_header:
         provider: '{{ panos_provider }}'
         http_profile: '{{ profile_name }}'
         log_type: 'config'
+        header: 'Content-Type'
+        value: 'application/json'
+
+    - name: Add a HTTP header to System HTTP Server Profile
+      paloaltonetworks.panos.panos_http_profile_header:
+        provider: '{{ panos_provider }}'
+        http_profile: '{{ profile_name }}'
+        log_type: 'system'
         header: 'Content-Type'
         value: 'application/json'
 
@@ -107,6 +115,14 @@
         provider: '{{ panos_provider }}'
         http_profile: '{{ profile_name }}'
         log_type: 'config'
+        param: 'serial'
+        value: '$serial'
+
+    - name: Add a param to the system log type
+      paloaltonetworks.panos.panos_http_profile_param:
+        provider: '{{ panos_provider }}'
+        http_profile: '{{ profile_name }}'
+        log_type: 'system'
         param: 'serial'
         value: '$serial'
 
@@ -133,6 +149,19 @@
         xpath: "/config/shared/log-settings/config/match-list"
         element: |
           <entry name="{{ config_log_name }}">
+            <send-http>
+              <member>{{ profile_name }}</member>
+            </send-http>
+            <filter>{{ log_filter }}</filter>
+          </entry>
+
+    - name: Forward System Logs to EDA source
+      paloaltonetworks.panos.panos_type_cmd:
+        provider: '{{ panos_provider }}'
+        cmd: set  # default
+        xpath: "/config/shared/log-settings/system/match-list"
+        element: |
+          <entry name="{{ system_log_name }}">
             <send-http>
               <member>{{ profile_name }}</member>
             </send-http>
