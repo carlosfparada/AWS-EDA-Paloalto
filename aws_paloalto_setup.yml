@@ -59,7 +59,7 @@
               "before_change_detail": "$before-change-detail",
               "after_change_detail": "$after-change-detail"
           }
-        system_name: "{{ config_profile_name }}"
+        system_name: "{{ system_profile_name }}"
         system_uri_format: '/test'
         system_payload: >
           {
