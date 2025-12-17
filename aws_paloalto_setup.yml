@@ -95,7 +95,6 @@
         protocol: "{{ config_http_protocol }}"
         http_method: "{{ config_http_method }}"
         http_port: "{{ config_http_port }}"
-        tls_version: ""
 
     - name: Create System HTTP server
       paloaltonetworks.panos.panos_http_server:
@@ -106,7 +105,6 @@
         protocol: "{{ system_http_protocol }}"
         http_method: "{{ system_http_method }}"
         http_port: "{{ system_http_port }}"
-        tls_version: ""
         
     - name: Add a HTTP header to Config HTTP Server Profile
       paloaltonetworks.panos.panos_http_profile_header:
