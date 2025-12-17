@@ -29,11 +29,3 @@
         # - run_job_template:
         #     organization: "Default"
         #     name: "EDA Paloalto: config remediation"
-    - name: "Handle System Logs - Authentication"
-      condition: event.payload.type == "SYSTEM"
-      actions:
-        # Debug
-        # - debug: 
-        #     var: event.payload
-        - print_event:
-            pretty: true
