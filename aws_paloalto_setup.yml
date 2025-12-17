@@ -168,7 +168,7 @@
         filter: '{{ system_log_filter }}'
         http_profiles: ['{{ system_profile_name }}']
 
-    # set shared log-settings config match-list "Config Logs" filter "All Logs" send-http {{ profile_name }}
+    # set shared log-settings config match-list "Config Logs" filter "All Logs" send-http {{ config_profile_name }}
     - name: Forward Config Logs to EDA source
       paloaltonetworks.panos.panos_type_cmd:
         provider: '{{ panos_provider }}'
@@ -182,6 +182,7 @@
             <filter>{{ config_log_filter }}</filter>
           </entry>
 
+    # set shared log-settings config match-list "System Logs" filter "All Logs" send-http {{ system_profile_name }}
     - name: Forward System Logs to EDA source
       paloaltonetworks.panos.panos_type_cmd:
         provider: '{{ panos_provider }}'
