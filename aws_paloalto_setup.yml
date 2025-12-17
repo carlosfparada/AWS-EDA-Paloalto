@@ -83,7 +83,7 @@
               "module": "$module",
               "severity": "$severity",
               "opaque": "$opaque",
-              "actionflags": "$actionflags",
+              "actionflags": "$actionflags"
           }
 
     - name: Create Config HTTP server
