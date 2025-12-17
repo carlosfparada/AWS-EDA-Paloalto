@@ -81,7 +81,7 @@
               "event_id": "$event_id",
               "object": "$object",
               "module": "$module",
-              "sedverity": "$severity",
+              "severity": "$severity",
               "opaque": "$opaque",
               "actionflags": "$actionflags",
           }
