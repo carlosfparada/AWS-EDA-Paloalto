@@ -11,7 +11,7 @@
   rules:
     - name: "Handle System Logs - Authentication"
       #condition: event.payload.type == "SYSTEM"
-      condition: event.payload.type is defined
+      condition: event.payload is defined
       actions:
         # Debug
         # - debug: 
