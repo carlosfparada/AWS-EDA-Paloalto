@@ -145,7 +145,7 @@
         name: '{{ config_forwarding_profile_name }}'
 
     # Log System Forwarding Profile
-    - name: Create log forwarding profile
+    - name: Create System log forwarding profile
       paloaltonetworks.panos.panos_log_forwarding_profile:
         provider: '{{ panos_provider }}'
         name: '{{ system_forwarding_profile_name }}'
