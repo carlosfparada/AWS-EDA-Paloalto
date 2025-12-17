@@ -179,7 +179,7 @@
             <send-http>
               <member>{{ config_profile_name }}</member>
             </send-http>
-            <filter>{{ log_filter }}</filter>
+            <filter>{{ config_log_filter }}</filter>
           </entry>
 
     - name: Forward System Logs to EDA source
