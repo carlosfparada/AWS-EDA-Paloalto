@@ -91,7 +91,7 @@
         provider: '{{ panos_provider }}'
         http_profile: '{{ config_profile_name }}'
         name: '{{ config_http_server_name }}'
-        address: "{{ config_http_address }}"
+        address: "{{ http_address }}"
         protocol: "{{ config_http_protocol }}"
         http_method: "{{ config_http_method }}"
         http_port: "{{ config_http_port }}"
@@ -101,7 +101,7 @@
         provider: '{{ panos_provider }}'
         http_profile: '{{ system_profile_name }}'
         name: '{{ system_http_server_name }}'
-        address: "{{ system_http_address }}"
+        address: "{{ http_address }}"
         protocol: "{{ system_http_protocol }}"
         http_method: "{{ system_http_method }}"
         http_port: "{{ system_http_port }}"
