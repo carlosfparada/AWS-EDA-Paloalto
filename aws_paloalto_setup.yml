@@ -29,12 +29,12 @@
         admin_password: '{{ admin_password }}'
         superuser: true
 
-    # HTTP Server Profile
+    # HTTP Config Server Profile
     # https://docs.paloaltonetworks.com/pan-os/9-1/pan-os-admin/monitoring/use-syslog-for-monitoring/syslog-field-descriptions/config-log-fields 
-    - name: Create a HTTP Server Profile for Logs
+    - name: Create a Config HTTP Server Profile for Logs
       paloaltonetworks.panos.panos_http_profile:
         provider: "{{ panos_provider }}"
-        name: "{{ profile_name }}"
+        name: "{{ config_profile_name }}"
         config_name: "{{ config_profile_name }}"
         config_uri_format: '/test'
         config_payload: >
@@ -59,6 +59,13 @@
               "before_change_detail": "$before-change-detail",
               "after_change_detail": "$after-change-detail"
           }
+
+    # HTTP System Server Profile
+    # https://docs.paloaltonetworks.com/pan-os/9-1/pan-os-admin/monitoring/use-syslog-for-monitoring/syslog-field-descriptions/system-log-fields
+    - name: Create a System HTTP Server Profile for Logs
+      paloaltonetworks.panos.panos_http_profile:
+        provider: "{{ panos_provider }}"
+        name: "{{ system_profile_name }}"
         system_name: "{{ system_profile_name }}"
         system_uri_format: '/test'
         system_payload: >
@@ -84,20 +91,30 @@
               "after_change_detail": "$after-change-detail"
           }
 
-    - name: Create HTTP server
+    - name: Create Config HTTP server
       paloaltonetworks.panos.panos_http_server:
         provider: '{{ panos_provider }}'
-        http_profile: '{{ profile_name }}'
-        name: '{{ http_server_name }}'
-        address: "{{ http_address }}"
-        protocol: "{{ http_protocol }}"
-        http_method: "{{ http_method }}"
-        http_port: "{{ http_port }}"
+        http_profile: '{{ config_profile_name }}'
+        name: '{{ config_http_server_name }}'
+        address: "{{ config_http_address }}"
+        protocol: "{{ config_http_protocol }}"
+        http_method: "{{ config_http_method }}"
+        http_port: "{{ config_http_port }}"
+
+    - name: Create System HTTP server
+      paloaltonetworks.panos.panos_http_server:
+        provider: '{{ panos_provider }}'
+        http_profile: '{{ system_profile_name }}'
+        name: '{{ system_http_server_name }}'
+        address: "{{ system_http_address }}"
+        protocol: "{{ system_http_protocol }}"
+        http_method: "{{ system_http_method }}"
+        http_port: "{{ system_http_port }}"
 
     - name: Add a HTTP header to Config HTTP Server Profile
       paloaltonetworks.panos.panos_http_profile_header:
         provider: '{{ panos_provider }}'
-        http_profile: '{{ profile_name }}'
+        http_profile: '{{ config_profile_name }}'
         log_type: 'config'
         header: 'Content-Type'
         value: 'application/json'
@@ -105,41 +122,56 @@
     - name: Add a HTTP header to System HTTP Server Profile
       paloaltonetworks.panos.panos_http_profile_header:
         provider: '{{ panos_provider }}'
-        http_profile: '{{ profile_name }}'
+        http_profile: '{{ system_profile_name }}'
         log_type: 'system'
         header: 'Content-Type'
         value: 'application/json'
 
-    - name: Add a param to the config log type
+    - name: Add a param to the Config Log Type
       paloaltonetworks.panos.panos_http_profile_param:
         provider: '{{ panos_provider }}'
-        http_profile: '{{ profile_name }}'
+        http_profile: '{{ config_profile_name }}'
         log_type: 'config'
         param: 'serial'
         value: '$serial'
 
-    - name: Add a param to the system log type
+    - name: Add a param to the System Log Type
       paloaltonetworks.panos.panos_http_profile_param:
         provider: '{{ panos_provider }}'
-        http_profile: '{{ profile_name }}'
+        http_profile: '{{ system_profile_name }}'
         log_type: 'system'
         param: 'serial'
         value: '$serial'
 
-    # Log Forwarding Profile
+    # Log Config Forwarding Profile
+    - name: Create Config Log forwarding profile
+      paloaltonetworks.panos.panos_log_forwarding_profile:
+        provider: '{{ panos_provider }}'
+        name: '{{ config_forwarding_profile_name }}'
+
+    # Log System Forwarding Profile
     - name: Create log forwarding profile
       paloaltonetworks.panos.panos_log_forwarding_profile:
         provider: '{{ panos_provider }}'
-        name: '{{ forwarding_profile_name }}'
+        name: '{{ system_forwarding_profile_name }}'
 
-    - name: Create log forwarding profile match list
+    - name: Create Config log forwarding profile match list
       paloaltonetworks.panos.panos_log_forwarding_profile_match_list:
         provider: '{{ panos_provider }}'
-        log_forwarding_profile: '{{ forwarding_profile_name }}'
-        name: '{{ forwarding_profile_name_match_list }}'
+        log_forwarding_profile: '{{ config_forwarding_profile_name }}'
+        name: '{{ config_forwarding_profile_name_match_list }}'
         #log_type: traffic  # default
-        filter: '{{ log_filter }}'
-        http_profiles: ['{{ profile_name }}']
+        filter: '{{ config_log_filter }}'
+        http_profiles: ['{{ config_profile_name }}']
+
+    - name: Create System log forwarding profile match list
+      paloaltonetworks.panos.panos_log_forwarding_profile_match_list:
+        provider: '{{ panos_provider }}'
+        log_forwarding_profile: '{{ system_forwarding_profile_name }}'
+        name: '{{ system_forwarding_profile_name_match_list }}'
+        #log_type: traffic  # default
+        filter: '{{ system_log_filter }}'
+        http_profiles: ['{{ system_profile_name }}']
 
     # set shared log-settings config match-list "Config Logs" filter "All Logs" send-http {{ profile_name }}
     - name: Forward Config Logs to EDA source
@@ -163,9 +195,9 @@
         element: |
           <entry name="{{ system_log_name }}">
             <send-http>
-              <member>{{ profile_name }}</member>
+              <member>{{ system_profile_name }}</member>
             </send-http>
-            <filter>{{ log_filter }}</filter>
+            <filter>{{ system_log_filter }}</filter>
           </entry>
 
     - name: Commit configuration

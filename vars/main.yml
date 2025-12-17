@@ -44,18 +44,26 @@ new_password: "{{ ansible_password }}"
 # Paloalto Configs
 admin_username: 'adminmanual'
 admin_password: "{{ ansible_password }}"
-profile_name: "EDA HTTP Profile"
+
 config_profile_name: 'EDA Config HTTP Profile'
-system_profile_name: 'EDA System HTTP Profile'
-http_server_name: 'EDA HTTP Server'
-http_protocol: "HTTP"
-http_method: 'POST'
-http_port: 5000
-forwarding_profile_name: 'EDA Config Forward Profile'
-forwarding_profile_name_match_list: 'EDA Config Forward Profile Match List'
-log_filter: "All Logs"
+config_http_server_name: 'EDA Config HTTP Server'
+config_http_protocol: "HTTP"
+config_http_method: 'POST'
+config_http_port: 5000
 config_log_name: "Config Logs"
+config_log_filter: "All Logs"
+config_forwarding_profile_name: 'EDA Config Forward Profile'
+config_forwarding_profile_name_match_list: 'EDA Config Forward Profile Match List'
+
+system_profile_name: 'EDA System HTTP Profile'
+system_http_server_name: 'EDA System HTTP Server'
+system_http_protocol: "HTTP"
+system_http_method: 'POST'
+system_http_port: 5001
 system_log_name: "System Logs"
+system_forwarding_profile_name: 'EDA System Forward Profile'
+system_forwarding_profile_name_match_list: 'EDA System Forward Profile Match List'
+system_log_filter: "All Logs"
 
 panos_services:
   dns-tcp: service-dns-tcp
