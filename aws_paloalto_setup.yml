@@ -203,4 +203,3 @@
     - name: Commit configuration
       paloaltonetworks.panos.panos_commit_firewall:
         provider: "{{ panos_provider }}"
-      ignore_errors: true
