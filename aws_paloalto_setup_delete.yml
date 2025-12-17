@@ -89,7 +89,7 @@
     - name: Delete a HTTP Server Profile for Config Logs
       paloaltonetworks.panos.panos_http_profile:
         provider: "{{ panos_provider }}"
-        name: "{{ profile_name }}"
+        name: "{{ config_profile_name }}"
         config_name: "{{ config_profile_name }}"
         config_uri_format: '/test'
         config_payload: >
