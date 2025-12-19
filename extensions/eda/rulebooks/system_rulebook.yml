@@ -17,3 +17,7 @@
             var: event.payload
         - print_event:
             pretty: true
+        # Notify Slack
+        - run_job_template:
+            organization: "Default"
+            name: "AWS EDA Paloalto: Notify Slack"            
