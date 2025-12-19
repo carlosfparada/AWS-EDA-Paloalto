@@ -40,4 +40,5 @@
         token: "{{ ansible_password }}"
         channel: "#ansible-demos"
         username: "Paloalto-Bot"
-        msg: "{{ payload }}"
+        #msg: "{{ payload }}"
+        msg: "My message"
