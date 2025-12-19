@@ -22,14 +22,19 @@
           username: "{{ ansible_user }}"
           password: "{{ ansible_ssh_pass }}"
 
-    - debug:
+    - name: Hostvars
+      debug:
         var: hostvars['localhost']
 
     - name: System Authentication
       set_fact:
         payload: "{{ ansible_eda.event.payload }}"
 
+    - name: Payload
+      debug:
+        var: hostvars['localhost']
+
     - name: Send notification message via Slack
       community.general.slack:
-        token: thetoken/generatedby/slack
+        token: ""
         msg: '{{ inventory_hostname }} completed'
