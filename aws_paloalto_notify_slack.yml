@@ -38,6 +38,6 @@
     - name: Send notification message via Slack
       community.general.slack:
         token: "{{ ansible_password }}"
-        channel: "ansible-demos"
+        channel: "#ansible-demos"
         username: "Paloalto-Bot"
         msg: "{{ payload }}"
