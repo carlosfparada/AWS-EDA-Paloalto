@@ -37,7 +37,7 @@
     # Slack Setup: https://www.youtube.com/shorts/jcPnBYB5qww 
     - name: Send notification message via Slack
       community.general.slack:
-        token: "{{ slack_token }}"
+        token: "{{ ansible_password }}"
         channel: "ansible-demos"
         username: "Paloalto-Bot"
         msg: "{{ payload }}"
