@@ -13,7 +13,7 @@
       condition: event.payload.type == "SYSTEM" and event.payload.subtype == "auth"
       actions:
         # Debug
-        # - debug: 
-        #     var: event.payload
+        - debug: 
+            var: event.payload
         - print_event:
             pretty: true
