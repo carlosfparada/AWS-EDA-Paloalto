@@ -34,6 +34,7 @@
       debug:
         var: hostvars['localhost']
 
+    # Slack Setup: https://www.youtube.com/shorts/jcPnBYB5qww 
     - name: Send notification message via Slack
       community.general.slack:
         token: ""
