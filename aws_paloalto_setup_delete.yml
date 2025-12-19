@@ -134,7 +134,7 @@
               "subtype": "$subtype",
               "vsys": "$vsys",
               "vsys_name": "$vsys_name",
-              "event_id": "$event_id",
+              "eventid": "$eventid",
               "object": "$object",
               "module": "$module",
               "severity": "$severity",
