@@ -39,7 +39,7 @@
       community.general.slack:
         token: "{{ ansible_password }}"
         #channel: "#ansible-demos"
-        channel: "#novo-canal"
+        #channel: "#novo-canal"
         username: "Paloalto-Bot"
         #msg: "{{ payload }}"
         msg: "My message"
