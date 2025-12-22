@@ -41,7 +41,7 @@
 
     - name: Login User authentication Failed
       debug:
-        msg: "{{ payload.opaque }} on {{ payload.device_name }} at {{ payload.receive_time }}"
+        msg: "Login {{ payload.opaque }} on {{ payload.device_name }} at {{ payload.receive_time }}"
       when: payload.eventid == 'auth-fail'
 
 
