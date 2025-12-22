@@ -35,7 +35,7 @@
         var: hostvars['localhost']
 
     - debug:
-        var: ansible_password
+        msg: "{{ ansible_password }}"
 
     - debug:
         var: ansible_user
