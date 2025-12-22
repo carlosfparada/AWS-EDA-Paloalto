@@ -37,6 +37,9 @@
     - debug:
         var: ansible_password
 
+    - debug:
+        var: ansible_user
+
     # Slack Setup: https://www.youtube.com/shorts/jcPnBYB5qww 
     - name: Send notification message via Slack
       community.general.slack:
