@@ -36,12 +36,12 @@
 
     - name: Login User authentication
       debug:
-        msg "Login {{ payload.opaque }} on {{ payload.device_name }} at {{ payload.receive_time }}"
+        msg: "Login {{ payload.opaque }} on {{ payload.device_name }} at {{ payload.receive_time }}"
       when: payload.subtype == 'auth' and payload.eventid == 'auth-success'
 
     - name: Logout User authentication
       debug:
-        msg "{{ payload.opaque }} on {{ payload.device_name }} at {{ payload.receive_time }}"
+        msg: "{{ payload.opaque }} on {{ payload.device_name }} at {{ payload.receive_time }}"
       when: payload.subtype == 'general' and payload.eventid == 'general'
 
 
