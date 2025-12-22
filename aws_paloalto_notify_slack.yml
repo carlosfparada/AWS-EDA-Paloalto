@@ -41,5 +41,6 @@
         channel: "#ansible-demos"
         #channel: "#novo-canal"
         username: "Carlos Parada"
+        #username: "cparada@redhat.com"
         #msg: "{{ payload }}"
         msg: "My message"
