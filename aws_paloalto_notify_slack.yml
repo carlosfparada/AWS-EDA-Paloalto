@@ -40,6 +40,6 @@
         token: "{{ ansible_password }}"
         channel: "#ansible-demos"
         #channel: "#novo-canal"
-        username: "Paloalto-Bot"
+        username: "Carlos Parada"
         #msg: "{{ payload }}"
         msg: "My message"
