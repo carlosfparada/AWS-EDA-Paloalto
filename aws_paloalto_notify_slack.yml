@@ -35,21 +35,18 @@
         var: hostvars['localhost']
 
     - debug:
-        msg: "{{ ansible_password }}"
+        var: ansible_eda.event.payload
 
-    - debug:
-        var: ansible_user
-
-    # Slack Setup: https://www.youtube.com/shorts/jcPnBYB5qww 
-    - name: Send notification message via Slack
-      community.general.slack:
-        token: "{{ ansible_password }}"
-        channel: "#ansible-demos"
-        #channel: "#novo-canal"
-        username: "Ansible Demos"
-        #username: "Carlos Parada"
-        #username: "cparada@redhat.com"
-        #username: "carlosparada@sapo.pt"
-        #username: "cparada"
-        #msg: "{{ payload }}"
-        msg: "My message"
+    # # Slack Setup: https://www.youtube.com/shorts/jcPnBYB5qww 
+    # - name: Send notification message via Slack
+    #   community.general.slack:
+    #     token: "{{ ansible_password }}"
+    #     channel: "#ansible-demos"
+    #     #channel: "#novo-canal"
+    #     username: "Ansible Demos"
+    #     #username: "Carlos Parada"
+    #     #username: "cparada@redhat.com"
+    #     #username: "carlosparada@sapo.pt"
+    #     #username: "cparada"
+    #     #msg: "{{ payload }}"
+    #     msg: "My message"
