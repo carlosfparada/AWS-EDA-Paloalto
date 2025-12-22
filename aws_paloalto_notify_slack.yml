@@ -44,9 +44,9 @@
     - name: Send notification message via Slack
       community.general.slack:
         token: "{{ ansible_password }}"
-        #channel: "#ansible-demos"
+        channel: "#ansible-demos"
         #channel: "#novo-canal"
-        #username: "Carlos Parada"
+        username: "Carlos Parada"
         #username: "cparada@redhat.com"
         #username: "carlosparada@sapo.pt"
         #username: "cparada"
