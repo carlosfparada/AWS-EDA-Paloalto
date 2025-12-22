@@ -30,22 +30,18 @@
       set_fact:
         payload: "{{ ansible_eda.event.payload }}"
 
-    - name: Debug Hostvars
-      debug:
-        var: hostvars['localhost']
-
-    - name: Debug Payload
-      debug:
-        var: ansible_eda.event.payload
+    # - name: Debug Payload
+    #   debug:
+    #     var: ansible_eda.event.payload
 
     - name: Login User authentication
       debug:
-        msg "Login {{ payload.opaque }} on {{ device_name }} at {{ receive_time }}"
+        msg "Login {{ payload.opaque }} on {{ payload.device_name }} at {{ payload.receive_time }}"
       when: payload.subtype == 'auth' and payload.eventid == 'auth-success'
 
     - name: Logout User authentication
       debug:
-        msg "{{ payload.opaque }} on {{ device_name }} at {{ receive_time }}"
+        msg "{{ payload.opaque }} on {{ payload.device_name }} at {{ payload.receive_time }}"
       when: payload.subtype == 'general' and payload.eventid == 'general'
 
 
