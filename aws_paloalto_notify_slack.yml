@@ -34,12 +34,12 @@
       debug:
         var: hostvars['localhost']
 
-    # # Slack Setup: https://www.youtube.com/shorts/jcPnBYB5qww 
-    # - name: Send notification message via Slack
-    #   community.general.slack:
-    #     token: "{{ ansible_password }}"
-    #     channel: "#ansible-demos"
-    #     #channel: "#novo-canal"
-    #     username: "Paloalto-Bot"
-    #     #msg: "{{ payload }}"
-    #     msg: "My message"
+    # Slack Setup: https://www.youtube.com/shorts/jcPnBYB5qww 
+    - name: Send notification message via Slack
+      community.general.slack:
+        token: "{{ ansible_password }}"
+        channel: "#ansible-demos"
+        #channel: "#novo-canal"
+        username: "Paloalto-Bot"
+        #msg: "{{ payload }}"
+        msg: "My message"
