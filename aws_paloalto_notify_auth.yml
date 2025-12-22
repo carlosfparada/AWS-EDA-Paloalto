@@ -30,13 +30,19 @@
       set_fact:
         payload: "{{ ansible_eda.event.payload }}"
 
+    - name: Debug Hostvars
+      debug:
+        var: hostvars['localhost']
+
     - name: Debug Payload
       debug:
         var: ansible_eda.event.payload
 
-    - name: Debug Payload
+    - name: Log In User authentication
       debug:
-        var: hostvars['localhost']
+        msg "Log in {{ payload.opaque }} on {{ device_name }} at {{ receive_time }}"
+      when: payload.subtype == 'auth' and payload.eventid == 'auth-success'
+      
 
     # # Slack Setup: https://www.youtube.com/shorts/jcPnBYB5qww 
     # - name: Send notification message via Slack
