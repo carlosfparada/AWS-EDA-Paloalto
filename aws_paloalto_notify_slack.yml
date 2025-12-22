@@ -42,6 +42,7 @@
         #channel: "#novo-canal"
         #username: "Carlos Parada"
         #username: "cparada@redhat.com"
-        username: "carlosparada@sapo.pt"
+        #username: "carlosparada@sapo.pt"
+        username: "cparada"
         #msg: "{{ payload }}"
         msg: "My message"
