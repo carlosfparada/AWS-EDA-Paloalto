@@ -10,7 +10,7 @@
   # Rule system logs
   rules:
     - name: "Handle System Logs - Authentication"
-      condition: event.payload.type == "SYSTEM" #and event.payload.subtype == "auth"
+      condition: event.payload.type == "SYSTEM" and event.payload.subtype == "auth"
       actions:
         # Debug
         - debug: 

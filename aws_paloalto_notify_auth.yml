@@ -34,15 +34,15 @@
     #   debug:
     #     var: ansible_eda.event.payload
 
-    - name: Login User authentication
+    - name: Login User authentication Succeeded
       debug:
         msg: "Login {{ payload.opaque }} on {{ payload.device_name }} at {{ payload.receive_time }}"
-      when: payload.subtype == 'auth' and payload.eventid == 'auth-success'
+      when: payload.eventid == 'auth-success'
 
-    - name: Logout User authentication
+    - name: Login User authentication Failed
       debug:
         msg: "{{ payload.opaque }} on {{ payload.device_name }} at {{ payload.receive_time }}"
-      when: payload.subtype == 'general' and payload.eventid == 'general'
+      when: payload.eventid == 'auth-fail'
 
 
     # # Slack Setup: https://www.youtube.com/shorts/jcPnBYB5qww 
