@@ -45,16 +45,16 @@
       when: payload.eventid == 'auth-fail'
 
 
-    # # Slack Setup: https://www.youtube.com/shorts/jcPnBYB5qww 
-    # - name: Send notification message via Slack
-    #   community.general.slack:
-    #     token: "{{ ansible_password }}"
-    #     channel: "#ansible-demos"
-    #     #channel: "#novo-canal"
-    #     username: "Ansible Demos"
-    #     #username: "Carlos Parada"
-    #     #username: "cparada@redhat.com"
-    #     #username: "carlosparada@sapo.pt"
-    #     #username: "cparada"
-    #     #msg: "{{ payload }}"
-    #     msg: "My message"
+    # Slack Setup: https://www.youtube.com/shorts/jcPnBYB5qww 
+    - name: Send notification message via Slack
+      community.general.slack:
+        token: "{{ ansible_password }}"
+        channel: "#ansible-demos"
+        #channel: "#novo-canal"
+        username: "Ansible Demos"
+        #username: "Carlos Parada"
+        #username: "cparada@redhat.com"
+        #username: "carlosparada@sapo.pt"
+        #username: "cparada"
+        #msg: "{{ payload }}"
+        msg: "My message"
