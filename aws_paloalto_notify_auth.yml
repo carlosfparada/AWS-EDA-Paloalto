@@ -51,4 +51,4 @@
         token: "{{ ansible_password }}"
         channel: "#ansible-demos"
         username: "Ansible Demos"
-        msg: "{{ payload }}"
+        msg: "New user authentication event: {{ payload }}"
