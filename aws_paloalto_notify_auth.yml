@@ -50,10 +50,10 @@
       community.general.slack:
         token: "{{ ansible_password }}"
         #channel: "#ansible-demos"
-        channel: "#ansible-labs"
+        channel: "#ansible-demos"
         #username: "Ansible Demos"
         #username: "Carlos Parada"
-        username: "Slackbot"
+        username: "Ansible Demonstrations"
         #username: "carlosparada@sapo.pt"
         #username: "cparada"
         #msg: "{{ payload }}"
