@@ -53,7 +53,7 @@
         channel: "#ansible-labs"
         #username: "Ansible Demos"
         #username: "Carlos Parada"
-        username: "cparada@redhat.com"
+        username: "Slackbot"
         #username: "carlosparada@sapo.pt"
         #username: "cparada"
         #msg: "{{ payload }}"
