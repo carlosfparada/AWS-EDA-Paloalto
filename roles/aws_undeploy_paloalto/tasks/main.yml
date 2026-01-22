@@ -54,7 +54,7 @@
     state: absent
     region: "{{ ec2_vpc_region }}"
     filters:
-      "tag:name": "{{ ec2_instance_name }}"
+      "tag:name": "{{ ec2_rhel_instance_name }}"
 
 - name: Terminate Paloalto instance
   amazon.aws.ec2_instance:
