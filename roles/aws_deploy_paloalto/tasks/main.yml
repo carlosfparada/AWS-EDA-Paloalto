@@ -127,7 +127,7 @@
   register: ec2_paloalto_eni1
 
 - name: Set Paloalto ENI IP address
-  set_facts:
+  ansible.builtin.set_fact:
     ec2_paloalto_eni1_ipaddress: "{{ ec2_paloalto_eni1.interface.private_ip_addresses[0].private_ip_address }}"
 
 - name: Create and Attach ENI 2
