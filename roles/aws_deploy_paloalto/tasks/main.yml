@@ -164,6 +164,7 @@
     key_name: "{{ ec2_rhel_key_name }}"
     region: "{{ ec2_vpc_region }}"
     vpc_subnet_id: "{{ subnet1.subnet.id }}" # Subnet 1
+    private_ip_address: "{{ private_ip_address }}" # static
     # network_interfaces:
     #   - assign_public_ip: true
     tags:

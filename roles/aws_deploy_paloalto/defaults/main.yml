@@ -51,5 +51,7 @@ ec2_rhel_key_name: "KeyPair-Virginia"
 # Instance
 ec2_rhel_instance_name: rhel-1
 
+private_ip_address: 10.0.1.5/24
+
 ec2_rhel_user: "ec2-user"
 ec2_rhel_pass: "{{ ansible_password }}"
