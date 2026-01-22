@@ -124,6 +124,7 @@
     delete_on_termination: true
     attached: true
     state: present
+  register: ec2_paloalto_eni1
 
 - name: Create and Attach ENI 2
   amazon.aws.ec2_eni:
@@ -136,6 +137,7 @@
     delete_on_termination: true
     attached: true
     state: present
+  register: ec2_paloalto_eni2
 
 - name: Print Paloalto instance details
   ansible.builtin.debug:

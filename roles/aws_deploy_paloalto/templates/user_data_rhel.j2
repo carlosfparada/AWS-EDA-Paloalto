@@ -1,5 +1,10 @@
 #!/bin/bash
+# enable password authentication
 #sed 's/PasswordAuthentication no/PasswordAuthentication yes/' -i /etc/ssh/sshd_config
 sed 's/PasswordAuthentication no/PasswordAuthentication yes/' -i /etc/ssh/sshd_config.d/50-cloud-init.conf
 systemctl restart sshd
+# set username password
 echo "{{ ec2_rhel_pass }}" | passwd --stdin {{ ec2_rhel_user }}
+# set default gateway
+sudo nmcli connection modify "System eth0" ipv4.gateway "{{ ec2_paloalto_eni1.private_ip_addresses[0].private_ip_address }}"
+sudo nmcli connection up "System eth0"
