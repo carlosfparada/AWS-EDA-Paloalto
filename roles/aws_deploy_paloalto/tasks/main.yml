@@ -190,13 +190,13 @@
     delay: 30
     host: "{{ ec2_paloalto_instance.instances[0].public_dns_name }}"
 
-- name: Wait until RHEL boots up
-  wait_for:
-    port: 22
-    state: started
-    timeout: 360
-    delay: 10
-    host: "{{ ec2_rhel_instance.instances[0].public_dns_name }}"
+# - name: Wait until RHEL boots up
+#   wait_for:
+#     port: 22
+#     state: started
+#     timeout: 360
+#     delay: 10
+#     host: "{{ ec2_rhel_instance.instances[0].public_dns_name }}"
 
 - name: Sleep for 30 seconds and continue with play
   wait_for:
