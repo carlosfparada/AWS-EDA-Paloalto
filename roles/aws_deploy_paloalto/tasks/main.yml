@@ -123,6 +123,7 @@
     device_index: 1
     subnet_id: "{{ subnet1.subnet.id }}"
     #security_groups: "{{ ec2_sg_name }}"
+    private_ip_address: "{{ ec2_paloalto_private_ip_address }}" # static
     delete_on_termination: true
     attached: true
     state: present
