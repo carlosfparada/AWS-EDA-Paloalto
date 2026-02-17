@@ -37,7 +37,7 @@ ec2_paloalto_flavor_name: c5n.xlarge
 ec2_paloalto_key_name: "KeyPair-Virginia"
 # Instance
 ec2_paloalto_instance_name: paloalto-1
-ec2_paloalto_private_ip_address: "10.0.1.4"
+ec2_paloalto_private_ip_address: 10.0.1.4
 
 
 # RHEL
