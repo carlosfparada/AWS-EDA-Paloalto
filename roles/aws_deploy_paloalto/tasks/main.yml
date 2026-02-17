@@ -214,7 +214,7 @@
 
 - name: Print RHEL Jump instance details
   ansible.builtin.debug:
-    msg: "Instance RHEL Jump DNS name is: {{ ec2_rhel_instance.instances[0].public_dns_name }} with IP address {{ ec2_rhel_instance.instances[0].public_ip_address }}"
+    msg: "Instance RHEL Jump DNS name is: {{ ec2_rhel_jump_instance.instances[0].public_dns_name }} with IP address {{ ec2_rhel_jump_instance.instances[0].public_ip_address }}"
 
 # Wait for boot up
 - name: Wait until Paloalto boots up
