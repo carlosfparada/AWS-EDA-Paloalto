@@ -166,7 +166,7 @@
     vpc_subnet_id: "{{ subnet1.subnet.id }}" # Subnet 1
     network_interfaces:
       - assign_public_ip: true  # no public IP
-        #private_ip_address: "{{ private_ip_address }}" # static
+        private_ip_address: "{{ private_ip_address }}" # static
     tags:
       name: "{{ ec2_rhel_instance_name }}"
     volumes:
