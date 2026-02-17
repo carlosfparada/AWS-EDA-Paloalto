@@ -166,7 +166,7 @@
     vpc_subnet_id: "{{ subnet1.subnet.id }}" # Subnet 1
     network_interfaces:
       - assign_public_ip: false  # no public IP
-        private_ip_address: "{{ private_ip_address }}" # static
+        private_ip_address: "{{ ec2_rhel_private_ip_address }}" # static
     tags:
       name: "{{ ec2_rhel_instance_name }}"
     volumes:
@@ -180,7 +180,7 @@
 
 - name: Print RHEL instance details
   ansible.builtin.debug:
-    msg: "Instance RHEL is IP address {{ ec2_rhel_instance.instances[0].private_ip_address }}"
+    msg: "Instance RHEL DNS name is: {{ ec2_rhel_instance.instances[0].private_dns_name }} with IP address {{ ec2_rhel_instance.instances[0].private_ip_address }}"
 
 # RHEL Jump
 - name: Get RHEL Jump AMI by Name
@@ -201,6 +201,8 @@
     vpc_subnet_id: "{{ subnet.subnet.id }}" # Subnet
     network_interfaces:
       - assign_public_ip: true  # public IP
+        private_ip_address: "{{ ec2_rhel_jump_private_ip_address }}" # static
+
     tags:
       name: "{{ ec2_rhel_jump_instance_name }}"
     volumes:
