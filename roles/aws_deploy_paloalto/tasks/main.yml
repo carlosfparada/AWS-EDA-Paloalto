@@ -200,8 +200,10 @@
     region: "{{ ec2_vpc_region }}"
     vpc_subnet_id: "{{ subnet1.subnet.id }}" # Subnet 1
     network_interfaces:
-      - assign_public_ip: true  # no public IP
+      - subnet_id: "{{ subnet.subnet.id }}"
+        assign_public_ip: true  # no public IP
         #private_ip_address: "{{ private_ip_address }}" # static
+      - subnet_id: "{{ subnet1.subnet.id }}"
     tags:
       name: "{{ ec2_rhel_jump_instance_name }}"
     volumes:
