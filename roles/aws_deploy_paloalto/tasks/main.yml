@@ -198,7 +198,7 @@
     name: "{{ ec2_rhel_jump_instance_name }}"
     key_name: "{{ ec2_rhel_jump_key_name }}"
     region: "{{ ec2_vpc_region }}"
-    vpc_subnet_id: "{{ subnet.subnet.id }}" # Subnet
+    vpc_subnet_id: "{{ subnet1.subnet.id }}" # Subnet
     network_interfaces:
       - assign_public_ip: true  # public IP
         private_ip_address: "{{ ec2_rhel_jump_private_ip_address }}" # static
