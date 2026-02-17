@@ -200,13 +200,13 @@
     region: "{{ ec2_vpc_region }}"
     vpc_subnet_id: "{{ subnet1.subnet.id }}" # Subnet 1
     network_interfaces:
-      - subnet_id: "{{ subnet.subnet.id }}"
+      - device_index: 0
+        subnet_id: "{{ subnet.subnet.id }}"
         assign_public_ip: true  # public IP
-        device_index: 0
         #private_ip_address: "{{ private_ip_address }}" # static
         delete_on_termination: true
-      - subnet_id: "{{ subnet1.subnet.id }}"
-        device_index: 1
+      - device_index: 1
+        subnet_id: "{{ subnet1.subnet.id }}"
         assign_public_ip: false  # no public IP
         delete_on_termination: true
     tags:
