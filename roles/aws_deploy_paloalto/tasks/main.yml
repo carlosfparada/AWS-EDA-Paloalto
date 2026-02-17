@@ -201,11 +201,13 @@
     vpc_subnet_id: "{{ subnet1.subnet.id }}" # Subnet 1
     network_interfaces:
       - subnet_id: "{{ subnet.subnet.id }}"
-        assign_public_ip: true  # no public IP
+        assign_public_ip: true  # public IP
         device_index: 0
         #private_ip_address: "{{ private_ip_address }}" # static
+        delete_on_termination: true
       - subnet_id: "{{ subnet1.subnet.id }}"
         device_index: 1
+        assign_public_ip: false  # no public IP
         delete_on_termination: true
     tags:
       name: "{{ ec2_rhel_jump_instance_name }}"
