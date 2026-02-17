@@ -202,8 +202,10 @@
     network_interfaces:
       - subnet_id: "{{ subnet.subnet.id }}"
         assign_public_ip: true  # no public IP
+        device_index: 0
         #private_ip_address: "{{ private_ip_address }}" # static
       - subnet_id: "{{ subnet1.subnet.id }}"
+        device_index: 1
     tags:
       name: "{{ ec2_rhel_jump_instance_name }}"
     volumes:
