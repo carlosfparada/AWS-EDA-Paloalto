@@ -197,6 +197,10 @@
           </entry>
 
 # NEW CODE
+    - name: Commit configuration
+      paloaltonetworks.panos.panos_commit_firewall:
+        provider: "{{ panos_provider }}"
+        
     - name: Create private zone on a firewall
       paloaltonetworks.panos.panos_zone:
         provider: '{{ provider }}'
