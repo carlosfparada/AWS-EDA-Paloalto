@@ -146,6 +146,13 @@
     state: present
   register: ec2_paloalto_eni2
 
+- name: Associate Elastic IP with ENI2
+  amazon.aws.ec2_eip:
+    device_id: "{{ ec2_paloalto_eni2.interface.id }}"
+    in_vpc: true
+    state: present
+  register: ec2_eip
+
 - name: Print Paloalto instance details
   ansible.builtin.debug:
     msg: "Instance Paloalto DNS name is: {{ ec2_paloalto_instance.instances[0].public_dns_name }} with IP address {{ ec2_paloalto_instance.instances[0].public_ip_address }}"
