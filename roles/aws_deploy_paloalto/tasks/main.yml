@@ -158,6 +158,10 @@
   ansible.builtin.debug:
     msg: "Instance Paloalto DNS name is: {{ ec2_paloalto_instance.instances[0].public_dns_name }} with IP address {{ ec2_paloalto_instance.instances[0].public_ip_address }}"
 
+- name: Print Paloalto ENI2 instance details
+  ansible.builtin.debug:
+    msg: "Instance Paloalto ENI2 Public IP address {{ ec2_eip.public_ip }}"
+
 # RHEL
 - name: Get RHEL AMI by Name
   amazon.aws.ec2_ami_info:
