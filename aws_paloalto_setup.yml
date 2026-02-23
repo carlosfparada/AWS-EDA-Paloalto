@@ -197,27 +197,24 @@
           </entry>
 
 # NEW CODE
-    - name: Commit configuration
-      paloaltonetworks.panos.panos_commit_firewall:
-        provider: "{{ panos_provider }}"
-        
+
     - name: Create private zone on a firewall
       paloaltonetworks.panos.panos_zone:
-        provider: '{{ provider }}'
+        provider: '{{ panos_provider }}'
         zone: 'private'
         mode: 'layer3'
         #zone_profile: 'strict'
 
     - name: Create public zone on a firewall
       paloaltonetworks.panos.panos_zone:
-        provider: '{{ provider }}'
+        provider: '{{ panos_provider }}'
         zone: 'public'
         mode: 'layer3'
         #zone_profile: 'strict'
 
     - name: Enable DHCP client on ethernet1/1 in zone private
       paloaltonetworks.panos.panos_l3_subinterface:
-        provider: '{{ provider }}'
+        provider: '{{ panos_provider }}'
         name: "ethernet1/1"
         tag: 1
         create_default_route: true
@@ -225,7 +222,7 @@
 
     - name: Enable DHCP client on ethernet1/2 in zone public
       paloaltonetworks.panos.panos_l3_subinterface:
-        provider: '{{ provider }}'
+        provider: '{{ panos_provider }}'
         name: "ethernet1/2"
         tag: 1
         create_default_route: true
@@ -233,7 +230,7 @@
 
     - name: Add Interfaces to default Virtual Router
       paloaltonetworks.panos.panos_virtual_router:
-        provider: '{{ provider }}'
+        provider: '{{ panos_provider }}'
         name: default
         interfaces: 
           - ethernet1/1
