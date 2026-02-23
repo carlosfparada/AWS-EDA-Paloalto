@@ -6,5 +6,6 @@ systemctl restart sshd
 # set username password
 echo "{{ ec2_rhel_pass }}" | passwd --stdin {{ ec2_rhel_user }}
 # set default gateway
-sudo nmcli connection modify "System eth0" ipv4.addresses "{{ ec2_rhel_private_ip_address}}/24" ipv4.gateway "{{ ec2_paloalto_eni1_ipaddress }}" ipv4.method "manual"
+ec2_rhel_private_ip_address=$(ip addr list eth0 | awk '/inet / {print $2}' | cut -d/ -f1)
+sudo nmcli connection modify "System eth0" ipv4.addresses "{{ ec2_rhel_private_ip_address }}/24" ipv4.gateway "{{ ec2_paloalto_eni1_ipaddress }}" ipv4.method "manual"
 sudo nmcli connection up "System eth0"

@@ -123,7 +123,7 @@
     device_index: 1
     subnet_id: "{{ subnet1.subnet.id }}"
     #security_groups: "{{ ec2_sg_name }}"
-    private_ip_address: "{{ ec2_paloalto_private_ip_address }}" # static
+    #private_ip_address: "{{ ec2_paloalto_private_ip_address }}" # static
     delete_on_termination: true
     attached: true
     state: present
@@ -169,7 +169,7 @@
     vpc_subnet_id: "{{ subnet1.subnet.id }}" # Subnet 1
     network_interfaces:
       - assign_public_ip: false  # no public IP
-        private_ip_address: "{{ ec2_rhel_private_ip_address }}" # static
+        #private_ip_address: "{{ ec2_rhel_private_ip_address }}" # static
     tags:
       name: "{{ ec2_rhel_instance_name }}"
     volumes:
@@ -204,7 +204,7 @@
     vpc_subnet_id: "{{ subnet1.subnet.id }}" # Subnet
     network_interfaces:
       - assign_public_ip: true  # public IP
-        private_ip_address: "{{ ec2_rhel_jump_private_ip_address }}" # static
+        #private_ip_address: "{{ ec2_rhel_jump_private_ip_address }}" # static
     tags:
       name: "{{ ec2_rhel_jump_instance_name }}"
     volumes:
