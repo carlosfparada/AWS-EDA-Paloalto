@@ -213,18 +213,18 @@
         #zone_profile: 'strict'
 
     - name: Enable DHCP client on ethernet1/1 in zone private
-      paloaltonetworks.panos.panos_l3_subinterface:
+      paloaltonetworks.panos.panos_interface:
         provider: '{{ panos_provider }}'
-        name: "ethernet1/1"
-        tag: 1
+        if_name: "ethernet1/1"
+        enable_dhcp: true
         create_default_route: true
         zone_name: "private"
 
     - name: Enable DHCP client on ethernet1/2 in zone public
-      paloaltonetworks.panos.panos_l3_subinterface:
+      paloaltonetworks.panos.panos_interface:
         provider: '{{ panos_provider }}'
-        name: "ethernet1/2"
-        tag: 1
+        if_name: "ethernet1/2"
+        enable_dhcp: true
         create_default_route: true
         zone_name: "public"
 
