@@ -277,6 +277,13 @@
         destination_addresses: ['any']
         destination_translated_address: '1.1.1.1' # NEED CHANGE!
 
+    - name: Ensure management profile allows ping and ssh
+      paloaltonetworks.panos.panos_management_profile:
+        provider: '{{ provider }}'
+        name: 'Allow Ping and SSH'
+        ping: true
+        ssh: true
+
     - name: Commit configuration
       paloaltonetworks.panos.panos_commit_firewall:
         provider: "{{ panos_provider }}"
