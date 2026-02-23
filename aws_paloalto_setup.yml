@@ -196,21 +196,18 @@
             <filter>{{ system_log_filter }}</filter>
           </entry>
 
-# NEW CODE
-
+  # NEW USE CASES
     - name: Create private zone on a firewall
       paloaltonetworks.panos.panos_zone:
         provider: '{{ panos_provider }}'
         zone: 'private'
         mode: 'layer3'
-        #zone_profile: 'strict'
 
     - name: Create public zone on a firewall
       paloaltonetworks.panos.panos_zone:
         provider: '{{ panos_provider }}'
         zone: 'public'
         mode: 'layer3'
-        #zone_profile: 'strict'
 
     - name: Add Interfaces to default Virtual Router
       paloaltonetworks.panos.panos_virtual_router:
@@ -236,6 +233,22 @@
         create_default_route: true
         zone_name: "public"
 
+    - name: Add Policy Rule for Virus detection
+      paloaltonetworks.panos.panos_security_rule:
+        provider: "{{ panos_provider }}"
+        rule_name: "Virus Detection"
+        source_zone: "private"
+        destination_zone: "public"
+        source_ip: ['any']
+        destination_ip: ['any']
+        category: ['any']
+        application: ['any']
+        service: ['service-http','service-https']
+        action: allow
+        antivirus: default
+        vulnerability: default
+        state: present
+        
     - name: Commit configuration
       paloaltonetworks.panos.panos_commit_firewall:
         provider: "{{ panos_provider }}"
