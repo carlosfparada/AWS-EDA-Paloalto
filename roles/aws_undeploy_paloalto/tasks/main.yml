@@ -65,7 +65,7 @@
 
 - name: Disassociate Elastic IP with ENI2
   amazon.aws.ec2_eip:
-    public_ip: "{{ eni2.association.public_ip }}"
+    public_ip: "{{ eni2.network_interfaces[0].association.public_ip }}"
     in_vpc: true
     state: absent
 
