@@ -148,6 +148,7 @@
 
 - name: Associate Elastic IP with ENI2
   amazon.aws.ec2_eip:
+    region: "{{ ec2_vpc_region }}"
     device_id: "{{ ec2_paloalto_eni2.interface.id }}"
     in_vpc: true
     state: present
