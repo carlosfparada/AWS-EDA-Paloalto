@@ -251,7 +251,7 @@
 
     - name: Add NAT Policy Rule (IN -> OUT)
       paloaltonetworks.panos.panos_nat_rule2:
-        provider: '{{ provider }}'
+        provider: '{{ panos_provider }}'
         name: 'NAT IN->OUT'
         nat_type: 'ipv4'
         from_zones: ['private']
