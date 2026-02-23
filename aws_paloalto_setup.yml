@@ -250,7 +250,7 @@
         state: present
 
     - name: Add NAT Policy Rule (IN -> OUT)
-      paloaltonetworks.panos.panos_nat_rule2:
+      paloaltonetworks.panos.panos_nat_rule:
         provider: '{{ panos_provider }}'
         name: 'NAT INOUT'
         nat_type: 'ipv4'
@@ -263,6 +263,19 @@
         source_translation_type: 'dynamic-ip-and-port'
         source_translation_interface: 'ethernet1/2'
         #source_translation_address_type: 'interface-address'
+
+    - name: Add NAT Policy Rule (OUT -> IN)
+      paloaltonetworks.panos.panos_nat_rule2:
+        provider: '{{ panos_provider }}'
+        name: 'NAT OUTIN'
+        nat_type: 'ipv4'
+        from_zones: ['public']
+        to_zones: ['private']
+        to_interface: 'any'
+        service: 'any'
+        source_addresses: ['any']
+        destination_addresses: ['any']
+        destination_translated_address: '1.1.1.1' # NEED CHANGE!
 
     - name: Commit configuration
       paloaltonetworks.panos.panos_commit_firewall:
