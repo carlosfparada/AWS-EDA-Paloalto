@@ -42,13 +42,6 @@
       "tag:Name": "{{ ec2_eni_name2 }}"
   register: eni2
 
-- name: Get Elastic IP details for ENI 2
-  amazon.aws.ec2_eip_info:
-    region: "{{ ec2_vpc_region }}"
-    filters:
-      network-interface-id: "{{ eni2.interface.id }}"
-  register: eni2_eip
-
 - name: Query Route Tables
   amazon.aws.ec2_vpc_route_table_info:
     region: "{{ ec2_vpc_region }}"
@@ -72,7 +65,7 @@
 
 - name: Disassociate Elastic IP with ENI2
   amazon.aws.ec2_eip:
-    public_ip: "{{ eni2_eip.public_ip }}"
+    public_ip: "{{ eni2.public_ip }}"
     in_vpc: true
     state: absent
 
