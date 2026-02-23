@@ -63,13 +63,6 @@
       "tag:name": "{{ ec2_rhel_instance_name }}"
     state: absent
 
-- name: Disassociate Elastic IP with ENI2
-  amazon.aws.ec2_eip:
-    region: "{{ ec2_vpc_region }}"
-    public_ip: "{{ eni2.network_interfaces[0].association.public_ip }}"
-    in_vpc: true
-    state: absent
-
 - name: Terminate Paloalto instance
   amazon.aws.ec2_instance:
     state: absent
@@ -94,6 +87,13 @@
     device_index: 2
     state: absent
   when: subnet2.subnets | length > 0
+
+- name: Disassociate Elastic IP with ENI2
+  amazon.aws.ec2_eip:
+    region: "{{ ec2_vpc_region }}"
+    public_ip: "{{ eni2.network_interfaces[0].association.public_ip }}"
+    in_vpc: true
+    state: absent
 
 - name: Delete EBS volume
   amazon.aws.ec2_vol:
