@@ -154,11 +154,11 @@
     state: present
   register: ec2_eip
 
-- name: Print Paloalto instance details
+- name: Print Paloalto instance details (management)
   ansible.builtin.debug:
     msg: "Instance Paloalto DNS name is: {{ ec2_paloalto_instance.instances[0].public_dns_name }} with IP address {{ ec2_paloalto_instance.instances[0].public_ip_address }}"
 
-- name: Print Paloalto ENI2 instance details
+- name: Print Paloalto instance details (ENI2)
   ansible.builtin.debug:
     msg: "Instance Paloalto ENI2 Public IP address {{ ec2_eip.public_ip }}"
 
