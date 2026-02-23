@@ -212,6 +212,14 @@
         mode: 'layer3'
         #zone_profile: 'strict'
 
+    - name: Add Interfaces to default Virtual Router
+      paloaltonetworks.panos.panos_virtual_router:
+        provider: '{{ panos_provider }}'
+        name: default
+        interface: 
+          - ethernet1/1
+          - ethernet1/2
+
     - name: Enable DHCP client on ethernet1/1 in zone private
       paloaltonetworks.panos.panos_interface:
         provider: '{{ panos_provider }}'
@@ -227,14 +235,6 @@
         enable_dhcp: true
         create_default_route: true
         zone_name: "public"
-
-    - name: Add Interfaces to default Virtual Router
-      paloaltonetworks.panos.panos_virtual_router:
-        provider: '{{ panos_provider }}'
-        name: default
-        interfaces: 
-          - ethernet1/1
-          - ethernet1/2
 
     - name: Commit configuration
       paloaltonetworks.panos.panos_commit_firewall:
