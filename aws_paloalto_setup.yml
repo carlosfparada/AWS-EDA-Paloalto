@@ -236,7 +236,7 @@
     - name: Add Policy Rule for Virus detection and Vulnerability protection 
       paloaltonetworks.panos.panos_security_rule:
         provider: "{{ panos_provider }}"
-        rule_name: "Virus Detection"
+        rule_name: "Virus and Vulnerability"
         source_zone: ['any']
         destination_zone: ['any']
         source_ip: ['any']
@@ -254,15 +254,15 @@
         provider: '{{ provider }}'
         name: 'NAT IN->OUT'
         nat_type: 'ipv4'
-        from_zones: ['Trust-L3']
-        to_zones: ['Untrusted-L3']
-        to_interface: 'ethernet1/1'
+        from_zones: ['private']
+        to_zones: ['public']
+        to_interface: 'any'
         service: 'any'
         source_addresses: ['any']
         destination_addresses: ['any']
         source_translation_type: 'dynamic-ip-and-port'
-        source_translation_address_type: 'interface-address'
-        source_translation_interface: 'ethernet1/1'
+        source_translation_interface: 'ethernet1/2'
+        #source_translation_address_type: 'interface-address'
 
     - name: Commit configuration
       paloaltonetworks.panos.panos_commit_firewall:
