@@ -200,8 +200,6 @@
         to_interface: 'any'
         service: 'any'
         source_addresses: ['any']
-        #destination_addresses: '10.0.1.171' # NEED CHANGE TO DYNAMIC!
-        #destination_translated_address: '10.0.2.184' # NEED CHANGE TO DYNAMIC!
         state: absent
 
     - name: Delete NAT Policy Rule (IN -> OUT)
