@@ -8,6 +8,19 @@
   - include_role: 
       name: utils_hosts_aws
 
+- name: Get AWS IPv4 info
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars_files: vars/main.yml
+  tasks:
+    - name: Query ENI 2
+      amazon.aws.ec2_eni_info:
+        region: "{{ ec2_vpc_region }}"
+        filters:
+          "tag:Name": "{{ ec2_eni_name2 }}"
+      register: eni2
+
 - name: Setup Paloalto provisioning
   hosts: localhost
   connection: local
@@ -263,20 +276,6 @@
         source_translation_address_type: 'interface-address'
         source_translation_interface: 'ethernet1/2'
         state: present
-
-    - name: Getting Interfaces IPv4 addresses
-      paloaltonetworks.panos.panos_interface:
-        provider: '{{ panos_provider }}'
-        #if_name: "ethernet1/1"
-        gathered_filter: '*'
-        state: gathered
-      register: interfaces
-
-    - name: Get facts
-      paloaltonetworks.panos.panos_facts:
-        provider: '{{ panos_provider }}'
-        gather_subset: ['interfaces']
-      register: interfaces
 
     - name: Add NAT Policy Rule (OUT -> IN)
       paloaltonetworks.panos.panos_nat_rule2:
