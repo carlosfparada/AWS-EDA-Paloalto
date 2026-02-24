@@ -209,14 +209,6 @@
         zone: 'public'
         mode: 'layer3'
 
-    - name: Add Interfaces to default Virtual Router
-      paloaltonetworks.panos.panos_virtual_router:
-        provider: '{{ panos_provider }}'
-        name: default
-        interface: 
-          - ethernet1/1
-          - ethernet1/2
-
     - name: Ensure management profile allows ping and ssh
       paloaltonetworks.panos.panos_management_profile:
         provider: '{{ panos_provider }}'
@@ -241,6 +233,14 @@
         create_default_route: true
         management_profile: SSH_PING
         zone_name: "public"
+
+    - name: Add Interfaces to default Virtual Router
+      paloaltonetworks.panos.panos_virtual_router:
+        provider: '{{ panos_provider }}'
+        name: default
+        interface: 
+          - ethernet1/1
+          - ethernet1/2
 
     - name: Add NAT Policy Rule (IN -> OUT)
       paloaltonetworks.panos.panos_nat_rule:
