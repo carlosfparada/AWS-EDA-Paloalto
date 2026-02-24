@@ -28,7 +28,7 @@
           "tag:Name": "rhel-1"
       register: rhel_1
 
-    - name: Store IPv4 vars
+    - name: Store IPv4 addresses
       set_fact:
         paloalto_ipv4_public: "{{ eni2.private_ip_address }}"
 
