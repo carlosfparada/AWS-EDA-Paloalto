@@ -25,7 +25,7 @@
       amazon.aws.ec2_instance_info:
         region: "{{ ec2_vpc_region }}"
         filters:
-          "tag:Name": Example
+          "tag:Name": "rhel-1"
       register: rhel_1
 
     - name: Store IPv4 vars
