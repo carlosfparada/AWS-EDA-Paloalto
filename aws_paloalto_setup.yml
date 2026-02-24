@@ -272,6 +272,12 @@
         state: gathered
       register: interfaces
 
+    - name: Get facts
+      paloaltonetworks.panos.panos_facts:
+        provider: '{{ panos_provider }}'
+        gather_subset: ['interfaces']
+      register: interfaces
+
     - name: Add NAT Policy Rule (OUT -> IN)
       paloaltonetworks.panos.panos_nat_rule2:
         provider: '{{ panos_provider }}'
