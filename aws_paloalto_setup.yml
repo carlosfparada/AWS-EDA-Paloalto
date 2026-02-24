@@ -256,6 +256,7 @@
         source_translation_type: 'dynamic-ip-and-port'
         source_translation_address_type: 'translated-address'
         source_translation_interface: 'ethernet1/2'
+        source_translation_ip_address: 10.0.2.184
 
     # - name: Add NAT Policy Rule (OUT -> IN)
     #   paloaltonetworks.panos.panos_nat_rule2:
