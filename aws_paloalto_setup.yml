@@ -270,21 +270,21 @@
     #     destination_addresses: ['any']
     #     destination_translated_address: '3.226.42.158' # NEED CHANGE!
 
-    - name: Add Policy Rule for Virus detection and Vulnerability protection 
-      paloaltonetworks.panos.panos_security_rule:
-        provider: "{{ panos_provider }}"
-        rule_name: "Virus and Vulnerability"
-        source_zone: ['any']
-        destination_zone: ['any']
-        source_ip: ['any']
-        destination_ip: ['any']
-        category: ['any']
-        application: ['any']
-        service: ['service-http','service-https']
-        action: allow
-        antivirus: default
-        vulnerability: default
-        state: present
+    # - name: Add Policy Rule for Virus detection and Vulnerability protection 
+    #   paloaltonetworks.panos.panos_security_rule:
+    #     provider: "{{ panos_provider }}"
+    #     rule_name: "Virus and Vulnerability"
+    #     source_zone: ['any']
+    #     destination_zone: ['any']
+    #     source_ip: ['any']
+    #     destination_ip: ['any']
+    #     category: ['any']
+    #     application: ['any']
+    #     service: ['service-http','service-https']
+    #     action: allow
+    #     antivirus: default
+    #     vulnerability: default
+    #     state: present
 
     - name: Commit configuration
       paloaltonetworks.panos.panos_commit_firewall:
