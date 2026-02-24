@@ -14,14 +14,14 @@
   gather_facts: no
   vars_files: vars/main.yml
   tasks:
-    - name: Query Paloalto ENI 2
+    - name: Query Paloalto ENI 2 Info
       amazon.aws.ec2_eni_info:
         region: "{{ ec2_vpc_region }}"
         filters:
           "tag:Name": "{{ ec2_eni_name2 }}"
       register: eni2
 
-    - name: Query Paloalto ENI 2
+    - name: Query RHEL-1 Instance Info
       amazon.aws.ec2_instance_info:
         region: "{{ ec2_vpc_region }}"
         filters:
