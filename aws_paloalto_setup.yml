@@ -8,7 +8,7 @@
   - include_role: 
       name: utils_hosts_aws
 
-- name: Get AWS IPv4 info
+- name: Get AWS IPv4 Info
   hosts: localhost
   connection: local
   gather_facts: no
