@@ -30,7 +30,7 @@
 
     - name: Store IPv4 addresses
       ansible.builtin.set_fact:
-        paloalto_ipv4_public: "{{ eni2.private_ip_address }}"
+        paloalto_ipv4_public: "{{ eni2.network_interfaces[0].private_ip_address }}"
 
 - name: Setup Paloalto provisioning
   hosts: localhost
