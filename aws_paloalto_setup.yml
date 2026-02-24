@@ -252,7 +252,7 @@
         to_interface: 'any'
         service: 'any'
         source_addresses: ['any']
-        destination_addresses: ['any']
+        destination_addresses: 10.0.2.18
         source_translation_type: 'dynamic-ip-and-port'
         source_translation_address_type: 'translated-address'
         source_translation_interface: 'ethernet1/2'
