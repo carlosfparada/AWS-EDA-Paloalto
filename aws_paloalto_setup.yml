@@ -14,12 +14,23 @@
   gather_facts: no
   vars_files: vars/main.yml
   tasks:
-    - name: Query ENI 2
+    - name: Query Paloalto ENI 2
       amazon.aws.ec2_eni_info:
         region: "{{ ec2_vpc_region }}"
         filters:
           "tag:Name": "{{ ec2_eni_name2 }}"
       register: eni2
+
+    - name: Query Paloalto ENI 2
+      amazon.aws.ec2_instance_info:
+        region: "{{ ec2_vpc_region }}"
+        filters:
+          "tag:Name": Example
+      register: rhel_1
+
+    - name: Store IPv4 vars
+      set_fact:
+        paloalto_ipv4_public: "{{ eni2.private_ip_address }}"
 
 - name: Setup Paloalto provisioning
   hosts: localhost
