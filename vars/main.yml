@@ -37,6 +37,40 @@ ec2_paloalto_flavor_name: c5n.xlarge
 ec2_paloalto_key_name: "KeyPair-Virginia"
 # Instance
 ec2_paloalto_instance_name: paloalto-1
+#ec2_paloalto_private_ip_address: 10.0.1.4
+
+
+# RHEL
+# AMI
+ec2_rhel_image_name: RHEL-9.5.0_HVM*x86_64*
+# Flavour 
+ec2_rhel_flavor_name: t2.large
+# Disk
+ec2_rhel_disk_size: 20
+ec2_rhel_ebs_name: /dev/sda1
+# Key Pair
+ec2_rhel_key_name: "KeyPair-Virginia"
+# Instance
+ec2_rhel_instance_name: rhel-1
+#ec2_rhel_private_ip_address: 10.0.1.5
+ec2_rhel_user: "ec2-user"
+ec2_rhel_pass: "{{ ansible_password }}"
+
+# RHEL Jump
+# AMI
+ec2_rhel_jump_image_name: RHEL-9.5.0_HVM*x86_64*
+# Flavour 
+ec2_rhel_jump_flavor_name: t2.large
+# Disk
+ec2_rhel_jump_disk_size: 20
+ec2_rhel_jump_ebs_name: /dev/sda1
+# Key Pair
+ec2_rhel_jump_key_name: "KeyPair-Virginia"
+# Instance
+ec2_rhel_jump_instance_name: rhel-jump
+#ec2_rhel_jump_private_ip_address: 10.0.1.6
+ec2_rhel_jump_user: "ec2-user"
+ec2_rhel_jump_pass: "{{ ansible_password }}"
 
 # New Password
 new_password: "{{ ansible_password }}"
