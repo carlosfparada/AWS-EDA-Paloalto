@@ -264,11 +264,12 @@
         source_translation_interface: 'ethernet1/2'
         state: present
 
-    - name: Gettingn Interfaces IPv4 addresses
+    - name: Getting Interfaces IPv4 addresses
       paloaltonetworks.panos.panos_interface:
         provider: '{{ panos_provider }}'
-        if_name: "ethernet1/1"
+        #if_name: "ethernet1/1"
         state: gathered
+      register: 
 
     - name: Add NAT Policy Rule (OUT -> IN)
       paloaltonetworks.panos.panos_nat_rule2:
