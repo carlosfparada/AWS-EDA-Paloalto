@@ -303,9 +303,6 @@
         destination_translated_address: "{{ paloalto_ipv4_private }}" #'10.0.2.184' # NEED CHANGE TO DYNAMIC!
         state: present
 
-        paloalto_ipv4_private: "{{ eni2.network_interfaces[0].private_ip_address }}"
-        rhel_ipv4_private: "{{ rhel_1.instances[0].network_interfaces[0].private_ip_address }}"
-
     - name: Add Policy Rule for Virus detection and Vulnerability protection 
       paloaltonetworks.panos.panos_security_rule:
         provider: "{{ panos_provider }}"
