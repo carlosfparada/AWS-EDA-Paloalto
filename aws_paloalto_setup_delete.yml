@@ -190,52 +190,21 @@
         vulnerability: default
         state: absent
 
-    - name: Create private zone on a firewall
-      paloaltonetworks.panos.panos_zone:
+    - name: Delete NAT Policy Rule (OUT -> IN)
+      paloaltonetworks.panos.panos_nat_rule2:
         provider: '{{ panos_provider }}'
-        zone: 'private'
-        mode: 'layer3'
+        name: 'NAT OUTIN'
+        nat_type: 'ipv4'
+        from_zones: ['public']
+        to_zones: ['private']
+        to_interface: 'any'
+        service: 'any'
+        source_addresses: ['any']
+        destination_addresses: '10.0.1.171' # NEED CHANGE TO DYNAMIC!
+        destination_translated_address: '10.0.2.184' # NEED CHANGE TO DYNAMIC!
+        state: absent
 
-    - name: Create public zone on a firewall
-      paloaltonetworks.panos.panos_zone:
-        provider: '{{ panos_provider }}'
-        zone: 'public'
-        mode: 'layer3'
-
-    - name: Ensure management profile allows ping and ssh
-      paloaltonetworks.panos.panos_management_profile:
-        provider: '{{ panos_provider }}'
-        name: 'SSH_PING'
-        ping: true
-        ssh: true
-
-    - name: Enable DHCP client on ethernet1/1 in zone private
-      paloaltonetworks.panos.panos_interface:
-        provider: '{{ panos_provider }}'
-        if_name: "ethernet1/1"
-        enable_dhcp: true
-        create_default_route: true
-        management_profile: SSH_PING
-        zone_name: "private"
-
-    - name: Enable DHCP client on ethernet1/2 in zone public
-      paloaltonetworks.panos.panos_interface:
-        provider: '{{ panos_provider }}'
-        if_name: "ethernet1/2"
-        enable_dhcp: true
-        create_default_route: true
-        management_profile: SSH_PING
-        zone_name: "public"
-
-    - name: Add Interfaces to default Virtual Router
-      paloaltonetworks.panos.panos_virtual_router:
-        provider: '{{ panos_provider }}'
-        name: default
-        interface: 
-          - ethernet1/1
-          - ethernet1/2
-
-    - name: Add NAT Policy Rule (IN -> OUT)
+    - name: Delete NAT Policy Rule (IN -> OUT)
       paloaltonetworks.panos.panos_nat_rule:
         provider: '{{ panos_provider }}'
         name: 'NAT INOUT'
@@ -249,19 +218,57 @@
         source_translation_type: 'dynamic-ip-and-port'
         source_translation_address_type: 'interface-address'
         source_translation_interface: 'ethernet1/2'
+        state: absent
 
-    - name: Add NAT Policy Rule (OUT -> IN)
-      paloaltonetworks.panos.panos_nat_rule2:
+    - name: Delete Interfaces from default Virtual Router
+      paloaltonetworks.panos.panos_virtual_router:
         provider: '{{ panos_provider }}'
-        name: 'NAT OUTIN'
-        nat_type: 'ipv4'
-        from_zones: ['public']
-        to_zones: ['private']
-        to_interface: 'any'
-        service: 'any'
-        source_addresses: ['any']
-        destination_addresses: '10.0.1.171' # NEED CHANGE TO DYNAMIC!
-        destination_translated_address: '10.0.2.184' # NEED CHANGE TO DYNAMIC!
+        name: default
+        interface: 
+          - ethernet1/1
+          - ethernet1/2
+        state: absent
+
+    - name: Disable DHCP client on ethernet1/1 in zone private
+      paloaltonetworks.panos.panos_interface:
+        provider: '{{ panos_provider }}'
+        if_name: "ethernet1/1"
+        enable_dhcp: true
+        create_default_route: true
+        management_profile: SSH_PING
+        zone_name: "private"
+        state: absent
+
+    - name: Disable DHCP client on ethernet1/2 in zone public
+      paloaltonetworks.panos.panos_interface:
+        provider: '{{ panos_provider }}'
+        if_name: "ethernet1/2"
+        enable_dhcp: true
+        create_default_route: true
+        management_profile: SSH_PING
+        zone_name: "public"
+        state: absent
+
+    - name: Delete management profile that allows ping and ssh
+      paloaltonetworks.panos.panos_management_profile:
+        provider: '{{ panos_provider }}'
+        name: 'SSH_PING'
+        ping: true
+        ssh: true
+        state: absent
+
+    - name: Delete public zone on a firewall
+      paloaltonetworks.panos.panos_zone:
+        provider: '{{ panos_provider }}'
+        zone: 'public'
+        mode: 'layer3'
+        state: absent
+
+    - name: Delete private zone on a firewall
+      paloaltonetworks.panos.panos_zone:
+        provider: '{{ panos_provider }}'
+        zone: 'private'
+        mode: 'layer3'
         state: absent
 
     - name: Commit configuration
