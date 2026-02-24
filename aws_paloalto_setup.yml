@@ -270,7 +270,7 @@
         #if_name: "ethernet1/1"
         gathered_filter: '*'
         state: gathered
-      register: 
+      register: interfaces
 
     - name: Add NAT Policy Rule (OUT -> IN)
       paloaltonetworks.panos.panos_nat_rule2:
