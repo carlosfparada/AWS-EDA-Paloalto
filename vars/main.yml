@@ -20,6 +20,7 @@ ec2_eni_name2: ENI_PA2
 ec2_igw_name: IGW_PA
 # Route Table
 ec2_rt_name: RT_PA
+ec2_rt_name_paloalto: RT_PA_Paloalto
 # RHEL Open ports
 ec2_sg_name: SG_PA
 ec2_sg_openports:

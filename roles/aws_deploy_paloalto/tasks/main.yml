@@ -61,7 +61,7 @@
       Name: "{{ ec2_rt_name }}"
     subnets:
       - "{{ subnet.subnet.id }}"
-      - "{{ subnet1.subnet.id }}"
+      #- "{{ subnet1.subnet.id }}"
       - "{{ subnet2.subnet.id }}"
     routes:
       - dest: 0.0.0.0/0
@@ -132,6 +132,19 @@
 - name: Set Paloalto ENI IP address
   ansible.builtin.set_fact:
     ec2_paloalto_eni1_ipaddress: "{{ ec2_paloalto_eni1.interface.private_ip_addresses[0].private_ip_address }}"
+
+- name: Create Route Table and IGW route via Paloalto (Subnet 1)
+  amazon.aws.ec2_vpc_route_table:
+    vpc_id: "{{ vpc.vpc.id }}"
+    region: "{{ ec2_vpc_region }}"
+    state: present
+    tags:
+      Name: "{{ ec2_rt_name_paloalto }}"
+    subnets:
+      - "{{ subnet1.subnet.id }}"
+    routes:
+      - dest: 0.0.0.0/0
+        network_interface_id: "{{ ec2_paloalto_eni1.id }}"
 
 - name: Create and Attach ENI 2
   amazon.aws.ec2_eni:

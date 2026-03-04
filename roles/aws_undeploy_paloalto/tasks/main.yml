@@ -42,12 +42,19 @@
       "tag:Name": "{{ ec2_eni_name2 }}"
   register: eni2
 
-- name: Query Route Tables
+- name: Query Route Table
   amazon.aws.ec2_vpc_route_table_info:
     region: "{{ ec2_vpc_region }}"
     filters:
       "tag:Name": "{{ ec2_rt_name }}"
   register: rtb
+
+- name: Query Route Table Paloalto
+  amazon.aws.ec2_vpc_route_table_info:
+    region: "{{ ec2_vpc_region }}"
+    filters:
+      "tag:Name": "{{ ec2_rt_name_paloalto }}"
+  register: rtb_paloalto
 
 - name: Terminate RHEL Jump instance
   amazon.aws.ec2_instance:
@@ -140,6 +147,15 @@
     lookup: id
     state: absent
   when: vpc.vpcs | length > 0 and rtb.route_tables | length > 0
+
+- name: Delete Route Table via Paloalto
+  amazon.aws.ec2_vpc_route_table:
+    vpc_id: "{{ vpc.vpcs[0].id }}"
+    region: "{{ ec2_vpc_region }}"
+    route_table_id: "{{ rtb_paloalto.route_tables[0].id }}"
+    lookup: id
+    state: absent
+  when: vpc.vpcs | length > 0 and rtb_paloalto.route_tables | length > 0
 
 - name: Delete Internet Gateway (IGW)
   amazon.aws.ec2_vpc_igw:
