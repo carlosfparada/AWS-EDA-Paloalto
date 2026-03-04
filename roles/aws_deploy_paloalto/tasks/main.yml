@@ -191,9 +191,9 @@
     name: "{{ ec2_rhel_instance_name }}"
     key_name: "{{ ec2_rhel_key_name }}"
     region: "{{ ec2_vpc_region }}"
-    vpc_subnet_id: "{{ subnet1.subnet.id }}" # Subnet 1
+    vpc_subnet_id: "{{ subnet.subnet.id }}" # Subnet 1
     network_interfaces:
-      - assign_public_ip: false  # no public IP
+      - assign_public_ip: true  # public IP
         #private_ip_address: "{{ ec2_rhel_private_ip_address }}" # static
     tags:
       name: "{{ ec2_rhel_instance_name }}"
@@ -206,9 +206,23 @@
     state: running
   register: ec2_rhel_instance
 
+- name: Create and Attach RHEL ENI 1 (Subnet 1)
+  amazon.aws.ec2_eni:
+    name: "{{ ec2_eni_name1 }}_RHEL"
+    region: "{{ ec2_vpc_region }}"
+    instance_id: "{{ ec2_rhel_instance.instances[0].instance_id }}"
+    device_index: 1
+    subnet_id: "{{ subnet1.subnet.id }}"
+    security_groups: "{{ ec2_sg_name }}"
+    #private_ip_address: "{{ ec2_paloalto_private_ip_address }}" # static
+    delete_on_termination: true
+    attached: true
+    state: present
+  register: ec2_rhel_eni1
+
 - name: Print RHEL instance details
   ansible.builtin.debug:
-    msg: "Instance RHEL DNS (Private) name is: {{ ec2_rhel_instance.instances[0].private_dns_name }} with IP address (Private) {{ ec2_rhel_instance.instances[0].private_ip_address }}"
+    msg: "Instance RHEL DNS name is: {{ ec2_paloalto_instance.instances[0].public_dns_name }} with IP address {{ ec2_rhel_instance.instances[0].public_ip_address }} and IP address (Private) {{ ec2_rhel_instance.instances[0].private_ip_address }}"
 
 # RHEL Jump
 - name: Get RHEL Jump AMI by Name

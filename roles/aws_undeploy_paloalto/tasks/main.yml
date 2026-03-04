@@ -95,6 +95,15 @@
     state: absent
   when: subnet2.subnets | length > 0
 
+- name: Delete ENI 1 RHEL
+  amazon.aws.ec2_eni:
+    name: "{{ ec2_eni_name1 }}_RHEL"
+    subnet_id: "{{ subnet1.subnets[0].subnet_id }}"
+    region: "{{ ec2_vpc_region }}"
+    device_index: 1
+    state: absent
+  when: subnet1.subnets | length > 0
+
 - name: Disassociate Elastic IP with ENI2
   amazon.aws.ec2_eip:
     region: "{{ ec2_vpc_region }}"
