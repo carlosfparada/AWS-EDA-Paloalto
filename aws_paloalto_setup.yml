@@ -26,6 +26,7 @@
         region: "{{ ec2_vpc_region }}"
         filters:
           "tag:Name": "rhel-1"
+          instance-state-name: ["running"]
       register: rhel_1
 
     - debug:
