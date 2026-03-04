@@ -144,7 +144,7 @@
       - "{{ subnet1.subnet.id }}"
     routes:
       - dest: 0.0.0.0/0
-        network_interface_id: "{{ ec2_paloalto_eni1.id }}"
+        network_interface_id: "{{ ec2_paloalto_eni1.interface.id }}"
 
 - name: Create and Attach ENI 2
   amazon.aws.ec2_eni:
