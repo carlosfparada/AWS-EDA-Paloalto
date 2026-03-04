@@ -28,9 +28,6 @@
           "tag:Name": "rhel-1"
       register: rhel_1
 
-    #- debug: 
-    #    var: rhel_1.instances[0].network_interfaces[0]
-
     - name: Store IPv4 addresses
       ansible.builtin.set_fact:
         paloalto_ipv4_private: "{{ eni2.network_interfaces[0].private_ip_address }}"
