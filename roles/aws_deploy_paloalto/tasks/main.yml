@@ -241,7 +241,7 @@
 
 - name: Create and Attach RHEL ENI 1 (Subnet 1)
   amazon.aws.ec2_eni:
-    name: "{{ ec2_eni_name1 }}_RHEL"
+    name: "{{ ec2_eni_name1 }}_JUMP"
     region: "{{ ec2_vpc_region }}"
     instance_id: "{{ ec2_rhel_jump_instance.instances[0].instance_id }}"
     device_index: 1
