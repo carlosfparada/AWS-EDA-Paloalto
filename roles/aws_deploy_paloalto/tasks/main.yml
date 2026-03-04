@@ -207,7 +207,7 @@
 
 - name: Print RHEL instance details
   ansible.builtin.debug:
-    msg: "Instance RHEL (Private) DNS name is: {{ ec2_rhel_instance.instances[0].private_dns_name }} with IP (Private) address {{ ec2_rhel_instance.instances[0].private_ip_address }}"
+    msg: "Instance RHEL (Private) DNS name is: {{ ec2_rhel_instance.instances[0].private_dns_name }} and IP (Private) address {{ ec2_rhel_instance.instances[0].private_ip_address }}"
 
 # RHEL Jump
 - name: Get RHEL Jump AMI by Name
