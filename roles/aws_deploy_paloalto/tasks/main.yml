@@ -193,7 +193,7 @@
     region: "{{ ec2_vpc_region }}"
     vpc_subnet_id: "{{ subnet.subnet.id }}" # Subnet 1
     network_interfaces:
-      - assign_public_ip: true  # public IP
+      - assign_public_ip: false  # public IP
     tags:
       name: "{{ ec2_rhel_instance_name }}"
     volumes:
@@ -207,7 +207,7 @@
 
 - name: Print RHEL instance details
   ansible.builtin.debug:
-    msg: "Instance RHEL DNS name is: {{ ec2_rhel_instance.instances[0].public_dns_name }} with IP address {{ ec2_rhel_instance.instances[0].public_ip_address }}"
+    msg: "Instance RHEL (Private) DNS name is: {{ ec2_rhel_instance.instances[0].private_dns_name }} with IP (Private) address {{ ec2_rhel_instance.instances[0].private_ip_address }}"
 
 # RHEL Jump
 - name: Get RHEL Jump AMI by Name
@@ -254,7 +254,7 @@
 
 - name: Print RHEL Jump instance details
   ansible.builtin.debug:
-    msg: "Instance RHEL DNS name is: {{ ec2_rhel_jump_instance.instances[0].public_dns_name }} with IP address {{ ec2_rhel_jump_instance.instances[0].public_ip_address }} and IP address (Private) {{ ec2_rhel_jump_instance.instances[0].private_ip_address }}"
+    msg: "Instance RHEL Jump DNS name is: {{ ec2_rhel_jump_instance.instances[0].public_dns_name }} with IP address {{ ec2_rhel_jump_instance.instances[0].public_ip_address }} and IP address (Private) {{ ec2_rhel_jump_instance.instances[0].private_ip_address }}"
 
 # Wait for boot up
 - name: Wait until Paloalto boots up
