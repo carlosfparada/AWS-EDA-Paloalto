@@ -29,7 +29,7 @@
       register: rhel_1
 
     - debug:
-        var: rhel_1.instances[0].network_interfaces
+        var: rhel_1.instances
 
     - name: Store IPv4 addresses
       ansible.builtin.set_fact:
