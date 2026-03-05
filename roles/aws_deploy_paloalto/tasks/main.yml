@@ -191,7 +191,7 @@
     name: "{{ ec2_rhel_instance_name }}"
     key_name: "{{ ec2_rhel_key_name }}"
     region: "{{ ec2_vpc_region }}"
-    vpc_subnet_id: "{{ subnet.subnet.id }}" # Subnet 1
+    vpc_subnet_id: "{{ subnet1.subnet.id }}" # Subnet 1
     network_interfaces:
       - assign_public_ip: false  # public IP
     tags:
