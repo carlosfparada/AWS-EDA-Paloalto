@@ -283,6 +283,7 @@
         destination: '0.0.0.0/0'
         nexthop: "{{ ec2_subnet_cidr2 | ansible.utils.ipaddr('1') | ansible.utils.ipaddr('address') }}"
         virtual_router: 'defatult'
+        state: present
         
     - name: Add NAT Policy Rule (IN -> OUT)
       paloaltonetworks.panos.panos_nat_rule:
