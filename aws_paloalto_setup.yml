@@ -278,6 +278,8 @@
       paloaltonetworks.panos.panos_static_route:
         provider: '{{ provider }}'
         name: 'Defaul Route AWS iGW'
+        interface: ethernet1/2
+        nexthop_type: ip-address
         destination: '0.0.0.0/0'
         nexthop: "{{ ec2_subnet_cidr2 | ansible.utils.ipaddr('1') }}"
         virtual_router: 'defatult'
