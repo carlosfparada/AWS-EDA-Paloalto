@@ -126,6 +126,7 @@
     #private_ip_address: "{{ ec2_paloalto_private_ip_address }}" # static
     delete_on_termination: true
     attached: true
+    source_dest_check: false
     state: present
   register: ec2_paloalto_eni1
 
@@ -156,6 +157,7 @@
     security_groups: "{{ ec2_sg_name }}"
     delete_on_termination: true
     attached: true
+    source_dest_check: false
     state: present
   register: ec2_paloalto_eni2
 
