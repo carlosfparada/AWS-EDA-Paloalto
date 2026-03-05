@@ -278,11 +278,11 @@
       paloaltonetworks.panos.panos_static_route:
         provider: '{{ panos_provider }}'
         name: 'Defaul Route AWS iGW'
-        #interface: ethernet1/2
+        interface: ethernet1/2
         nexthop_type: ip-address
         destination: '0.0.0.0/0'
         nexthop: "{{ ec2_subnet_cidr2 | ansible.utils.ipaddr('1') | ansible.utils.ipaddr('address') }}"
-        virtual_router: 'defatult'
+        virtual_router: 'default'
         state: present
         
     - name: Add NAT Policy Rule (IN -> OUT)
