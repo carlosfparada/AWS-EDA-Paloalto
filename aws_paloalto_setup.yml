@@ -260,7 +260,7 @@
         provider: '{{ panos_provider }}'
         if_name: "ethernet1/2"
         enable_dhcp: true
-        create_default_route: false
+        create_default_route: true
         management_profile: SSH_PING
         zone_name: "public"
         state: present
@@ -274,16 +274,16 @@
           - ethernet1/2
         state: present
 
-    - name: Create default route to AWS iGW
-      paloaltonetworks.panos.panos_static_route:
-        provider: '{{ panos_provider }}'
-        name: 'Defaul Route AWS iGW'
-        interface: ethernet1/2
-        nexthop_type: ip-address
-        destination: '0.0.0.0/0'
-        nexthop: "{{ ec2_subnet_cidr2 | ansible.utils.ipaddr('1') | ansible.utils.ipaddr('address') }}"
-        virtual_router: 'default'
-        state: present
+    # - name: Create default route to AWS iGW
+    #   paloaltonetworks.panos.panos_static_route:
+    #     provider: '{{ panos_provider }}'
+    #     name: 'Defaul Route AWS iGW'
+    #     interface: ethernet1/2
+    #     nexthop_type: ip-address
+    #     destination: '0.0.0.0/0'
+    #     nexthop: "{{ ec2_subnet_cidr2 | ansible.utils.ipaddr('1') | ansible.utils.ipaddr('address') }}"
+    #     virtual_router: 'default'
+    #     state: present
         
     - name: Add NAT Policy Rule (IN -> OUT)
       paloaltonetworks.panos.panos_nat_rule:
