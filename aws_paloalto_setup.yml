@@ -276,7 +276,7 @@
 
     - name: Create default route to AWS iGW
       paloaltonetworks.panos.panos_static_route:
-        provider: '{{ provider }}'
+        provider: '{{ panos_provider }}'
         name: 'Defaul Route AWS iGW'
         interface: ethernet1/2
         nexthop_type: ip-address
