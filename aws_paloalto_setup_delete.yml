@@ -218,16 +218,16 @@
         source_translation_interface: 'ethernet1/2'
         state: absent
 
-    - name: Create default route to AWS iGW
-      paloaltonetworks.panos.panos_static_route:
-        provider: '{{ panos_provider }}'
-        name: 'Defaul Route AWS iGW'
-        interface: ethernet1/2
-        nexthop_type: ip-address
-        destination: '0.0.0.0/0'
-        nexthop: "{{ ec2_subnet_cidr2 | ansible.utils.ipaddr('1') | ansible.utils.ipaddr('address') }}"
-        virtual_router: 'default'
-        state: absent
+    # - name: Create default route to AWS iGW
+    #   paloaltonetworks.panos.panos_static_route:
+    #     provider: '{{ panos_provider }}'
+    #     name: 'Defaul Route AWS iGW'
+    #     interface: ethernet1/2
+    #     nexthop_type: ip-address
+    #     destination: '0.0.0.0/0'
+    #     nexthop: "{{ ec2_subnet_cidr2 | ansible.utils.ipaddr('1') | ansible.utils.ipaddr('address') }}"
+    #     virtual_router: 'default'
+    #     state: absent
 
     - name: Delete Interfaces from default Virtual Router
       paloaltonetworks.panos.panos_virtual_router:
