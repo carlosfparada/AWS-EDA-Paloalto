@@ -274,6 +274,14 @@
           - ethernet1/2
         state: present
 
+    - name: Create default route to AWS iGW
+      paloaltonetworks.panos.panos_static_route:
+        provider: '{{ provider }}'
+        name: 'Defaul Route AWS iGW'
+        destination: '0.0.0.0/0'
+        nexthop: "{{ ec2_subnet_cidr2 | ansible.utils.ipaddr('1') }}"
+        virtual_router: 'defatult'
+        
     - name: Add NAT Policy Rule (IN -> OUT)
       paloaltonetworks.panos.panos_nat_rule:
         provider: '{{ panos_provider }}'
