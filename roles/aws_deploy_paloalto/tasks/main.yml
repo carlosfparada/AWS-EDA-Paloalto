@@ -166,7 +166,8 @@
     state: present
   register: ec2_eip
 
-- amazon.aws.ec2_vpc_dhcp_option:
+- name: Create DHCP Options to point DNS to Paloalto
+  amazon.aws.ec2_vpc_dhcp_option:
     region: "{{ ec2_vpc_region }}"
     vpc_id: "{{ vpc.vpc.id }}"
     dns_servers:
