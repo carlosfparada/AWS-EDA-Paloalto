@@ -190,6 +190,34 @@
         vulnerability: default
         state: absent
 
+    - name: Delete Policy Rule to enable IN -> OUT traffic
+      paloaltonetworks.panos.panos_security_rule:
+        provider: "{{ panos_provider }}"
+        rule_name: "Allow RHEL Access to Internet"
+        source_zone: private
+        destination_zone: public
+        source_ip: ['any']
+        destination_ip: ['any']
+        category: ['any']
+        application: ['any']
+        service: ['any']
+        action: allow
+        state: absent
+
+    - name: Delete Policy Rule to enable OUT -> IN http/s traffic
+      paloaltonetworks.panos.panos_security_rule:
+        provider: "{{ panos_provider }}"
+        rule_name: "Allow RHEL HTTP/S Access from Internet"
+        source_zone: public
+        destination_zone: private
+        source_ip: ['any']
+        destination_ip: ['any']
+        category: ['any']
+        application: ['any']
+        service: ['service-http','service-https']
+        action: allow
+        state: absent
+
     - name: Delete NAT Policy Rule (OUT -> IN)
       paloaltonetworks.panos.panos_nat_rule2:
         provider: '{{ panos_provider }}'
@@ -217,17 +245,6 @@
         source_translation_address_type: 'interface-address'
         source_translation_interface: 'ethernet1/2'
         state: absent
-
-    # - name: Create default route to AWS iGW
-    #   paloaltonetworks.panos.panos_static_route:
-    #     provider: '{{ panos_provider }}'
-    #     name: 'Defaul Route AWS iGW'
-    #     interface: ethernet1/2
-    #     nexthop_type: ip-address
-    #     destination: '0.0.0.0/0'
-    #     nexthop: "{{ ec2_subnet_cidr2 | ansible.utils.ipaddr('1') | ansible.utils.ipaddr('address') }}"
-    #     virtual_router: 'default'
-    #     state: absent
 
     - name: Delete Interfaces from default Virtual Router
       paloaltonetworks.panos.panos_virtual_router:
