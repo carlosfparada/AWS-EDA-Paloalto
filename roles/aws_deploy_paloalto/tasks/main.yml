@@ -10,6 +10,16 @@
       Name: "{{ ec2_vpc_name }}"
   register: vpc
 
+- amazon.aws.ec2_vpc_dhcp_option:
+    name: "VPC_PA_DHCP_OPTIONS"
+    region: "{{ ec2_vpc_region }}"
+    vpc_id: "{{ vpc.vpc.id }}"
+    dns_servers:
+      - 8.8.8.8
+      - 8.8.8.9
+    tags:
+      Name: "VPC_PA_DHCP_OPTIONS"
+
 - name: Create Subnet default in VPC
   amazon.aws.ec2_vpc_subnet:
     vpc_id: "{{ vpc.vpc.id }}"
