@@ -250,12 +250,32 @@
         provider: '{{ panos_provider }}'
         if_name: "ethernet1/1"
         enable_dhcp: true
+        create_default_route: true
+        management_profile: SSH_PING
+        zone_name: "private"
+        state: present
+
+    - name: Disable creation default route on ethernet1/1
+      paloaltonetworks.panos.panos_interface:
+        provider: '{{ panos_provider }}'
+        if_name: "ethernet1/1"
+        enable_dhcp: true
         create_default_route: false
         management_profile: SSH_PING
         zone_name: "private"
         state: present
 
     - name: Enable DHCP client on ethernet1/2 in zone public
+      paloaltonetworks.panos.panos_interface:
+        provider: '{{ panos_provider }}'
+        if_name: "ethernet1/2"
+        enable_dhcp: true
+        create_default_route: false
+        management_profile: SSH_PING
+        zone_name: "public"
+        state: present
+
+    - name: Disable creation default route on ethernet1/2
       paloaltonetworks.panos.panos_interface:
         provider: '{{ panos_provider }}'
         if_name: "ethernet1/2"
