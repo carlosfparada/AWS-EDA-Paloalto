@@ -132,12 +132,18 @@
     device_index: 1
     subnet_id: "{{ subnet1.subnet.id }}"
     security_groups: "{{ ec2_sg_name }}"
-    #private_ip_address: "{{ ec2_paloalto_private_ip_address }}" # static
     delete_on_termination: true
     attached: true
-    source_dest_check: false
+    source_dest_check: true
     state: present
   register: ec2_paloalto_eni1
+
+- name: Set Source Destination Check false to ENI 1
+  amazon.aws.ec2_eni:
+    name: "{{ ec2_eni_name1 }}"
+    region: "{{ ec2_vpc_region }}"
+    source_dest_check: false
+    state: present
 
 - name: Set Paloalto ENI IP address
   ansible.builtin.set_fact:
@@ -166,9 +172,16 @@
     security_groups: "{{ ec2_sg_name }}"
     delete_on_termination: true
     attached: true
-    source_dest_check: false
+    source_dest_check: true
     state: present
   register: ec2_paloalto_eni2
+
+- name: Set Source Destination Check false to ENI 2
+  amazon.aws.ec2_eni:
+    name: "{{ ec2_eni_name2 }}"
+    region: "{{ ec2_vpc_region }}"
+    source_dest_check: false
+    state: present
 
 - name: Associate Elastic IP with ENI2
   amazon.aws.ec2_eip:
