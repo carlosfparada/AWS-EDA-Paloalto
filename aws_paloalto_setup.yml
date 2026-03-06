@@ -356,7 +356,7 @@
     - name: Add Policy Rule to enable IN -> OUT traffic
       paloaltonetworks.panos.panos_security_rule:
         provider: "{{ panos_provider }}"
-        rule_name: "Allow RHEL INternet Access"
+        rule_name: "Allow RHEL Internet Access"
         source_zone: private
         destination_zone: public
         source_ip: ['any']
