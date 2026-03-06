@@ -365,8 +365,6 @@
         application: ['any']
         service: ['any']
         action: allow
-        antivirus: default
-        vulnerability: default
         state: present
 
     - name: Commit configuration
