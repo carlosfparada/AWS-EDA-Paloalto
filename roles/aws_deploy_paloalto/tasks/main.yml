@@ -134,17 +134,8 @@
     security_groups: "{{ ec2_sg_name }}"
     delete_on_termination: true
     attached: true
-    source_dest_check: true
     state: present
   register: ec2_paloalto_eni1
-
-- name: Set Source Destination Check false to ENI 1
-  amazon.aws.ec2_eni:
-    name: "{{ ec2_eni_name1 }}"
-    region: "{{ ec2_vpc_region }}"
-    subnet_id: "{{ subnet1.subnet.id }}"
-    source_dest_check: false
-    state: present
 
 - name: Set Paloalto ENI IP address
   ansible.builtin.set_fact:
@@ -173,17 +164,8 @@
     security_groups: "{{ ec2_sg_name }}"
     delete_on_termination: true
     attached: true
-    source_dest_check: true
     state: present
   register: ec2_paloalto_eni2
-
-- name: Set Source Destination Check false to ENI 2
-  amazon.aws.ec2_eni:
-    name: "{{ ec2_eni_name2 }}"
-    region: "{{ ec2_vpc_region }}"
-    subnet_id: "{{ subnet2.subnet.id }}"
-    source_dest_check: false
-    state: present
 
 - name: Associate Elastic IP with ENI2
   amazon.aws.ec2_eip:
@@ -306,6 +288,22 @@
     timeout: 360
     delay: 10
     host: "{{ ec2_rhel_jump_instance.instances[0].public_dns_name }}"
+
+- name: Set Source Destination Check false to ENI 1
+  amazon.aws.ec2_eni:
+    name: "{{ ec2_eni_name1 }}"
+    region: "{{ ec2_vpc_region }}"
+    subnet_id: "{{ subnet1.subnet.id }}"
+    source_dest_check: false
+    state: present
+
+- name: Set Source Destination Check false to ENI 2
+  amazon.aws.ec2_eni:
+    name: "{{ ec2_eni_name2 }}"
+    region: "{{ ec2_vpc_region }}"
+    subnet_id: "{{ subnet2.subnet.id }}"
+    source_dest_check: false
+    state: present
 
 - name: Sleep for 30 seconds and continue with play
   wait_for:
