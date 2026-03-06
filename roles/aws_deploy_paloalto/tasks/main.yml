@@ -142,6 +142,7 @@
   amazon.aws.ec2_eni:
     name: "{{ ec2_eni_name1 }}"
     region: "{{ ec2_vpc_region }}"
+    subnet_id: "{{ subnet1.subnet.id }}"
     source_dest_check: false
     state: present
 
@@ -180,6 +181,7 @@
   amazon.aws.ec2_eni:
     name: "{{ ec2_eni_name2 }}"
     region: "{{ ec2_vpc_region }}"
+    subnet_id: "{{ subnet2.subnet.id }}"
     source_dest_check: false
     state: present
 
