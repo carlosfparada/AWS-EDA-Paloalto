@@ -181,3 +181,11 @@
     state: absent
   when: vpc.vpcs | length > 0
 
+- amazon.aws.ec2_vpc_dhcp_option:
+    region: "{{ ec2_vpc_region }}"
+    vpc_id: "{{ vpc.vpc.id }}"
+    dns_servers:
+      - "{{ eni1.interface.private_ip_addresses[0].private_ip_address }}"
+    tags:
+      Name: "VPC_PA_DHCP_OPTIONS"
+    state: absent
