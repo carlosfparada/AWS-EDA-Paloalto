@@ -114,7 +114,7 @@
 - name: Delete DHCP Options to point DNS to Paloalto
   amazon.aws.ec2_vpc_dhcp_option:
     region: "{{ ec2_vpc_region }}"
-    vpc_id: "{{ vpc.vpcs[0].id }}"
+    #vpc_id: "{{ vpc.vpcs[0].id }}"
     tags:
       Name: "VPC_PA_DHCP_OPTIONS"
     state: absent 
