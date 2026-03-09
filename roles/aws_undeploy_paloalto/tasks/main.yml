@@ -111,14 +111,6 @@
     in_vpc: true
     state: absent
 
-- name: Delete DHCP Options to point DNS to Paloalto
-  amazon.aws.ec2_vpc_dhcp_option:
-    region: "{{ ec2_vpc_region }}"
-    #vpc_id: "{{ vpc.vpcs[0].id }}"
-    tags:
-      Name: "VPC_PA_DHCP_OPTIONS"
-    state: absent 
-
 - name: Delete EBS volume
   amazon.aws.ec2_vol:
     region: "{{ ec2_region }}"
@@ -188,3 +180,19 @@
     cidr_block: "{{ vpc.vpcs[0].cidr_block }}"
     state: absent
   when: vpc.vpcs | length > 0
+
+- name: Find the DHCP Options Set by Name tag
+  amazon.aws.ec2_vpc_dhcp_option_info:
+    region: "{{ ec2_vpc_region }}"
+    filters:
+      "tag:Name": "VPC_PA_DHCP_OPTIONS"
+  register: dhcp_info
+
+- name: Delete DHCP Options to point DNS to Paloalto
+  amazon.aws.ec2_vpc_dhcp_option:
+    region: "{{ ec2_vpc_region }}"
+    id: "{{ dhcp_info.dhcp_options[0].dhcp_options_id }}"
+    #vpc_id: "{{ vpc.vpcs[0].id }}"
+    tags:
+      Name: "VPC_PA_DHCP_OPTIONS"
+    state: absent 
