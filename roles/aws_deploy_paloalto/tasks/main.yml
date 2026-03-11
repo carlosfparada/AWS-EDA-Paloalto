@@ -180,15 +180,15 @@
     state: present
   register: ec2_eip
 
-# - name: Create DHCP Options to point DNS to Paloalto
-#   amazon.aws.ec2_vpc_dhcp_option:
-#     region: "{{ ec2_vpc_region }}"
-#     vpc_id: "{{ vpc.vpc.id }}"
-#     dns_servers:
-#       - 8.8.8.8
-#       - 8.8.4.4
-#     tags:
-#       Name: "VPC_PA_DHCP_OPTIONS"
+- name: Create DHCP Options to point DNS to Paloalto
+  amazon.aws.ec2_vpc_dhcp_option:
+    region: "{{ ec2_vpc_region }}"
+    vpc_id: "{{ vpc.vpc.id }}"
+    dns_servers:
+      - 8.8.8.8
+      - 8.8.4.4
+    tags:
+      Name: "VPC_PA_DHCP_OPTIONS"
 
 - name: Print Paloalto instance details (management)
   ansible.builtin.debug:
