@@ -93,7 +93,8 @@
     description: Allow all on ports
     state: present
     rules:
-      - cidr_ip: 0.0.0.0/0
+      - proto: all
+        cidr_ip: 0.0.0.0/0
         rule_desc: Allow all on ports
     region: "{{ ec2_vpc_region }}"
     vpc_id: "{{ vpc.vpc.id }}"
