@@ -173,14 +173,6 @@
     state: absent
   when: vpc.vpcs | length > 0
 
-- name: Delete VPC
-  amazon.aws.ec2_vpc_net:
-    name: "{{ ec2_vpc_name }}"
-    region: "{{ ec2_vpc_region }}"
-    cidr_block: "{{ vpc.vpcs[0].cidr_block }}"
-    state: absent
-  when: vpc.vpcs | length > 0
-
 - name: Find the DHCP Options Set by Name tag
   amazon.aws.ec2_vpc_dhcp_option_info:
     region: "{{ ec2_vpc_region }}"
@@ -195,3 +187,11 @@
     tags:
       Name: "VPC_PA_DHCP_OPTIONS"
     state: absent 
+
+- name: Delete VPC
+  amazon.aws.ec2_vpc_net:
+    name: "{{ ec2_vpc_name }}"
+    region: "{{ ec2_vpc_region }}"
+    cidr_block: "{{ vpc.vpcs[0].cidr_block }}"
+    state: absent
+  when: vpc.vpcs | length > 0
