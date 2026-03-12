@@ -26,7 +26,7 @@
   #connection: ssh
   gather_facts: yes
   become_user: root
-  vars: # Why?
+  vars: # Why needed?
       ansible_python_interpreter: /usr/bin/python3
   tasks:
     - name: Attach Red Hat subscription
@@ -47,23 +47,23 @@
           - httpd
       become: yes
 
-    # - name: Open port TCP 80
-    #   ansible.posix.firewalld:
-    #     port: http/tcp
-    #     permanent: yes
-    #     state: enabled
-    #   become: true
+    - name: Open port TCP 80
+      ansible.posix.firewalld:
+        port: http/tcp
+        permanent: yes
+        state: enabled
+      become: true
 
-    # - name: Open port TCP 443
-    #   ansible.posix.firewalld:
-    #     port: https/tcp
-    #     permanent: yes
-    #     state: enabled
-    #   become: true
+    - name: Open port TCP 443
+      ansible.posix.firewalld:
+        port: https/tcp
+        permanent: yes
+        state: enabled
+      become: true
 
     - name: Copy index.html template tyo webserver
       ansible.builtin.template:
-        src: ../files/index.html.j2
+        src: files/index.html.j2
         dest: /var/www/html/index.html
         owner: apache
         mode: "0644"
@@ -72,12 +72,12 @@
         title: "Paloalto Demo"
         body: "Hi, I am RHEL VM on Paloalto Demo"
 
-    # - name: Start firewalld
-    #   ansible.builtin.service:
-    #     name: firewalld
-    #     enabled: yes
-    #     state: restarted
-    #   become: true
+    - name: Start firewalld
+      ansible.builtin.service:
+        name: firewalld
+        enabled: yes
+        state: restarted
+      become: true
 
     - name: Restart httpd server 
       ansible.builtin.service: 
