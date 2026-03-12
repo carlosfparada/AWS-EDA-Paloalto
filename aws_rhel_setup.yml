@@ -27,11 +27,9 @@
   gather_facts: yes
   remote_user: ec2-user
   become_user: root
+  vars:
+      ansible_python_interpreter: /usr/bin/python3
   tasks:
-
-    - debug:
-        var: hostvars['rhel']
-
     - name: Attach Red Hat subscription
       community.general.redhat_subscription:
         state: present
