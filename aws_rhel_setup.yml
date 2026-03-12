@@ -23,6 +23,7 @@
 # RHEL Configs
 - name: AWS RHEL config
   hosts: rhel
+  connection: ssh
   gather_facts: no
   tasks:
     - name: Attach Red Hat subscription
