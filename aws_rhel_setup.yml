@@ -10,7 +10,6 @@
       set_fact:
         node_name: "{{ item }}"
       loop: "{{ groups['all'] }}"
-      #when: hostvars[item].tags is defined and hostvars[item].tags.Name is match("^rhel-1$")
       when: hostvars[item].tags is defined and hostvars[item].tags.Name is match("^rhel-jump$")
 
     - name: Add RHEL node to the rhel group
@@ -23,9 +22,7 @@
 # RHEL Configs
 - name: AWS RHEL config
   hosts: rhel
-  #connection: ssh
-  gather_facts: yes
-  become_user: root
+  #become_user: root
   vars: # Why needed?
       ansible_python_interpreter: /usr/bin/python3
   tasks:
