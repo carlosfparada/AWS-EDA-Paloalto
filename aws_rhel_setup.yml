@@ -23,7 +23,7 @@
 # RHEL Configs
 - name: AWS RHEL config
   hosts: rhel
-  connection: local
+  connection: ssh
   gather_facts: no
   tasks:
     - name: Attach Red Hat subscription
@@ -32,7 +32,9 @@
         username: "{{ subscription_user }}"
         password: "{{ subscription_pass }}"
         pool_ids: "{{ rh_subs_pool_id }}"
-      #become: true
+        remote_user: ec2-user
+        become_user: root
+        become: true
 
     - name: Install Software
       ansible.builtin.dnf:
