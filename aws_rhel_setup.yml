@@ -1,0 +1,91 @@
+---
+
+# Get RHEL Node
+- name: Get RHEL Node
+  hosts: all
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Get RHEL node
+      set_fact:
+        node_name: "{{ item }}"
+      loop: "{{ groups['all'] }}"
+      when: hostvars[item].tags is defined and hostvars[item].tags.Name is match("^rhel-1$")
+
+    - name: Add RHEL node to the rhel group
+      add_host:
+        name: "{{ node_name }}"
+        groups: "rhel"
+      when: node_name is defined
+
+
+# RHEL Configs
+- name: AWS RHEL config
+  hosts: rhel
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Attach Red Hat subscription
+      community.general.redhat_subscription:
+        state: present
+        username: "{{ subscription_user }}"
+        password: "{{ subscription_pass }}"
+        pool_ids: "{{ rh_subs_pool_id }}"
+      become: true
+
+    - name: Install Software
+      ansible.builtin.dnf:
+        name: "{{ packages }}"
+        state: present
+      vars:
+        packages:
+          - firewalld
+          - httpd
+      become: yes
+
+    # - name: Open port TCP 80
+    #   ansible.posix.firewalld:
+    #     port: http/tcp
+    #     permanent: yes
+    #     state: enabled
+    #   become: true
+
+    # - name: Open port TCP 443
+    #   ansible.posix.firewalld:
+    #     port: https/tcp
+    #     permanent: yes
+    #     state: enabled
+    #   become: true
+
+    - name: Copy index.html template tyo webserver
+      ansible.builtin.template:
+        src: ../files/index.html.j2
+        dest: /var/www/html/index.html
+        owner: apache
+        mode: "0644"
+      become: yes
+      vars:
+        title: "Paloalto Demo"
+        body: "Hi, I am RHEL VM on Paloalto Demo"
+
+    # - name: Start firewalld
+    #   ansible.builtin.service:
+    #     name: firewalld
+    #     enabled: yes
+    #     state: restarted
+    #   become: true
+
+    - name: Restart httpd server 
+      ansible.builtin.service: 
+        name: httpd
+        enabled: yes
+        state: restarted
+      become: yes
+    
+    - name: Dettach Red Hat subscription
+      community.general.redhat_subscription:
+        state: absent
+        username: "{{ subscription_user }}"
+        password: "{{ subscription_pass }}"
+        pool_ids: "{{ rh_subs_pool_id }}"
+      become: true

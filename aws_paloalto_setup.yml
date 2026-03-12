@@ -357,3 +357,67 @@
     - name: Commit configuration
       paloaltonetworks.panos.panos_commit_firewall:
         provider: "{{ panos_provider }}"
+
+
+# RHEL Configs
+- name: AWS RHEL config
+  hosts: rhel
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Attach Red Hat subscription
+      community.general.redhat_subscription:
+        state: present
+        username: "{{ subscription_user }}"
+        password: "{{ subscription_pass }}"
+        pool_ids: "{{ rh_subs_pool_id }}"
+      become: true
+
+    - name: Install Software
+      ansible.builtin.dnf:
+        name: "{{ packages }}"
+        state: present
+      vars:
+        packages:
+          - firewalld
+          - httpd
+          - php 
+          - php-common
+      become: yes
+
+    - name: Open port TCP 80
+      ansible.posix.firewalld:
+        port: http/tcp
+        permanent: yes
+        state: enabled
+      become: true
+
+    - name: Webpage template
+      ansible.builtin.template:
+        src: ../templates/webpage.html.j2
+        dest: /var/www/html/index.html
+        owner: apache
+        mode: "0644"
+      become: yes
+
+    - name: Start firewalld
+      ansible.builtin.service:
+        name: firewalld
+        enabled: yes
+        state: restarted
+      become: true
+
+    - name: Restart httpd server 
+      ansible.builtin.service: 
+        name: httpd
+        enabled: yes
+        state: restarted
+      become: yes
+    
+    - name: Dettach Red Hat subscription
+      community.general.redhat_subscription:
+        state: absent
+        username: "{{ subscription_user }}"
+        password: "{{ subscription_pass }}"
+        pool_ids: "{{ rh_subs_pool_id }}"
+      become: true
