@@ -31,7 +31,7 @@
         username: "{{ subscription_user }}"
         password: "{{ subscription_pass }}"
         pool_ids: "{{ rh_subs_pool_id }}"
-      become: true
+      #become: true
 
     - name: Install Software
       ansible.builtin.dnf:
