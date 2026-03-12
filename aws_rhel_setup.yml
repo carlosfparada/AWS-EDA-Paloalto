@@ -4,7 +4,7 @@
 - name: Get RHEL Node
   hosts: all
   connection: local
-  gather_facts: no
+  gather_facts: yes
   tasks:
     - name: Get RHEL node
       set_fact:
