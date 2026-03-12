@@ -10,7 +10,8 @@
       set_fact:
         node_name: "{{ item }}"
       loop: "{{ groups['all'] }}"
-      when: hostvars[item].tags is defined and hostvars[item].tags.Name is match("^rhel-1$")
+      #when: hostvars[item].tags is defined and hostvars[item].tags.Name is match("^rhel-1$")
+      when: hostvars[item].tags is defined and hostvars[item].tags.Name is match("^rhel-jump$")
 
     - name: Add RHEL node to the rhel group
       add_host:
