@@ -190,20 +190,6 @@
         vulnerability: default
         state: absent
 
-    # - name: Delete Policy Rule to enable IN -> OUT traffic
-    #   paloaltonetworks.panos.panos_security_rule:
-    #     provider: "{{ panos_provider }}"
-    #     rule_name: "Allow RHEL to Internet"
-    #     source_zone: private
-    #     destination_zone: public
-    #     source_ip: ['any']
-    #     destination_ip: ['any']
-    #     category: ['any']
-    #     application: ['any']
-    #     service: ['any']
-    #     action: allow
-    #     state: absent
-
     - name: Delete Policy Rule to enable OUT -> IN http/s traffic
       paloaltonetworks.panos.panos_security_rule:
         provider: "{{ panos_provider }}"
