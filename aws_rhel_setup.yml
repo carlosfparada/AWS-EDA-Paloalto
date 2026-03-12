@@ -25,6 +25,8 @@
   hosts: rhel
   connection: ssh
   gather_facts: no
+  remote_user: ec2-user
+  become_user: root
   tasks:
     - name: Attach Red Hat subscription
       community.general.redhat_subscription:
@@ -32,9 +34,7 @@
         username: "{{ subscription_user }}"
         password: "{{ subscription_pass }}"
         pool_ids: "{{ rh_subs_pool_id }}"
-        remote_user: ec2-user
-        become_user: root
-        become: true
+      become: true
 
     - name: Install Software
       ansible.builtin.dnf:
