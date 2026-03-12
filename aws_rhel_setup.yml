@@ -41,7 +41,7 @@
         packages:
           - firewalld
           - httpd
-      become: yes
+      #become: yes
 
     # - name: Open port TCP 80
     #   ansible.posix.firewalld:
@@ -63,7 +63,7 @@
         dest: /var/www/html/index.html
         owner: apache
         mode: "0644"
-      become: yes
+      #become: yes
       vars:
         title: "Paloalto Demo"
         body: "Hi, I am RHEL VM on Paloalto Demo"
@@ -80,7 +80,7 @@
         name: httpd
         enabled: yes
         state: restarted
-      become: yes
+      #become: yes
     
     - name: Dettach Red Hat subscription
       community.general.redhat_subscription:
@@ -88,4 +88,4 @@
         username: "{{ subscription_user }}"
         password: "{{ subscription_pass }}"
         pool_ids: "{{ rh_subs_pool_id }}"
-      become: true
+      #become: true
