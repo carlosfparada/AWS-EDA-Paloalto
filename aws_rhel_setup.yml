@@ -22,9 +22,8 @@
 # RHEL Configs
 - name: AWS RHEL config
   hosts: rhel
-  #become_user: root
-  vars: # Why needed?
-      ansible_python_interpreter: /usr/bin/python3
+  vars:
+      ansible_python_interpreter: /usr/bin/python3 # Why needed?
   tasks:
     - name: Attach Red Hat subscription
       community.general.redhat_subscription:
