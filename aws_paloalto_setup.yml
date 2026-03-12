@@ -320,25 +320,23 @@
         to_interface: 'any'
         service: 'any'
         source_addresses: ['any']
-#        destination_addresses: "{{ rhel_ipv4_private }}"
-#        destination_translated_address: "{{ paloalto_ipv4_private }}"
         destination_addresses: "{{ paloalto_ipv4_private }}"
         destination_translated_address: "{{ rhel_ipv4_private }}"
         state: present
 
-    - name: Add Policy Rule to enable IN -> OUT traffic
-      paloaltonetworks.panos.panos_security_rule:
-        provider: "{{ panos_provider }}"
-        rule_name: "Allow RHEL to Internet"
-        source_zone: private
-        destination_zone: public
-        source_ip: ['any']
-        destination_ip: ['any']
-        category: ['any']
-        application: ['any']
-        service: ['any']
-        action: allow
-        state: present
+    # - name: Add Policy Rule to enable IN -> OUT traffic
+    #   paloaltonetworks.panos.panos_security_rule:
+    #     provider: "{{ panos_provider }}"
+    #     rule_name: "Allow RHEL to Internet"
+    #     source_zone: private
+    #     destination_zone: public
+    #     source_ip: ['any']
+    #     destination_ip: ['any']
+    #     category: ['any']
+    #     application: ['any']
+    #     service: ['any']
+    #     action: allow
+    #     state: present
 
     - name: Add Policy Rule to enable OUT -> IN http/s traffic
       paloaltonetworks.panos.panos_security_rule:
@@ -364,7 +362,7 @@
         destination_ip: ['any']
         category: ['any']
         application: ['any']
-        service: ['service-http','service-https']
+        service:  ['any']
         action: allow
         antivirus: default
         vulnerability: default
