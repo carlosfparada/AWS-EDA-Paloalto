@@ -25,9 +25,8 @@
   hosts: rhel
   #connection: ssh
   gather_facts: yes
-  remote_user: ec2-user
   become_user: root
-  vars:
+  vars: # Why?
       ansible_python_interpreter: /usr/bin/python3
   tasks:
     - name: Attach Red Hat subscription
@@ -46,7 +45,7 @@
         packages:
           - firewalld
           - httpd
-      #become: yes
+      become: yes
 
     # - name: Open port TCP 80
     #   ansible.posix.firewalld:
@@ -85,7 +84,7 @@
         name: httpd
         enabled: yes
         state: restarted
-      #become: yes
+      become: yes
     
     - name: Dettach Red Hat subscription
       community.general.redhat_subscription:
@@ -93,4 +92,4 @@
         username: "{{ subscription_user }}"
         password: "{{ subscription_pass }}"
         pool_ids: "{{ rh_subs_pool_id }}"
-      #become: true
+      become: true
