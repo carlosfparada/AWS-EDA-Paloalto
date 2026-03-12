@@ -23,7 +23,7 @@
 # RHEL Configs
 - name: AWS RHEL config
   hosts: rhel
-  connection: ssh
+  connection: local
   gather_facts: yes
   remote_user: ec2-user
   become_user: root
