@@ -67,10 +67,10 @@
         dest: /var/www/html/index.html
         owner: apache
         mode: "0644"
-      #become: yes
       vars:
         title: "Paloalto Demo"
         body: "Hi, I am RHEL VM on Paloalto Demo"
+      become: yes
 
     - name: Start firewalld
       ansible.builtin.service:
