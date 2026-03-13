@@ -19,20 +19,20 @@
         region: "{{ ec2_vpc_region }}"
         filters:
           "tag:Name": "{{ ec2_eni_name2 }}"
-      register: eni2
+      register: paloalto_eni2
 
-    - name: Query RHEL-1 Instance Info
+    - name: Query RHEL ENI 1 Info
       amazon.aws.ec2_instance_info:
         region: "{{ ec2_vpc_region }}"
         filters:
-          "tag:Name": "rhel-1"
+          "tag:Name": "{{ ec2_eni_name2 }}_RHEL"
           instance-state-name: ["running"]
-      register: rhel_1
+      register: rhel_eni1
 
     - name: Store IPv4 addresses
       ansible.builtin.set_fact:
-        paloalto_ipv4_private: "{{ eni2.network_interfaces[0].private_ip_address }}"
-        rhel_ipv4_private: "{{ rhel_1.instances[0].network_interfaces[0].private_ip_address }}"
+        paloalto_ipv4_private: "{{ paloalto_eni2.network_interfaces[0].private_ip_address }}"
+        rhel_ipv4_private: "{{ rhel_eni1.network_interfaces[0].private_ip_address }}"
 
 - name: Setup Paloalto provisioning
   hosts: localhost
