@@ -315,7 +315,7 @@
         name: 'NAT OUTIN'
         nat_type: 'ipv4'
         from_zones: ['public']
-        to_zones: ['private']
+        to_zones: ['public']
         to_interface: 'any'
         service: 'any'
         source_addresses: ['any']
