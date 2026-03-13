@@ -25,7 +25,7 @@
       amazon.aws.ec2_instance_info:
         region: "{{ ec2_vpc_region }}"
         filters:
-          "tag:Name": "{{ ec2_eni_name2 }}_RHEL"
+          "tag:Name": "{{ ec2_eni_name1 }}_RHEL"
       register: rhel_eni1
 
     - name: Store IPv4 addresses
