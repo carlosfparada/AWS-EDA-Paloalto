@@ -326,7 +326,7 @@
     - name: Add Policy Rule to enable OUT -> IN http/s traffic
       paloaltonetworks.panos.panos_security_rule:
         provider: "{{ panos_provider }}"
-        rule_name: "Allow RHEL from Internet"
+        rule_name: "RHEL from Internet"
         source_zone: public
         destination_zone: private
         source_ip: ['any']
@@ -340,7 +340,7 @@
     - name: Add Policy Rule for Virus detection and Vulnerability protection 
       paloaltonetworks.panos.panos_security_rule:
         provider: "{{ panos_provider }}"
-        rule_name: "Allow Virus and Vulnerability"
+        rule_name: "Virus and Vulnerability"
         source_zone: ['any']
         destination_zone: ['any']
         source_ip: ['any']

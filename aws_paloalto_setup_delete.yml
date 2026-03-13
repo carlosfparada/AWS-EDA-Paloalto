@@ -193,7 +193,7 @@
     - name: Delete Policy Rule to enable OUT -> IN http/s traffic
       paloaltonetworks.panos.panos_security_rule:
         provider: "{{ panos_provider }}"
-        rule_name: "Allow RHEL from Internet"
+        rule_name: "RHEL from Internet"
         source_zone: public
         destination_zone: private
         source_ip: ['any']
