@@ -95,3 +95,6 @@
         conn_name: "System eth0"
         state: absent
       become: true
+      async: 10      # Maximum time allowed for the task to exist
+      poll: 0        # Fire and forget: don't wait for a response
+      ignore_errors: yes
