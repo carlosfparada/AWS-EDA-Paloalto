@@ -92,6 +92,6 @@
 
     - name: Disable connection
       community.general.nmcli:
-        conn_name: eth0
+        conn_name: "System eth0"
         state: down
       become: true
