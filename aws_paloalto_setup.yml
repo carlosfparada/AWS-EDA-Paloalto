@@ -26,7 +26,6 @@
         region: "{{ ec2_vpc_region }}"
         filters:
           "tag:Name": "{{ ec2_eni_name2 }}_RHEL"
-          instance-state-name: ["running"]
       register: rhel_eni1
 
     - name: Store IPv4 addresses
