@@ -89,3 +89,9 @@
         password: "{{ subscription_pass }}"
         pool_ids: "{{ rh_subs_pool_id }}"
       become: true
+
+    - name: Disable connection
+      community.general.nmcli:
+        conn_name: eth0
+        state: down
+      become: true
