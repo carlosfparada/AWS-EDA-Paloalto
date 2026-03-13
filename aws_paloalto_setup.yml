@@ -22,7 +22,7 @@
       register: paloalto_eni2
 
     - name: Query RHEL ENI 1 Info
-      amazon.aws.ec2_instance_info:
+      amazon.aws.ec2_eni_info:
         region: "{{ ec2_vpc_region }}"
         filters:
           "tag:Name": "{{ ec2_eni_name1 }}_RHEL"
