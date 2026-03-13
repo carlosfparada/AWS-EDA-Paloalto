@@ -333,7 +333,7 @@
         destination_ip: ['any']
         category: ['any']
         application: ['any']
-        service: ['service-http','service-https']
+        service: ['service-http']
         action: allow
         state: present
 
