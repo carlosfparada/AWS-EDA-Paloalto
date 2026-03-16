@@ -138,6 +138,24 @@
     region: "{{ ec2_vpc_region }}"
     state: absent
 
+- name: Delete Route Table
+  amazon.aws.ec2_vpc_route_table:
+    vpc_id: "{{ vpc.vpcs[0].id }}"
+    region: "{{ ec2_vpc_region }}"
+    route_table_id: "{{ rtb.route_tables[0].id }}"
+    lookup: id
+    state: absent
+  when: vpc.vpcs | length > 0 and rtb.route_tables | length > 0
+
+- name: Delete Route Table via Paloalto
+  amazon.aws.ec2_vpc_route_table:
+    vpc_id: "{{ vpc.vpcs[0].id }}"
+    region: "{{ ec2_vpc_region }}"
+    route_table_id: "{{ rtb_paloalto.route_tables[0].id }}"
+    lookup: id
+    state: absent
+  when: vpc.vpcs | length > 0 and rtb_paloalto.route_tables | length > 0
+
 - name: Delete Subnet default in VPC
   amazon.aws.ec2_vpc_subnet:
     vpc_id: "{{ vpc.vpcs[0].id }}"
@@ -161,24 +179,6 @@
     region: "{{ ec2_vpc_region }}"
     state: absent
   when: vpc.vpcs | length > 0 and subnet2.subnets | length > 0
-
-- name: Delete Route Table
-  amazon.aws.ec2_vpc_route_table:
-    vpc_id: "{{ vpc.vpcs[0].id }}"
-    region: "{{ ec2_vpc_region }}"
-    route_table_id: "{{ rtb.route_tables[0].id }}"
-    lookup: id
-    state: absent
-  when: vpc.vpcs | length > 0 and rtb.route_tables | length > 0
-
-- name: Delete Route Table via Paloalto
-  amazon.aws.ec2_vpc_route_table:
-    vpc_id: "{{ vpc.vpcs[0].id }}"
-    region: "{{ ec2_vpc_region }}"
-    route_table_id: "{{ rtb_paloalto.route_tables[0].id }}"
-    lookup: id
-    state: absent
-  when: vpc.vpcs | length > 0 and rtb_paloalto.route_tables | length > 0
 
 - name: Delete Internet Gateway (IGW)
   amazon.aws.ec2_vpc_igw:
