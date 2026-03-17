@@ -104,17 +104,18 @@
 
     - name: Disable connection on boot
       community.general.nmcli:
-        conn_name: eth0
-        state: present
+        type: ethernet
+        ifname: eth0
+        state: down
         autoconnect: no
       become: true
       # async: 10      # Maximum time allowed for the task to exist
       # poll: 0        # Fire and forget: don't wait for a response
       # ignore_errors: yes
 
-    - name: Reboot RHEL
-      ansible.builtin.reboot:
-      ignore_errors: yes
+    # - name: Reboot RHEL
+    #   ansible.builtin.reboot:
+    #   ignore_errors: yes
 
 # RHEL JUMP Configs
 - name: AWS RHEL JUMP config
