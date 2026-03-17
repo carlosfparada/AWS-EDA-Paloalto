@@ -34,6 +34,7 @@
 # RHEL Configs
 - name: AWS RHEL config
   hosts: rhel
+  gather_facts: no
   vars:
       ansible_python_interpreter: /usr/bin/python3 # Why needed?
   tasks:
@@ -114,13 +115,14 @@
       # poll: 0        # Fire and forget: don't wait for a response
       # ignore_errors: yes
 
-    # - name: Reboot RHEL
-    #   ansible.builtin.reboot:
-    #   ignore_errors: yes
+    - name: Reboot RHEL
+      ansible.builtin.reboot:
+      ignore_errors: yes
 
 # RHEL JUMP Configs
 - name: AWS RHEL JUMP config
   hosts: rhel_jump
+  gather_facts: no
   vars:
       ansible_python_interpreter: /usr/bin/python3 # Why needed?
   tasks:
