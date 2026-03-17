@@ -68,17 +68,24 @@
         state: enabled
       become: true
 
-    - name: Copy index.html template tyo webserver
+    - name: Copy index.html template to webserver
       ansible.builtin.template:
-        src: files/index.html.j2
+        src: templates/rhel-jump-index.html.j2
         dest: /var/www/html/index.html
         owner: apache
         mode: "0644"
       vars:
         title: "Paloalto Demo"
-        body: "Hi, I am RHEL VM on Paloalto Demo"
+        body: "Hi, I am RHEL JUMP VM on Paloalto Demo"
       become: yes
 
+    - name: Copy index.html template to webserver
+      ansible.builtin.template:
+        src: templates/rhel-jump-index.html.j2
+        dest: /var/www/html/index.html
+        owner: apache
+        mode: "0644"
+        
     - name: Start firewalld
       ansible.builtin.service:
         name: firewalld
@@ -139,9 +146,9 @@
         state: enabled
       become: true
 
-    - name: Copy index.html template tyo webserver
+    - name: Copy index.html template to webserver
       ansible.builtin.template:
-        src: files/index.html.j2
+        src: templates/rhel-index.html.j2
         dest: /var/www/html/index.html
         owner: apache
         mode: "0644"
