@@ -304,9 +304,10 @@
       paloaltonetworks.panos.panos_type_cmd:
         provider: '{{ panos_provider }}'
         cmd: set  # default
-        xpath: "/config/shared/log-settings/threat/match-list"
+        xpath: "/config/shared/log-settings/config/match-list"
         element: |
           <entry name="{{ threat_log_name }}">
+            <log-type>threat</log-type>
             <send-http>
               <member>{{ threat_profile_name }}</member>
             </send-http>
