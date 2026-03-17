@@ -107,7 +107,7 @@
         conn_name: eth0
         type: ethernet
         ifname: eth0
-        state: down
+        state: absent
         autoconnect: no
       become: true
       # async: 10      # Maximum time allowed for the task to exist
