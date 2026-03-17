@@ -1,6 +1,6 @@
 ---
 
-- name: "Receive logs sourced from HTTP Server Profile in PAN-OS (system events)"
+- name: "Receive logs sourced from HTTP Server Profile in PAN-OS (threat events)"
   hosts: "localhost"
   # Source PanOS config
   sources:
@@ -10,8 +10,9 @@
         #type: system
   # Rule system logs
   rules:
-    - name: "Handle System Logs - Authentication"
-      condition: event.payload.type == "SYSTEM" and event.payload.subtype == "auth"
+    - name: "Handle Threats - Virus Detection"
+      #condition: event.payload.type == "THREAT" and event.payload.subtype == "virus"
+      condition: event.payload.type == event.payload.type
       actions:
         # Debug
         - debug: 
@@ -21,4 +22,4 @@
         # Notify Slack
         - run_job_template:
             organization: "Default"
-            name: "AWS EDA Paloalto: Notify Auth"            
+            name: "AWS EDA Paloalto: Threat Virus"

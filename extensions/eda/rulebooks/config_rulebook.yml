@@ -1,4 +1,5 @@
 ---
+
 - name: "Receive logs sourced from HTTP Server Profile in PAN-OS (config events)"
   hosts: "localhost"
   # Source PanOS config
