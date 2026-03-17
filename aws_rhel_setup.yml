@@ -104,7 +104,7 @@
 
     - name: Disable connection
       community.general.nmcli:
-        conn_name: "System eth0"
+        conn_name: "eth0"
         state: absent
       become: true
       async: 10      # Maximum time allowed for the task to exist
