@@ -111,6 +111,43 @@
               "actionflags": "$actionflags"
           }
 
+    # HTTP Threat Server Profile
+    # https://docs.paloaltonetworks.com/pan-os/11-0/pan-os-admin/monitoring/use-syslog-for-monitoring/syslog-field-descriptions/threat-log-fields
+    - name: Create a Threat HTTP Server Profile for Logs
+      paloaltonetworks.panos.panos_http_profile:
+        provider: "{{ panos_provider }}"
+        name: "{{ threat_profile_name }}"
+        threat_name: "{{ threat_profile_name }}"
+        threat_uri_format: '/test'
+        threat_payload: >
+          {
+              "receive_time": "$receive_time",
+              "type": "$type",
+              "subtype": "$subtype",
+              "device_name": "$device_name",
+              "serial": "$serial",
+              "src": "$scr",
+              "dst": "$dst",
+              "rule": "$rule",
+              "natsrc": "$natsrc",
+              "natdst": "$natdst",
+              "from": "$from",
+              "to": "$to",
+              "inbound_if": "$inbound_if",
+              "outbound_if": "$outbound_if",
+              "proto": "$proto",
+              "action": "$action",
+              "misc": "$misc",
+              "threatid": "$threatid",
+              "category": "$category",
+              "severity": "$severity",
+              "direction": "$direction",
+              "hostid": "$hostid",
+              "seqno": "$seqno",
+              "reason": "$reason",
+              "justification": "$justification"
+          }
+
     - name: Create Config HTTP server
       paloaltonetworks.panos.panos_http_server:
         provider: '{{ panos_provider }}'
@@ -130,7 +167,17 @@
         protocol: "{{ system_http_protocol }}"
         http_method: "{{ system_http_method }}"
         http_port: "{{ system_http_port }}"
-        
+
+    - name: Create Threat HTTP server
+      paloaltonetworks.panos.panos_http_server:
+        provider: '{{ panos_provider }}'
+        http_profile: '{{ threat_profile_name }}'
+        name: '{{ threat_http_server_name }}'
+        address: "{{ http_address }}"
+        protocol: "{{ threat_http_protocol }}"
+        http_method: "{{ threat_http_method }}"
+        http_port: "{{ threat_http_port }}"
+
     - name: Add a HTTP header to Config HTTP Server Profile
       paloaltonetworks.panos.panos_http_profile_header:
         provider: '{{ panos_provider }}'
@@ -144,6 +191,14 @@
         provider: '{{ panos_provider }}'
         http_profile: '{{ system_profile_name }}'
         log_type: 'system'
+        header: 'Content-Type'
+        value: 'application/json'
+
+    - name: Add a HTTP header to Threat HTTP Server Profile
+      paloaltonetworks.panos.panos_http_profile_header:
+        provider: '{{ panos_provider }}'
+        http_profile: '{{ threat_profile_name }}'
+        log_type: 'threat'
         header: 'Content-Type'
         value: 'application/json'
 
@@ -163,6 +218,14 @@
         param: 'serial'
         value: '$serial'
 
+    - name: Add a param to the System Log Type
+      paloaltonetworks.panos.panos_http_profile_param:
+        provider: '{{ panos_provider }}'
+        http_profile: '{{ threat_profile_name }}'
+        log_type: 'threat'
+        param: 'serial'
+        value: '$serial'
+
     # Log Config Forwarding Profile
     - name: Create Config Log forwarding profile
       paloaltonetworks.panos.panos_log_forwarding_profile:
@@ -174,6 +237,12 @@
       paloaltonetworks.panos.panos_log_forwarding_profile:
         provider: '{{ panos_provider }}'
         name: '{{ system_forwarding_profile_name }}'
+
+    # Log Threat Forwarding Profile
+    - name: Create Threat log forwarding profile
+      paloaltonetworks.panos.panos_log_forwarding_profile:
+        provider: '{{ panos_provider }}'
+        name: '{{ threat_forwarding_profile_name }}'
 
     - name: Create Config log forwarding profile match list
       paloaltonetworks.panos.panos_log_forwarding_profile_match_list:
@@ -192,6 +261,15 @@
         #log_type: traffic  # default
         filter: '{{ system_log_filter }}'
         http_profiles: ['{{ system_profile_name }}']
+
+    - name: Create Threat log forwarding profile match list
+      paloaltonetworks.panos.panos_log_forwarding_profile_match_list:
+        provider: '{{ panos_provider }}'
+        log_forwarding_profile: '{{ threat_forwarding_profile_name }}'
+        name: '{{ threat_forwarding_profile_name_match_list }}'
+        #log_type: traffic  # default
+        filter: '{{ threat_log_filter }}'
+        http_profiles: ['{{ threat_profile_name }}']
 
     # set shared log-settings config match-list "Config Logs" filter "All Logs" send-http {{ config_profile_name }}
     - name: Forward Config Logs to EDA source
@@ -219,6 +297,20 @@
               <member>{{ system_profile_name }}</member>
             </send-http>
             <filter>{{ system_log_filter }}</filter>
+          </entry>
+
+    # set shared log-settings config match-list "Threat Logs" filter "All Logs" send-http {{ system_profile_name }}
+    - name: Forward Threat Logs to EDA source
+      paloaltonetworks.panos.panos_type_cmd:
+        provider: '{{ panos_provider }}'
+        cmd: set  # default
+        xpath: "/config/shared/log-settings/threat/match-list"
+        element: |
+          <entry name="{{ threat_log_name }}">
+            <send-http>
+              <member>{{ threat_profile_name }}</member>
+            </send-http>
+            <filter>{{ threat_log_filter }}</filter>
           </entry>
 
   # NEW USE CASES
@@ -356,67 +448,3 @@
     - name: Commit configuration
       paloaltonetworks.panos.panos_commit_firewall:
         provider: "{{ panos_provider }}"
-
-
-# RHEL Configs
-- name: AWS RHEL config
-  hosts: rhel
-  connection: local
-  gather_facts: no
-  tasks:
-    - name: Attach Red Hat subscription
-      community.general.redhat_subscription:
-        state: present
-        username: "{{ subscription_user }}"
-        password: "{{ subscription_pass }}"
-        pool_ids: "{{ rh_subs_pool_id }}"
-      become: true
-
-    - name: Install Software
-      ansible.builtin.dnf:
-        name: "{{ packages }}"
-        state: present
-      vars:
-        packages:
-          - firewalld
-          - httpd
-          - php 
-          - php-common
-      become: yes
-
-    - name: Open port TCP 80
-      ansible.posix.firewalld:
-        port: http/tcp
-        permanent: yes
-        state: enabled
-      become: true
-
-    - name: Webpage template
-      ansible.builtin.template:
-        src: ../templates/webpage.html.j2
-        dest: /var/www/html/index.html
-        owner: apache
-        mode: "0644"
-      become: yes
-
-    - name: Start firewalld
-      ansible.builtin.service:
-        name: firewalld
-        enabled: yes
-        state: restarted
-      become: true
-
-    - name: Restart httpd server 
-      ansible.builtin.service: 
-        name: httpd
-        enabled: yes
-        state: restarted
-      become: yes
-    
-    - name: Dettach Red Hat subscription
-      community.general.redhat_subscription:
-        state: absent
-        username: "{{ subscription_user }}"
-        password: "{{ subscription_pass }}"
-        pool_ids: "{{ rh_subs_pool_id }}"
-      become: true

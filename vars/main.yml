@@ -100,6 +100,16 @@ system_forwarding_profile_name: 'EDA System Forward Profile'
 system_forwarding_profile_name_match_list: 'EDA System Forward Profile Match List'
 system_log_filter: "All Logs"
 
+threat_profile_name: 'EDA Threat HTTP Profile'
+threat_http_server_name: 'EDA Threat HTTP Server'
+threat_http_protocol: "HTTP"
+threat_http_method: 'POST'
+threat_http_port: 5002
+threat_log_name: "Threat Logs"
+threat_forwarding_profile_name: 'EDA Threat Forward Profile'
+threat_forwarding_profile_name_match_list: 'EDA Threat Forward Profile Match List'
+threat_log_filter: "All Logs"
+
 panos_services:
   dns-tcp: service-dns-tcp
   dns-udp: service-dns-udp
