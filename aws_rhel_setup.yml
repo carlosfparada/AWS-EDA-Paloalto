@@ -105,6 +105,7 @@
     - name: Disable connection on boot
       community.general.nmcli:
         conn_name: eth0
+        state: present
         autoconnect: no
       become: true
       # async: 10      # Maximum time allowed for the task to exist
