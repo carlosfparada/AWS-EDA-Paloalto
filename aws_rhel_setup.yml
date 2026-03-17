@@ -10,7 +10,7 @@
       set_fact:
         node_name: "{{ item }}"
       loop: "{{ groups['all'] }}"
-      when: hostvars[item].tags is defined and hostvars[item].tags.Name is match("^rhel-1$")
+      when: hostvars[item].tags is defined and hostvars[item].tags.Name is match("^rhel-jump$")
 
     - name: Add RHEL node to the rhel group
       add_host:
@@ -90,11 +90,11 @@
         pool_ids: "{{ rh_subs_pool_id }}"
       become: true
 
-    - name: Disable connection
-      community.general.nmcli:
-        conn_name: "System eth0"
-        state: absent
-      become: true
-      async: 10      # Maximum time allowed for the task to exist
-      poll: 0        # Fire and forget: don't wait for a response
-      ignore_errors: yes
+    # - name: Disable connection
+    #   community.general.nmcli:
+    #     conn_name: "System eth0"
+    #     state: absent
+    #   become: true
+    #   async: 10      # Maximum time allowed for the task to exist
+    #   poll: 0        # Fire and forget: don't wait for a response
+    #   ignore_errors: yes
