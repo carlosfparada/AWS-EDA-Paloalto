@@ -193,4 +193,4 @@
 
     - name: Debug URL for Anti-Virus testing
       debug:
-        msg: "Virus URL: http://{{ inventory_hostname }}/eicar.com.txt"
+        msg: "Virus URL: curl http://{{ inventory_hostname }}/eicar.com.txt"
