@@ -18,7 +18,7 @@
         groups: "rhel"
       when: node_name is defined
 
-    - name: Get RHEL node
+    - name: Get RHEL Jump node
       set_fact:
         node_name: "{{ item }}"
       loop: "{{ groups['all'] }}"
