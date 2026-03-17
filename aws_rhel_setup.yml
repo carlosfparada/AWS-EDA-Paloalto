@@ -104,6 +104,7 @@
 
     - name: Disable connection on boot
       community.general.nmcli:
+        conn_name: eth0
         type: ethernet
         ifname: eth0
         state: down
