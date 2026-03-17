@@ -167,6 +167,7 @@
         dest: /var/www/html/eicar.com.txt
         owner: apache
         mode: "0644"
+      become: yes
 
     - name: Start firewalld
       ansible.builtin.service:
