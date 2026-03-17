@@ -168,12 +168,10 @@
         method: GET
       register: result
 
-    - debug:
-        var: result
-
     - name: Copy eicar.com.txt file to webserver
       ansible.builtin.copy:
         content: "{{ result.content }}"
+        dest: /var/www/html/eicar.com.txt
         owner: apache
         mode: "0644"
       become: yes
