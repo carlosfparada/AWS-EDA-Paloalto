@@ -102,7 +102,7 @@
         pool_ids: "{{ rh_subs_pool_id }}"
       become: true
 
-    - name: Disable connection
+    - name: Disable connection on boot
       community.general.nmcli:
         conn_name: eth0
         autoconnect: no
@@ -111,7 +111,7 @@
       # poll: 0        # Fire and forget: don't wait for a response
       # ignore_errors: yes
 
-    - name: Unconditionally reboot the machine with all defaults
+    - name: Reboot RHEL
       ansible.builtin.reboot:
       ignore_errors: yes
 
