@@ -30,83 +30,6 @@
         groups: "rhel_jump"
       when: node_name is defined
 
-# RHEL JUMP Configs
-- name: AWS RHEL JUMP config
-  hosts: rhel_jump
-  vars:
-      ansible_python_interpreter: /usr/bin/python3 # Why needed?
-  tasks:
-    - name: Attach Red Hat subscription
-      community.general.redhat_subscription:
-        state: present
-        username: "{{ subscription_user }}"
-        password: "{{ subscription_pass }}"
-        pool_ids: "{{ rh_subs_pool_id }}"
-      become: true
-
-    - name: Install Software
-      ansible.builtin.dnf:
-        name: "{{ packages }}"
-        state: present
-      vars:
-        packages:
-          - firewalld
-          - httpd
-      become: yes
-
-    - name: Open port TCP 80
-      ansible.posix.firewalld:
-        port: http/tcp
-        permanent: yes
-        state: enabled
-      become: true
-
-    - name: Open port TCP 443
-      ansible.posix.firewalld:
-        port: https/tcp
-        permanent: yes
-        state: enabled
-      become: true
-
-    - name: Copy index.html template to webserver
-      ansible.builtin.template:
-        src: templates/rhel-jump-index.html.j2
-        dest: /var/www/html/index.html
-        owner: apache
-        mode: "0644"
-      vars:
-        title: "Paloalto Demo"
-        body: "Hi, I am RHEL JUMP VM on Paloalto Demo"
-      become: yes
-
-    - name: Copy eicar.com.txt file to webserver
-      ansible.builtin.template:
-        src: files/eicar.com.txt
-        dest: /var/www/html/eicar.com.txt
-        owner: apache
-        mode: "0644"
-
-    - name: Start firewalld
-      ansible.builtin.service:
-        name: firewalld
-        enabled: yes
-        state: restarted
-      become: true
-
-    - name: Restart httpd server 
-      ansible.builtin.service: 
-        name: httpd
-        enabled: yes
-        state: restarted
-      become: yes
-    
-    - name: Dettach Red Hat subscription
-      community.general.redhat_subscription:
-        state: absent
-        username: "{{ subscription_user }}"
-        password: "{{ subscription_pass }}"
-        pool_ids: "{{ rh_subs_pool_id }}"
-      become: true
     
 # RHEL Configs
 - name: AWS RHEL config
@@ -187,3 +110,86 @@
       async: 10      # Maximum time allowed for the task to exist
       poll: 0        # Fire and forget: don't wait for a response
       ignore_errors: yes
+
+
+# RHEL JUMP Configs
+- name: AWS RHEL JUMP config
+  hosts: rhel_jump
+  vars:
+      ansible_python_interpreter: /usr/bin/python3 # Why needed?
+  tasks:
+    - name: Attach Red Hat subscription
+      community.general.redhat_subscription:
+        state: present
+        username: "{{ subscription_user }}"
+        password: "{{ subscription_pass }}"
+        pool_ids: "{{ rh_subs_pool_id }}"
+      become: true
+
+    - name: Install Software
+      ansible.builtin.dnf:
+        name: "{{ packages }}"
+        state: present
+      vars:
+        packages:
+          - firewalld
+          - httpd
+      become: yes
+
+    - name: Open port TCP 80
+      ansible.posix.firewalld:
+        port: http/tcp
+        permanent: yes
+        state: enabled
+      become: true
+
+    - name: Open port TCP 443
+      ansible.posix.firewalld:
+        port: https/tcp
+        permanent: yes
+        state: enabled
+      become: true
+
+    - name: Copy index.html template to webserver
+      ansible.builtin.template:
+        src: templates/rhel-jump-index.html.j2
+        dest: /var/www/html/index.html
+        owner: apache
+        mode: "0644"
+      vars:
+        title: "Paloalto Demo"
+        body: "Hi, I am RHEL JUMP VM on Paloalto Demo"
+      become: yes
+
+    - name: Copy eicar.com.txt file to webserver
+      ansible.builtin.template:
+        src: files/eicar.com.txt
+        dest: /var/www/html/eicar.com.txt
+        owner: apache
+        mode: "0644"
+
+    - name: Start firewalld
+      ansible.builtin.service:
+        name: firewalld
+        enabled: yes
+        state: restarted
+      become: true
+
+    - name: Restart httpd server 
+      ansible.builtin.service: 
+        name: httpd
+        enabled: yes
+        state: restarted
+      become: yes
+    
+    - name: Dettach Red Hat subscription
+      community.general.redhat_subscription:
+        state: absent
+        username: "{{ subscription_user }}"
+        password: "{{ subscription_pass }}"
+        pool_ids: "{{ rh_subs_pool_id }}"
+      become: true
+
+    - name: Debug URL for Anti-Virus testing
+      debug:
+        msg: "Virus URL: http://{{ inventory_hostname }}/eicar.com.txt"
