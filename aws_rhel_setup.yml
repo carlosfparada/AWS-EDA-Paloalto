@@ -27,12 +27,12 @@
     - name: Add RHEL node to the rhel group
       add_host:
         name: "{{ node_name }}"
-        groups: "rhel-jump"
+        groups: "rhel_jump"
       when: node_name is defined
 
 # RHEL JUMP Configs
 - name: AWS RHEL JUMP config
-  hosts: rhel-jump
+  hosts: rhel_jump
   vars:
       ansible_python_interpreter: /usr/bin/python3 # Why needed?
   tasks:
