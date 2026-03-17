@@ -105,8 +105,8 @@
     - name: Disable connection
       community.general.nmcli:
         conn_name: eth0
-        #state: absent
-        state: down
+        state: absent
+        #state: down
       become: true
       async: 10      # Maximum time allowed for the task to exist
       poll: 2        # Fire and forget: don't wait for a response
