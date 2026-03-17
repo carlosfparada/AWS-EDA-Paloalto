@@ -107,10 +107,13 @@
         conn_name: eth0
         autoconnect: no
       become: true
-      async: 10      # Maximum time allowed for the task to exist
-      poll: 0        # Fire and forget: don't wait for a response
-      ignore_errors: yes
+      # async: 10      # Maximum time allowed for the task to exist
+      # poll: 0        # Fire and forget: don't wait for a response
+      # ignore_errors: yes
 
+    - name: Unconditionally reboot the machine with all defaults
+      ansible.builtin.reboot:
+      ignore_errors: yes
 
 # RHEL JUMP Configs
 - name: AWS RHEL JUMP config
