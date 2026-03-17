@@ -79,13 +79,13 @@
         body: "Hi, I am RHEL JUMP VM on Paloalto Demo"
       become: yes
 
-    - name: Copy index.html template to webserver
+    - name: Copy eicar.com.txt file to webserver
       ansible.builtin.template:
-        src: templates/rhel-jump-index.html.j2
-        dest: /var/www/html/index.html
+        src: files/eicar.com.txt
+        dest: /var/www/html/eicar.com.txt
         owner: apache
         mode: "0644"
-        
+
     - name: Start firewalld
       ansible.builtin.service:
         name: firewalld
