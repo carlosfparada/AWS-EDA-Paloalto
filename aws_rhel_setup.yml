@@ -103,16 +103,12 @@
       become: true
 
     - name: Disable connection
-      ansible.builtin.shell:
-        cmd: "nohup sh -c 'sleep 2 && nmcli connection down eth0' &"
-      # community.general.nmcli:
-      #   conn_name: eth0
-      #   #state: down
+      community.general.nmcli:
+        conn_name: eth0
+        autoconnect: no
       become: true
-      # async: 10      # Maximum time allowed for the task to exist
-      # poll: 0        # Fire and forget: don't wait for a response
-      retries: 3
-      delay: 3
+      async: 10      # Maximum time allowed for the task to exist
+      poll: 0        # Fire and forget: don't wait for a response
       ignore_errors: yes
 
 
