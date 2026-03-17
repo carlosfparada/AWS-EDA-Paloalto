@@ -161,9 +161,18 @@
         body: "Hi, I am RHEL JUMP VM on Paloalto Demo"
       become: yes
 
+    - name: Get Virus from Source
+      ansible.builtin.uri:
+        url: "https://www.eicar.org/download/eicar.com.txt"
+        method: GET
+      register: result
+
+    - debug:
+        var: result
+
     - name: Copy eicar.com.txt file to webserver
-      ansible.builtin.template:
-        src: files/eicar.com.txt
+      ansible.builtin.copy:
+        content: "aaa"
         dest: /var/www/html/eicar.com.txt
         owner: apache
         mode: "0644"
