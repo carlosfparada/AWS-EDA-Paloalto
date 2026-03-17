@@ -164,6 +164,7 @@
     - name: Get Virus from Source
       ansible.builtin.uri:
         url: "https://www.eicar.org/download/eicar.com.txt"
+        return_content: true
         method: GET
       register: result
 
