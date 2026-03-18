@@ -124,7 +124,7 @@
 
 - name: Disable connection on boot (1 minute after)
   ansible.builtin.shell:
-    cmd: sudo echo 'nmcli connection down "System eth0"' | at now +1 minute
+    cmd: echo 'sudo nmcli connection down "System eth0"' | at now + 1 minute
 
 
 # RHEL JUMP Configs
