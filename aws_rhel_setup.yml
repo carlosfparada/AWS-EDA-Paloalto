@@ -111,7 +111,7 @@
         pool_ids: "{{ rh_subs_pool_id }}"
       become: true
 
-    # - name: Disable connection on boot (NOT WORKING)
+    # - name: Disable connection on boot (NOT WORKING!)
     #   community.general.nmcli:
     #     conn_name: eth0
     #     type: ethernet
@@ -122,9 +122,9 @@
       # poll: 0        # Fire and forget: don't wait for a response
       # ignore_errors: yes
 
-- name: Disable connection on boot (1 minute after)
-  ansible.builtin.shell:
-    cmd: echo 'sudo nmcli connection down "System eth0"' | at now + 1 minute
+    - name: Disable connection on boot (1 minute after)
+      ansible.builtin.shell:
+        cmd: echo 'sudo nmcli connection down "System eth0"' | at now + 1 minute
 
 
 # RHEL JUMP Configs
