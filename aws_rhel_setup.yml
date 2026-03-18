@@ -126,6 +126,10 @@
       ansible.builtin.shell:
         cmd: echo 'sudo nmcli connection down "System eth0"' | at now + 1 minute
 
+    - name: Debug URL for Anti-Virus testing
+      debug:
+        msg: "URL RHEL Web Server Acess: http://{{ inventory_hostname }}"
+
 
 # RHEL JUMP Configs
 - name: AWS RHEL JUMP config
