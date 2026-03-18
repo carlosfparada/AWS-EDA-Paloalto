@@ -7,12 +7,12 @@
     - paloaltonetworks.panos.logs:
         host: 0.0.0.0
         port: 5002
-        #type: system
+        #type: threat
   # Rule system logs
   rules:
     - name: "Handle Threats - Virus Detection"
       #condition: event.payload.type == "THREAT" and event.payload.subtype == "virus"
-      condition: event.payload.type == event.payload.type
+      #condition: event.payload.type == event.payload.type
       actions:
         # Debug
         - debug: 
