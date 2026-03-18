@@ -89,7 +89,7 @@
         state: restarted
       become: true
 
-    - name: Start atd
+    - name: Restart atd
       ansible.builtin.service:
         name: atd
         enabled: yes
