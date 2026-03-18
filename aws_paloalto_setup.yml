@@ -299,19 +299,19 @@
             <filter>{{ system_log_filter }}</filter>
           </entry>
 
-    # set shared log-settings config match-list "Threat Logs" filter "All Logs" send-http {{ system_profile_name }}
-    - name: Forward Threat Logs to EDA source
-      paloaltonetworks.panos.panos_type_cmd:
-        provider: '{{ panos_provider }}'
-        cmd: set  # default
-        xpath: "/config/shared/log-settings/config/match-list"
-        element: |
-          <entry name="{{ threat_log_name }}">
-            <send-http>
-              <member>{{ threat_profile_name }}</member>
-            </send-http>
-            <filter>{{ threat_log_filter }}</filter>
-          </entry>
+    # # set shared log-settings config match-list "Threat Logs" filter "All Logs" send-http {{ system_profile_name }}
+    # - name: Forward Threat Logs to EDA source
+    #   paloaltonetworks.panos.panos_type_cmd:
+    #     provider: '{{ panos_provider }}'
+    #     cmd: set  # default
+    #     xpath: "/config/shared/log-settings/config/match-list"
+    #     element: |
+    #       <entry name="{{ threat_log_name }}">
+    #         <send-http>
+    #           <member>{{ threat_profile_name }}</member>
+    #         </send-http>
+    #         <filter>{{ threat_log_filter }}</filter>
+    #       </entry>
 
   # NEW USE CASES
     - name: Create private zone on a firewall
@@ -443,6 +443,7 @@
         action: allow
         antivirus: default
         vulnerability: default
+        log_setting: "{{ threat_forwarding_profile_name }}"
         state: present
 
     - name: Commit configuration
