@@ -30,6 +30,13 @@
       set_fact:
         payload: "{{ ansible_eda.event.payload }}"
 
+    - name: Create Dynamic User Group 'Quaranteen'
+      paloaltonetworks.panos.panos_dynamic_user_group:
+        provider: "{{ panos_provider }}"
+        name: Quarantine
+        description: 'Questionable User Group - isolate Virus Hosts'
+        #filter: 'questionable-activity'
+        
     - name: Add 'Quaranteen' tag to Host {{ payload.src }}
       paloaltonetworks.panos.panos_registered_ip:
         provider: "{{ panos_provider }}"
