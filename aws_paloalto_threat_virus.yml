@@ -47,4 +47,5 @@
         application: ['any']
         service: ['any']
         action: deny
+        location: top
         commit: yes
