@@ -30,34 +30,36 @@
       set_fact:
         payload: "{{ ansible_eda.event.payload }}"
 
-    - name: Create Dynamic User Group 'Quarantine'
-      paloaltonetworks.panos.panos_dynamic_user_group:
+    - name: Create Address Group 'Quarantine'
+      paloaltonetworks.panos.panos_address_group:
         provider: "{{ panos_provider }}"
         name: Quarantine
-        description: 'Questionable User Group - isolate Virus Hosts'
-        filter: 'quarantine'
-        
-    - name: Add 'Quarantine' tag to Host {{ payload.src }}
-      paloaltonetworks.panos.panos_registered_ip:
-        provider: "{{ panos_provider }}"
-        ips: "{{ payload.src }}"
-        tags: quarantine
-        state: 'present'
+        description: 'Questionable Adrress Group - isolate Virus Hosts'
+        dynamic_value: 'quarantine'
+        state: present
 
     - name: Add Policy Rule to Dynamic User Group
       paloaltonetworks.panos.panos_security_rule:
         provider: "{{ panos_provider }}"
         rule_name: "Quarantine"
         description: "Quarantine Dynamic User Group"
-        source_zone: "{{ payload.from }}"
-        destination_zone: "{{ payload.to }}"
-        source_user: quarantine
+        source_zone: ['any']
+        destination_zone: ['any']
+        source_ip: quarantine
         destination_ip: ['any']
         category: ['any']
         application: ['any']
         service: ['any']
         location: top
         action: deny
+        state: present
+
+    - name: Add 'quarantine' tag to Host {{ payload.src }}
+      paloaltonetworks.panos.panos_registered_ip:
+        provider: "{{ panos_provider }}"
+        ips: "{{ payload.src }}"
+        tags: quarantine
+        state: present
 
     - name: Add Policy Rule to Quarantine Host {{ payload.src }}
       paloaltonetworks.panos.panos_security_rule:
