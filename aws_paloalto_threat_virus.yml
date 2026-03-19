@@ -61,17 +61,17 @@
         tags: quarantine
         state: present
 
-    - name: Add Policy Rule to Quarantine Host {{ payload.src }}
-      paloaltonetworks.panos.panos_security_rule:
-        provider: "{{ panos_provider }}"
-        rule_name: "Quarantine-{{ payload.src }}"
-        description: "Quarantine {{ payload.src }}"
-        source_zone: "{{ payload.from }}"
-        destination_zone: "{{ payload.to }}"
-        source_ip: "{{ payload.src }}"
-        destination_ip: ['any']
-        category: ['any']
-        application: ['any']
-        service: ['any']
-        location: top
-        action: deny
+    # - name: Add Policy Rule to Quarantine Host {{ payload.src }}
+    #   paloaltonetworks.panos.panos_security_rule:
+    #     provider: "{{ panos_provider }}"
+    #     rule_name: "Quarantine-{{ payload.src }}"
+    #     description: "Quarantine {{ payload.src }}"
+    #     source_zone: "{{ payload.from }}"
+    #     destination_zone: "{{ payload.to }}"
+    #     source_ip: "{{ payload.src }}"
+    #     destination_ip: ['any']
+    #     category: ['any']
+    #     application: ['any']
+    #     service: ['any']
+    #     location: top
+    #     action: deny
