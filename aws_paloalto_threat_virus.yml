@@ -34,7 +34,7 @@
     #   debug:
     #     var: ansible_eda.event.payload
 
-    - name: Add Policy Rule to Quarantine Host
+    - name: Add Policy Rule to Quarantine Host {{ payload.src }}
       paloaltonetworks.panos.panos_security_rule:
         provider: "{{ panos_provider }}"
         rule_name: "Quarantine {{ payload.src }}"
