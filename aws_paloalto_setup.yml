@@ -126,7 +126,7 @@
               "subtype": "$subtype",
               "device_name": "$device_name",
               "serial": "$serial",
-              "src": "$scr",
+              "src": "$src",
               "dst": "$dst",
               "rule": "$rule",
               "natsrc": "$natsrc",
