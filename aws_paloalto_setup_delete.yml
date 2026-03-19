@@ -65,9 +65,19 @@
         provider: '{{ panos_provider }}'
         log_forwarding_profile: '{{ system_forwarding_profile_name }}'
         name: '{{ system_forwarding_profile_name_match_list }}'
-        #log_type: traffic  # default
+        log_type: auth
         filter: '{{ system_log_filter }}'
         http_profiles: ['{{ system_profile_name }}']
+        state: absent
+
+    - name: Delete Threat log forwarding profile match list
+      paloaltonetworks.panos.panos_log_forwarding_profile_match_list:
+        provider: '{{ panos_provider }}'
+        log_forwarding_profile: '{{ threat_forwarding_profile_name }}'
+        name: '{{ threat_forwarding_profile_name_match_list }}'
+        log_type: auth
+        filter: '{{ threat_log_filter }}'
+        http_profiles: ['{{ threat_profile_name }}']
         state: absent
 
     # Config Log Forwarding Profile
@@ -82,6 +92,13 @@
       paloaltonetworks.panos.panos_log_forwarding_profile:
         provider: '{{ panos_provider }}'
         name: '{{ system_forwarding_profile_name }}'
+        state: absent
+
+    # Threat Log Forwarding Profile
+    - name: Delete Threat log forwarding profile
+      paloaltonetworks.panos.panos_log_forwarding_profile:
+        provider: '{{ panos_provider }}'
+        name: '{{ threat_forwarding_profile_name }}'
         state: absent
 
     # HTTP Server Profile
@@ -143,6 +160,44 @@
           }
         state: absent
 
+    # HTTP Threat Server Profile
+    # https://docs.paloaltonetworks.com/pan-os/11-0/pan-os-admin/monitoring/use-syslog-for-monitoring/syslog-field-descriptions/threat-log-fields
+    - name: Create a Threat HTTP Server Profile for Logs
+      paloaltonetworks.panos.panos_http_profile:
+        provider: "{{ panos_provider }}"
+        name: "{{ threat_profile_name }}"
+        threat_name: "{{ threat_profile_name }}"
+        threat_uri_format: '/test'
+        threat_payload: >
+          {
+              "receive_time": "$receive_time",
+              "type": "$type",
+              "subtype": "$subtype",
+              "device_name": "$device_name",
+              "serial": "$serial",
+              "src": "$src",
+              "dst": "$dst",
+              "rule": "$rule",
+              "natsrc": "$natsrc",
+              "natdst": "$natdst",
+              "from": "$from",
+              "to": "$to",
+              "inbound_if": "$inbound_if",
+              "outbound_if": "$outbound_if",
+              "proto": "$proto",
+              "action": "$action",
+              "misc": "$misc",
+              "threatid": "$threatid",
+              "category": "$category",
+              "severity": "$severity",
+              "direction": "$direction",
+              "hostid": "$hostid",
+              "seqno": "$seqno",
+              "reason": "$reason",
+              "justification": "$justification"
+          }
+        state: absent
+
     - name: Delete Config HTTP Server
       paloaltonetworks.panos.panos_http_server:
         provider: '{{ panos_provider }}'
@@ -163,6 +218,17 @@
         protocol: "{{ config_http_protocol }}"
         http_method: "{{ config_http_method }}"
         http_port: "{{ config_http_port }}"
+        state: absent
+
+    - name: Delete Threat HTTP server
+      paloaltonetworks.panos.panos_http_server:
+        provider: '{{ panos_provider }}'
+        http_profile: '{{ threat_profile_name }}'
+        name: '{{ threat_http_server_name }}'
+        address: "{{ http_address }}"
+        protocol: "{{ threat_http_protocol }}"
+        http_method: "{{ threat_http_method }}"
+        http_port: "{{ threat_http_port }}"
         state: absent
 
     - name: Delete admin user for manual changes
