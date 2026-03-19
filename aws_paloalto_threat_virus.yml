@@ -26,7 +26,7 @@
       debug:
         var: hostvars['localhost']
 
-    - name: Threat Detection
+    - name: THREAT DETECTION payload
       set_fact:
         payload: "{{ ansible_eda.event.payload }}"
 
