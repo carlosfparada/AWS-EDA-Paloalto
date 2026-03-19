@@ -34,6 +34,13 @@
     #   debug:
     #     var: ansible_eda.event.payload
 
+    - name: Add 'Quaranteen' tag to Host {{ payload.src }}
+      paloaltonetworks.panos.panos_registered_ip:
+        provider: "{{ panos_provider }}"
+        ips: "{{ payload.src }}"
+        tags: ['Quaranteen']
+        state: 'present'
+
     - name: Add Policy Rule to Quarantine Host {{ payload.src }}
       paloaltonetworks.panos.panos_security_rule:
         provider: "{{ panos_provider }}"
