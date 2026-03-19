@@ -41,8 +41,23 @@
       paloaltonetworks.panos.panos_registered_ip:
         provider: "{{ panos_provider }}"
         ips: "{{ payload.src }}"
-        tags: ['quarantine']
+        tags: quarantine
         state: 'present'
+
+    - name: Add Policy Rule to Dynamic User Group
+      paloaltonetworks.panos.panos_security_rule:
+        provider: "{{ panos_provider }}"
+        rule_name: "Quarantine"
+        description: "Quarantine Dynamic User Group"
+        source_zone: "{{ payload.from }}"
+        destination_zone: "{{ payload.to }}"
+        source_user: quarantine
+        destination_ip: ['any']
+        category: ['any']
+        application: ['any']
+        service: ['any']
+        location: top
+        action: deny
 
     - name: Add Policy Rule to Quarantine Host {{ payload.src }}
       paloaltonetworks.panos.panos_security_rule:
@@ -56,5 +71,5 @@
         category: ['any']
         application: ['any']
         service: ['any']
-        action: deny
         location: top
+        action: deny
