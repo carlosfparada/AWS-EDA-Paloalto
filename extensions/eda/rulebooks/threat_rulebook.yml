@@ -2,17 +2,16 @@
 
 - name: "Receive logs sourced from HTTP Server Profile in PAN-OS (threat events)"
   hosts: "localhost"
-  # Source PanOS config
+  # Source PanOS threat
   sources:
     - paloaltonetworks.panos.logs:
         host: 0.0.0.0
         port: 5002
         #type: threat
-  # Rule system logs
+  # Rule threat logs
   rules:
     - name: "Handle Threats - Virus Detection"
       condition: event.payload.type == "THREAT" and event.payload.subtype == "virus"
-      #condition: event.payload.type == event.payload.type
       actions:
         # Debug
         - debug: 

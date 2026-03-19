@@ -1,34 +1,12 @@
 ---
 
-# Get RHEL Node
-- name: Get RHEL Node
-  hosts: all
+- name: Get nodes from Inventory and add to Groups
+  hosts: localhost
   connection: local
-  gather_facts: yes
+  gather_facts: no
   tasks:
-    - name: Get RHEL node
-      set_fact:
-        node_name: "{{ item }}"
-      loop: "{{ groups['all'] }}"
-      when: hostvars[item].tags is defined and hostvars[item].tags.Name is match("^rhel-1$")
-
-    - name: Add RHEL node to the rhel group
-      add_host:
-        name: "{{ node_name }}"
-        groups: "rhel"
-      when: node_name is defined
-
-    - name: Get RHEL Jump node
-      set_fact:
-        node_name: "{{ item }}"
-      loop: "{{ groups['all'] }}"
-      when: hostvars[item].tags is defined and hostvars[item].tags.Name is match("^rhel-jump$")
-
-    - name: Add RHEL node to the rhel group
-      add_host:
-        name: "{{ node_name }}"
-        groups: "rhel_jump"
-      when: node_name is defined
+  - include_role: 
+      name: utils_hosts_aws
 
     
 # RHEL Configs

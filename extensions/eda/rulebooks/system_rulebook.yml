@@ -2,7 +2,7 @@
 
 - name: "Receive logs sourced from HTTP Server Profile in PAN-OS (system events)"
   hosts: "localhost"
-  # Source PanOS config
+  # Source PanOS system
   sources:
     - paloaltonetworks.panos.logs:
         host: 0.0.0.0
