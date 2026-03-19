@@ -38,7 +38,7 @@
       paloaltonetworks.panos.panos_security_rule:
         provider: "{{ panos_provider }}"
         rule_name: "Quarantine-{{ payload.src }}"
-        description: "Quarantine-{{ payload.src }}"
+        description: "Quarantine {{ payload.src }}"
         source_zone: "{{ payload.from }}"
         destination_zone: "{{ payload.to }}"
         source_ip: "{{ payload.src }}"
