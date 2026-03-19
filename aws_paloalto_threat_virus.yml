@@ -35,13 +35,13 @@
         provider: "{{ panos_provider }}"
         name: Quarantine
         description: 'Questionable User Group - isolate Virus Hosts'
-        #filter: 'questionable-activity'
+        filter: 'quarantine'
         
     - name: Add 'Quarantine' tag to Host {{ payload.src }}
       paloaltonetworks.panos.panos_registered_ip:
         provider: "{{ panos_provider }}"
         ips: "{{ payload.src }}"
-        tags: ['Quarantine']
+        tags: ['quarantine']
         state: 'present'
 
     - name: Add Policy Rule to Quarantine Host {{ payload.src }}
