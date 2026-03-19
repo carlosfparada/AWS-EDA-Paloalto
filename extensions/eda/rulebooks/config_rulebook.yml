@@ -21,11 +21,11 @@
         # Config tag compliance
         - run_job_template:
             organization: "Default"
-            name: "AWS EDA Paloalto: Fix Compliance Tag"
+            name: "AWS EDA Paloalto: X. Fix Compliance Tag"
         # Config log compliance
         - run_job_template:
             organization: "Default"
-            name: "AWS EDA Paloalto: Fix Compliance Log"
+            name: "AWS EDA Paloalto: X. Fix Compliance Log"
         # Remediation Template
         # - run_job_template:
         #     organization: "Default"

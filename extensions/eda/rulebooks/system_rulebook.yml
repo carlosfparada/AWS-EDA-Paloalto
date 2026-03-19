@@ -21,4 +21,4 @@
         # Notify Slack
         - run_job_template:
             organization: "Default"
-            name: "AWS EDA Paloalto: Notify Auth"            
+            name: "AWS EDA Paloalto: X. Notify Auth"            
