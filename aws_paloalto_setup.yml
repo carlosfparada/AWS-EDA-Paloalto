@@ -252,6 +252,7 @@
         #log_type: traffic  # default
         filter: '{{ config_log_filter }}'
         http_profiles: ['{{ config_profile_name }}']
+        log_type: traffic
 
     - name: Create System log forwarding profile match list
       paloaltonetworks.panos.panos_log_forwarding_profile_match_list:
@@ -261,15 +262,16 @@
         #log_type: traffic  # default
         filter: '{{ system_log_filter }}'
         http_profiles: ['{{ system_profile_name }}']
+        log_type: traffic
 
     - name: Create Threat log forwarding profile match list
       paloaltonetworks.panos.panos_log_forwarding_profile_match_list:
         provider: '{{ panos_provider }}'
         log_forwarding_profile: '{{ threat_forwarding_profile_name }}'
         name: '{{ threat_forwarding_profile_name_match_list }}'
-        #log_type: traffic  # default
         filter: '{{ threat_log_filter }}'
         http_profiles: ['{{ threat_profile_name }}']
+        log_type: threat
 
     # set shared log-settings config match-list "Config Logs" filter "All Logs" send-http {{ config_profile_name }}
     - name: Forward Config Logs to EDA source
