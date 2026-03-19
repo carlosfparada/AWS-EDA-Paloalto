@@ -262,7 +262,7 @@
         #log_type: traffic  # default
         filter: '{{ system_log_filter }}'
         http_profiles: ['{{ system_profile_name }}']
-        log_type: traffic
+        log_type: auth
 
     - name: Create Threat log forwarding profile match list
       paloaltonetworks.panos.panos_log_forwarding_profile_match_list:
