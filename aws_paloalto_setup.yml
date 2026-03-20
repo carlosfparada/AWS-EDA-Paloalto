@@ -420,7 +420,7 @@
     - name: Add Policy Rule to enable OUT -> IN http/s traffic
       paloaltonetworks.panos.panos_security_rule:
         provider: "{{ panos_provider }}"
-        rule_name: "RHEL from Internet"
+        rule_name: "OutIn Vulnerability Detection"
         source_zone: public
         destination_zone: private
         source_ip: ['any']
@@ -436,7 +436,7 @@
     - name: Add Policy Rule for Virus detection and Vulnerability protection 
       paloaltonetworks.panos.panos_security_rule:
         provider: "{{ panos_provider }}"
-        rule_name: "Virus and Vulnerability"
+        rule_name: "InOut Virus Detection"
         source_zone: private
         destination_zone: public
         source_ip: ['any']
