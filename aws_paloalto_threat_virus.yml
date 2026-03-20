@@ -50,9 +50,6 @@
         category: ['any']
         application: ['any']
         service: ['any']
-        # tag_name: "{{ _rules_result.gathered.tag_name | default([], true) }}"
-        # log_start: true
-        # log_end: true
         location: top
         action: deny
         state: merged
