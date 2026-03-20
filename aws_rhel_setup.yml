@@ -104,9 +104,9 @@
       ansible.builtin.shell:
         cmd: echo 'sudo nmcli connection down "System eth0"' | at now + 1 minute
 
-    - name: Debug URL for Anti-Virus testing
+    - name: Debug URL for Vulnerability testing
       debug:
-        msg: "URL RHEL Web Server Acess: http://{{ inventory_hostname }}"
+        msg: "URL RHEL Web Server Acess: http://{{ hostvars[groups['paloalto'][0]] }}"
 
 
 # RHEL JUMP Configs
