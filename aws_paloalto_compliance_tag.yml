@@ -81,11 +81,20 @@
     - name: COMPLIANCE TAG - POLICY ANSIBLE CHANGE (admin)
       block:
 
-        - name: COMPLIANCE TAG - GET INFO ON ADDED RULES (admin)
+        - name: COMPLIANCE TAG - GET INFO ON ADDED RULES (admin) - set
           paloaltonetworks.panos.panos_security_rule:
             provider: '{{ panos_provider }}'
             rule_name: "{{ payload.after_change_detail | regex_search('.*rules { ([^ ]*) .*','\\1') | first }}"
             state: gathered
+          when: payload.cmd == 'set'
+          register: _rules_result
+
+        - name: COMPLIANCE TAG - GET INFO ON ADDED RULES (admin) - set
+          paloaltonetworks.panos.panos_security_rule:
+            provider: '{{ panos_provider }}'
+            rule_name: "{{ payload.after_change_detail | regex_search('([^ ]*) .*','\\1') | first }}"
+            state: gathered
+          when: payload.cmd == 'edit'
           register: _rules_result
 
         - name: COMPLIANCE TAG - SET ansible TAG (admin)
