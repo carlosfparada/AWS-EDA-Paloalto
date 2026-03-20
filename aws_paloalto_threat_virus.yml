@@ -54,13 +54,6 @@
         action: deny
         state: present
 
-    - name: Add 'quarantine' tag to Host {{ payload.src }}
-      paloaltonetworks.panos.panos_registered_ip:
-        provider: "{{ panos_provider }}"
-        ips: "{{ payload.src }}"
-        tags: quarantine
-        state: present
-
     # - name: Add Policy Rule to Quarantine Host {{ payload.src }}
     #   paloaltonetworks.panos.panos_security_rule:
     #     provider: "{{ panos_provider }}"
@@ -75,3 +68,15 @@
     #     service: ['any']
     #     location: top
     #     action: deny
+
+    - name: Commit configuration
+      paloaltonetworks.panos.panos_commit_firewall:
+        provider: "{{ panos_provider }}"
+
+    - name: Add 'quarantine' tag to Host {{ payload.src }}
+      paloaltonetworks.panos.panos_registered_ip:
+        provider: "{{ panos_provider }}"
+        ips: "{{ payload.src }}"
+        tags: quarantine
+        state: present
+
