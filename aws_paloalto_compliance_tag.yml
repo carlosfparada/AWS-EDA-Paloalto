@@ -89,7 +89,7 @@
           when: payload.cmd == 'set'
           register: _rules_result
 
-        - name: COMPLIANCE TAG - GET INFO ON ADDED RULES (admin) - set
+        - name: COMPLIANCE TAG - GET INFO ON ADDED RULES (admin) - edit
           paloaltonetworks.panos.panos_security_rule:
             provider: '{{ panos_provider }}'
             rule_name: "{{ payload.after_change_detail | regex_search('([^ ]*) .*','\\1') | first }}"
