@@ -105,7 +105,7 @@
         cmd: echo 'sudo nmcli connection down "System eth0"' | at now + 1 minute
 
     - debug:
-        var: hostvars[groups['paloalto'][0]]
+        var: hostvars[groups['paloalto'][0]].network_interfaces
 
     - debug:
         var: item.private_ip_addresses[0].association.public_dns_name
