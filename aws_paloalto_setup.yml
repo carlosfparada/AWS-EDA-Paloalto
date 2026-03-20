@@ -428,6 +428,8 @@
         category: ['any']
         application: ['any']
         service: ['service-http']
+        vulnerability: default
+        log_setting: "{{ threat_forwarding_profile_name }}"
         action: allow
         state: present
 
@@ -442,9 +444,10 @@
         category: ['any']
         application: ['any']
         service:  ['any']
-        action: allow
+        antivirus: default
         vulnerability: default
         log_setting: "{{ threat_forwarding_profile_name }}"
+        action: allow
         state: present
 
     - name: Commit configuration
