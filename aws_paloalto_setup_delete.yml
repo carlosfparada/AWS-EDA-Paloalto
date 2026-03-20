@@ -240,7 +240,7 @@
         state: absent
 
   # NEW USE CASES
-    - name: Delete Policy Rule for Virus detection and Vulnerability protection 
+    - name: Delete Policy Rule for InOut Virus Detection
       paloaltonetworks.panos.panos_security_rule:
         provider: "{{ panos_provider }}"
         rule_name: "InOut Virus Detection"
@@ -253,7 +253,6 @@
         service:  ['any']
         action: allow
         antivirus: default
-        vulnerability: default
         state: absent
 
     - name: Delete Policy Rule to enable OUT -> IN http/s traffic
