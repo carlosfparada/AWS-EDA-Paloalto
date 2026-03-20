@@ -110,7 +110,7 @@
     - debug:
         var: item.private_ip_addresses[0].association.public_dns_name
       loop: hostvars[groups['paloalto'][0]].network_interfaces
-      when: item.attachment.device_index
+      when: item.attachment.device_index == 2
 
     - name: Debug URL for Vulnerability testing
       debug:
