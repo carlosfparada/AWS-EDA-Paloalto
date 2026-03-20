@@ -104,6 +104,9 @@
       ansible.builtin.shell:
         cmd: echo 'sudo nmcli connection down "System eth0"' | at now + 1 minute
 
+    - debug:
+        var: hostvars[groups['paloalto'][0]]
+
     - name: Debug URL for Vulnerability testing
       debug:
         msg: "URL RHEL Web Server Acess: http://{{ hostvars[groups['paloalto'][0]] }}"
