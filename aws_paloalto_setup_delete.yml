@@ -244,8 +244,8 @@
       paloaltonetworks.panos.panos_security_rule:
         provider: "{{ panos_provider }}"
         rule_name: "Virus and Vulnerability"
-        source_zone: ['any']
-        destination_zone: ['any']
+        source_zone: private
+        destination_zone: public
         source_ip: ['any']
         destination_ip: ['any']
         category: ['any']
@@ -267,6 +267,7 @@
         category: ['any']
         application: ['any']
         service: ['service-http']
+        vulnerability: default
         action: allow
         state: absent
 
