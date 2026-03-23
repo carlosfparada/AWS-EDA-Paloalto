@@ -417,7 +417,7 @@
         destination_translated_address: "{{ rhel_ipv4_private }}"
         state: present
 
-    - name: Create Vulnerability Threat Profile
+    - name: Create Vulnerability Profile (custom)
       paloaltonetworks.panos.panos_type_cmd:
         provider: '{{ panos_provider }}'
         cmd: set  # default
@@ -455,8 +455,7 @@
         category: ['any']
         application: ['any']
         service: ['service-http']
-        #vulnerability: default
-        vulnerability: custom
+        vulnerability: custom   # Vulnerability Profile
         log_setting: "{{ threat_forwarding_profile_name }}"
         action: allow
         state: present

@@ -26,7 +26,7 @@
     - name: Delete Forward Config Logs to EDA source
       paloaltonetworks.panos.panos_type_cmd:
         provider: '{{ panos_provider }}'
-        cmd: delete  # default
+        cmd: delete
         xpath: "/config/shared/log-settings/config/match-list"
         element: |
           <entry name="{{ config_log_name }}">
@@ -40,7 +40,7 @@
     - name: Delete Forward System Logs to EDA source
       paloaltonetworks.panos.panos_type_cmd:
         provider: '{{ panos_provider }}'
-        cmd: delete  # default
+        cmd: delete
         xpath: "/config/shared/log-settings/system/match-list"
         element: |
           <entry name="{{ system_log_name }}">
@@ -55,7 +55,7 @@
         provider: '{{ panos_provider }}'
         log_forwarding_profile: '{{ config_forwarding_profile_name }}'
         name: '{{ config_forwarding_profile_name_match_list }}'
-        #log_type: traffic  # default
+        log_type: traffic  # default
         filter: '{{ config_log_filter }}'
         http_profiles: ['{{ config_profile_name }}']
         state: absent
@@ -270,24 +270,30 @@
         action: allow
         state: absent
 
-    - name: Create Vulnerability Threat Profile
+    - name: Delete Vulnerability Profile (custome)
       paloaltonetworks.panos.panos_type_cmd:
         provider: '{{ panos_provider }}'
-        cmd: delete  # default
-        xpath: "/config/shared/profiles/vulnerability/entry[@name='custom']"
-        #xpath: "/config/shared/profiles/vulnerability/entry[@name='ANSIBLE-VULN-PROFILE']"
+        cmd: delete
+        xpath: "/config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/profiles/vulnerability/entry[@name='custom']"
         element: |
           <rules>
-            <entry name="custom">
+            <entry name="alert_all_rule">
+              <action>
+                <alert/>
+              </action>
+              <vendor-id>
+                <member>any</member>
+              </vendor-id>
               <severity>
                 <member>any</member>
               </severity>
               <cve>
                 <member>any</member>
               </cve>
-              <action>
-                <alert/>
-              </action>
+              <threat-name>any</threat-name>
+              <host>any</host>
+              <category>any</category>
+              <packet-capture>disable</packet-capture>              
             </entry>
           </rules>
 
