@@ -75,7 +75,7 @@
         provider: '{{ panos_provider }}'
         log_forwarding_profile: '{{ threat_forwarding_profile_name }}'
         name: '{{ threat_forwarding_profile_name_match_list }}'
-        log_type: auth
+        log_type: threat
         filter: '{{ threat_log_filter }}'
         http_profiles: ['{{ threat_profile_name }}']
         state: absent
