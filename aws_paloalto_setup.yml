@@ -449,6 +449,28 @@
         action: allow
         state: present
 
+    - name: Create Vulnerability Threat Profile
+      paloaltonetworks.panos.panos_type_cmd:
+        provider: '{{ panos_provider }}'
+        cmd: set  # default
+        xpath: "/config/shared/profiles/vulnerability/"
+        #xpath: "/config/shared/profiles/vulnerability/entry[@name='ANSIBLE-VULN-PROFILE']"
+        element: |
+          <rules>
+            <entry name="Custom">
+              <severity>
+                <member>any</member>
+              </severity>
+              <action>
+                <alert/>
+              </action>
+            </entry>
+          </rules>
+
+    - name: Update content to latest version
+      paloaltonetworks.panos.panos_dynamic_updates:
+        provider: "{{ panos_provider }}"
+
     - name: Commit configuration
       paloaltonetworks.panos.panos_commit_firewall:
         provider: "{{ panos_provider }}"
