@@ -437,7 +437,7 @@
               <cve>
                 <member>any</member>
               </cve>
-              <threat-name§>any</threat-name>
+              <threat-name>any</threat-name>
               <host>any</host>
               <category>any</category>
               <packet-capture>disable</packet-capture>              
