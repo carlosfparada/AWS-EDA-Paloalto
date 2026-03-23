@@ -84,13 +84,6 @@
         name: '{{ system_forwarding_profile_name }}'
         state: absent
 
-    # Threat Log Forwarding Profile
-    - name: Delete Threat log forwarding profile
-      paloaltonetworks.panos.panos_log_forwarding_profile:
-        provider: '{{ panos_provider }}'
-        name: '{{ threat_forwarding_profile_name }}'
-        state: absent
-
     # HTTP Server Profile
     # https://docs.paloaltonetworks.com/pan-os/9-1/pan-os-admin/monitoring/use-syslog-for-monitoring/syslog-field-descriptions/config-log-fields 
     - name: Delete a HTTP Server Profile for Config Logs
@@ -295,6 +288,13 @@
         log_type: threat
         filter: '{{ threat_log_filter }}'
         http_profiles: ['{{ threat_profile_name }}']
+        state: absent
+
+    # Threat Log Forwarding Profile
+    - name: Delete Threat log forwarding profile
+      paloaltonetworks.panos.panos_log_forwarding_profile:
+        provider: '{{ panos_provider }}'
+        name: '{{ threat_forwarding_profile_name }}'
         state: absent
 
     - name: Delete NAT Policy Rule (OUT -> IN)
