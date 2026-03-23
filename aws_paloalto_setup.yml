@@ -417,6 +417,24 @@
         destination_translated_address: "{{ rhel_ipv4_private }}"
         state: present
 
+    - name: Create Vulnerability Threat Profile
+      paloaltonetworks.panos.panos_type_cmd:
+        provider: '{{ panos_provider }}'
+        cmd: set  # default
+        xpath: "/config/shared/profiles/vulnerability/"
+        #xpath: "/config/shared/profiles/vulnerability/entry[@name='ANSIBLE-VULN-PROFILE']"
+        element: |
+          <rules>
+            <entry name="custom">
+              <severity>
+                <member>any</member>
+              </severity>
+              <action>
+                <alert/>
+              </action>
+            </entry>
+          </rules>
+
     - name: Add Policy Rule for OutIn Vulnerability Detection
       paloaltonetworks.panos.panos_security_rule:
         provider: "{{ panos_provider }}"
@@ -428,7 +446,8 @@
         category: ['any']
         application: ['any']
         service: ['service-http']
-        vulnerability: default
+        #vulnerability: default
+        vulnerability: custom
         log_setting: "{{ threat_forwarding_profile_name }}"
         action: allow
         state: present
@@ -448,24 +467,6 @@
         log_setting: "{{ threat_forwarding_profile_name }}"
         action: allow
         state: present
-
-    - name: Create Vulnerability Threat Profile
-      paloaltonetworks.panos.panos_type_cmd:
-        provider: '{{ panos_provider }}'
-        cmd: set  # default
-        xpath: "/config/shared/profiles/vulnerability/"
-        #xpath: "/config/shared/profiles/vulnerability/entry[@name='ANSIBLE-VULN-PROFILE']"
-        element: |
-          <rules>
-            <entry name="custom">
-              <severity>
-                <member>any</member>
-              </severity>
-              <action>
-                <alert/>
-              </action>
-            </entry>
-          </rules>
 
     - name: Update content to latest version
       paloaltonetworks.panos.panos_dynamic_updates:
