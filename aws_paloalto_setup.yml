@@ -432,9 +432,6 @@
               <cve>
                 <member>any</member>
               </cve>
-              <category>
-                <member>all</member>
-              </category>
               <action>
                 <alert/>
               </action>
