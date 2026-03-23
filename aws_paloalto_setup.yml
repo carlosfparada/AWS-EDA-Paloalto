@@ -433,7 +433,7 @@
                 <member>any</member>
               </cve>
               <host>
-                <member>any</member>
+                <member>all</member>
               </host>
               <action>
                 <alert/>
