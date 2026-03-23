@@ -429,6 +429,12 @@
               <severity>
                 <member>any</member>
               </severity>
+              <cve>
+                <member>any</member>
+              </cve>
+              <category>
+                <member>any</member>
+              </category>
               <action>
                 <alert/>
               </action>
