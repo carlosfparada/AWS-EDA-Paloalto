@@ -8,7 +8,7 @@
   - include_role: 
       name: utils_hosts_aws
 
-- name: Setup Paloalto provisioning
+- name: Threat Virus Detection
   hosts: localhost
   connection: local
   gather_facts: no
@@ -30,22 +30,22 @@
       set_fact:
         payload: "{{ ansible_eda.event.payload }}"
 
-    - name: Create Address Group 'Quarantine'
+    - name: Create Address Group 'InOut Quarantine'
       paloaltonetworks.panos.panos_address_group:
         provider: "{{ panos_provider }}"
-        name: Quarantine
+        name: InOut Quarantine
         description: 'Questionable Address Group - isolate Virus Hosts'
-        dynamic_value: 'quarantine'
+        dynamic_value: 'inout_quarantine'
         state: present
 
     - name: Add Policy Rule to Dynamic Address Group
       paloaltonetworks.panos.panos_security_rule:
         provider: "{{ panos_provider }}"
-        rule_name: "Quarantine"
-        description: "Quarantine Dynamic User Group"
+        rule_name: "InOut Quarantine"
+        description: "InOut Quarantine Dynamic User Group"
         source_zone: ['any']
         destination_zone: ['any']
-        source_ip: Quarantine
+        source_ip: InOut Quarantine
         destination_ip: ['any']
         category: ['any']
         application: ['any']
@@ -54,29 +54,14 @@
         action: deny
         state: merged
 
-    # - name: Add Policy Rule to Quarantine Host {{ payload.src }}
-    #   paloaltonetworks.panos.panos_security_rule:
-    #     provider: "{{ panos_provider }}"
-    #     rule_name: "Quarantine-{{ payload.src }}"
-    #     description: "Quarantine {{ payload.src }}"
-    #     source_zone: "{{ payload.from }}"
-    #     destination_zone: "{{ payload.to }}"
-    #     source_ip: "{{ payload.src }}"
-    #     destination_ip: ['any']
-    #     category: ['any']
-    #     application: ['any']
-    #     service: ['any']
-    #     location: top
-    #     action: deny
-
     - name: Commit configuration
       paloaltonetworks.panos.panos_commit_firewall:
         provider: "{{ panos_provider }}"
 
-    - name: Add 'quarantine' tag to Host {{ payload.src }}
+    - name: Add 'inout_quarantine' tag to Host {{ payload.src }}
       paloaltonetworks.panos.panos_registered_ip:
         provider: "{{ panos_provider }}"
         ips: "{{ payload.src }}"
-        tags: quarantine
+        tags: inout_quarantine
         state: present
 

@@ -19,7 +19,7 @@
         - run_job_template:
             organization: "Default"
             name: "AWS EDA Paloalto: X. Threat Virus"
-    - name: "Handle Threats - Vlnerability Detection"
+    - name: "Handle Threats - Vulnerability Detection"
       condition: event.payload.type == "THREAT" and event.payload.subtype == "vulnerability"
       actions:
         - print_event:
