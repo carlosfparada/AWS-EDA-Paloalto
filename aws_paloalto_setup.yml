@@ -457,7 +457,7 @@
         #xpath: "/config/shared/profiles/vulnerability/entry[@name='ANSIBLE-VULN-PROFILE']"
         element: |
           <rules>
-            <entry name="Custom">
+            <entry name="custom">
               <severity>
                 <member>any</member>
               </severity>
