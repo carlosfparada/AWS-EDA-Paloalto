@@ -13,12 +13,18 @@
     - name: "Handle Threats - Virus Detection"
       condition: event.payload.type == "THREAT" and event.payload.subtype == "virus"
       actions:
-        # Debug
-        - debug: 
-            var: event.payload
         - print_event:
             pretty: true
-        # Notify Slack
+        # Isolate host (quarantine)
         - run_job_template:
             organization: "Default"
             name: "AWS EDA Paloalto: X. Threat Virus"
+    - name: "Handle Threats - Vlnerability Detection"
+      condition: event.payload.type == "THREAT" and event.payload.subtype == "vulnerability"
+      actions:
+        - print_event:
+            pretty: true
+        # Isolate web server (quarantine)
+        - run_job_template:
+            organization: "Default"
+            name: "AWS EDA Paloalto: X. Threat Vulnerability"
