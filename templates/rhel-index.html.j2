@@ -7,7 +7,7 @@
   <body>
     <p><strong>{{ body }}</strong></p>
     <form action="/" method="POST">
-    Script Input: <input type="text" name="myname" value="<script>alert(XSS Test)</script>"/>
+    Script Input: <input type="text" size="50" name="myname" value="<script>alert(XSS Test)</script>"/>
     <input type="submit"></input>
     </form>
   </body>
