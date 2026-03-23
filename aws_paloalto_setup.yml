@@ -432,9 +432,9 @@
               <cve>
                 <member>any</member>
               </cve>
-              <host>
+              <category>
                 <member>all</member>
-              </host>
+              </category>
               <action>
                 <alert/>
               </action>
