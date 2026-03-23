@@ -70,16 +70,6 @@
         http_profiles: ['{{ system_profile_name }}']
         state: absent
 
-    - name: Delete Threat log forwarding profile match list
-      paloaltonetworks.panos.panos_log_forwarding_profile_match_list:
-        provider: '{{ panos_provider }}'
-        log_forwarding_profile: '{{ threat_forwarding_profile_name }}'
-        name: '{{ threat_forwarding_profile_name_match_list }}'
-        log_type: threat
-        filter: '{{ threat_log_filter }}'
-        http_profiles: ['{{ threat_profile_name }}']
-        state: absent
-
     # Config Log Forwarding Profile
     - name: Delete Config log forwarding profile
       paloaltonetworks.panos.panos_log_forwarding_profile:
@@ -296,6 +286,16 @@
               <packet-capture>disable</packet-capture>              
             </entry>
           </rules>
+
+    - name: Delete Threat log forwarding profile match list
+      paloaltonetworks.panos.panos_log_forwarding_profile_match_list:
+        provider: '{{ panos_provider }}'
+        log_forwarding_profile: '{{ threat_forwarding_profile_name }}'
+        name: '{{ threat_forwarding_profile_name_match_list }}'
+        log_type: threat
+        filter: '{{ threat_log_filter }}'
+        http_profiles: ['{{ threat_profile_name }}']
+        state: absent
 
     - name: Delete NAT Policy Rule (OUT -> IN)
       paloaltonetworks.panos.panos_nat_rule2:
