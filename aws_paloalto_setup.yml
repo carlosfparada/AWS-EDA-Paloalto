@@ -421,20 +421,26 @@
       paloaltonetworks.panos.panos_type_cmd:
         provider: '{{ panos_provider }}'
         cmd: set  # default
-        xpath: "/config/shared/profiles/vulnerability/entry[@name='custom']"
-        #xpath: "/config/shared/profiles/vulnerability/entry[@name='ANSIBLE-VULN-PROFILE']"
+        xpath: "/config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/profiles/vulnerability/entry[@name='custom']"
         element: |
           <rules>
-            <entry name="custom">
+            <entry name="alert_all_rule">
+              <action>
+                <alert/>
+              </action>
+              <vendor-id>
+                <member>any</member>
+              </vendor-id>
               <severity>
                 <member>any</member>
               </severity>
               <cve>
                 <member>any</member>
               </cve>
-              <action>
-                <alert/>
-              </action>
+              <threat-name§>any</threat-name>
+              <host>any</host>
+              <category>any</category>
+              <packet-capture>disable</packet-capture>              
             </entry>
           </rules>
 
