@@ -20,7 +20,7 @@
             organization: "Default"
             name: "AWS EDA Paloalto: X. Threat Virus"
     - name: "Handle Threats - Vulnerability Detection"
-      condition: event.payload.type == "THREAT" and event.payload.subtype == "vulnerability"
+      condition: event.payload.type == "THREAT" and event.payload.subtype == "vulnerability" and event.payload.threatid == "Generic HTTP Cross Site Scripting Attempt(31477)"
       actions:
         - print_event:
             pretty: true
