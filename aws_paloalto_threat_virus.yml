@@ -65,3 +65,10 @@
         tags: inout_quarantine
         state: present
 
+    # Slack Setup: https://www.youtube.com/shorts/jcPnBYB5qww 
+    - name: Send notification message via Slack
+      community.general.slack:
+        token: "{{ ansible_password }}"
+        channel: "#ansible-demos"
+        username: "Ansible Demos"
+        msg: "New Virus Detected. IP Quaranteen: {{ payload.src }}. Details: {{ payload }}"
