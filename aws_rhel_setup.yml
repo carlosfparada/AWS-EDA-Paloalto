@@ -112,7 +112,7 @@
 
     - name: Debug URL for Vulnerability testing
       debug:
-        msg: "URL RHEL Web Server Acess: http://{{ paloalto_en2_public_ip }}"
+        msg: "URL RHEL Web Server Access: http://{{ paloalto_en2_public_ip }}"
 
 
 # RHEL JUMP Configs
