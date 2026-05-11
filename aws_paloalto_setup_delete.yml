@@ -22,6 +22,68 @@
           username: "{{ ansible_user }}"
           password: "{{ ansible_ssh_pass }}"
 
+    - name: Delete Policy Rule for InOut Virus Detection
+      paloaltonetworks.panos.panos_security_rule:
+        provider: "{{ panos_provider }}"
+        rule_name: "InOut Virus Detection"
+        source_zone: private
+        destination_zone: public
+        source_ip: ['any']
+        destination_ip: ['any']
+        category: ['any']
+        application: ['any']
+        service:  ['any']
+        action: allow
+        antivirus: default
+        state: absent
+
+    - name: Delete Policy Rule to enable OUT -> IN http/s traffic
+      paloaltonetworks.panos.panos_security_rule:
+        provider: "{{ panos_provider }}"
+        rule_name: "OutIn Vulnerability Detection"
+        source_zone: public
+        destination_zone: private
+        source_ip: ['any']
+        destination_ip: ['any']
+        category: ['any']
+        application: ['any']
+        service: ['service-http']
+        vulnerability: custom
+        action: allow
+        state: absent
+
+    - name: Delete Policy Rule InOut Quarantine to Dynamic Address Group
+      paloaltonetworks.panos.panos_security_rule:
+        provider: "{{ panos_provider }}"
+        rule_name: "InOut Quarantine"
+        description: "InOut Quarantine Dynamic User Group"
+        source_zone: ['any']
+        destination_zone: ['any']
+        source_ip: InOut Quarantine
+        destination_ip: ['any']
+        category: ['any']
+        application: ['any']
+        service: ['any']
+        location: top
+        action: deny
+        state: absent
+
+    - name: Delete Policy Rule OutIn Quarantine to Dynamic Address Group
+      paloaltonetworks.panos.panos_security_rule:
+        provider: "{{ panos_provider }}"
+        rule_name: "OutIn Quarantine"
+        description: "OutIn Quarantine Dynamic User Group"
+        source_zone: ['any']
+        destination_zone: ['any']
+        source_ip: ['any']
+        destination_ip: OutIn Quarantine
+        category: ['any']
+        application: ['any']
+        service: ['any']
+        location: top
+        action: deny
+        state: absent
+
     # delete shared log-settings config match-list "Config Logs" filter "All Logs" send-http {{ config_profile_name }}
     - name: Delete Forward Config Logs to EDA source
       paloaltonetworks.panos.panos_type_cmd:
@@ -234,69 +296,6 @@
         admin_username: '{{ admin_username }}'
         admin_password: '{{ admin_password }}'
         superuser: true
-        state: absent
-
-  # NEW USE CASES
-    - name: Delete Policy Rule for InOut Virus Detection
-      paloaltonetworks.panos.panos_security_rule:
-        provider: "{{ panos_provider }}"
-        rule_name: "InOut Virus Detection"
-        source_zone: private
-        destination_zone: public
-        source_ip: ['any']
-        destination_ip: ['any']
-        category: ['any']
-        application: ['any']
-        service:  ['any']
-        action: allow
-        antivirus: default
-        state: absent
-
-    - name: Delete Policy Rule to enable OUT -> IN http/s traffic
-      paloaltonetworks.panos.panos_security_rule:
-        provider: "{{ panos_provider }}"
-        rule_name: "OutIn Vulnerability Detection"
-        source_zone: public
-        destination_zone: private
-        source_ip: ['any']
-        destination_ip: ['any']
-        category: ['any']
-        application: ['any']
-        service: ['service-http']
-        vulnerability: custom
-        action: allow
-        state: absent
-
-    - name: Delete Policy Rule InOut Quarantine to Dynamic Address Group
-      paloaltonetworks.panos.panos_security_rule:
-        provider: "{{ panos_provider }}"
-        rule_name: "InOut Quarantine"
-        description: "InOut Quarantine Dynamic User Group"
-        source_zone: ['any']
-        destination_zone: ['any']
-        source_ip: InOut Quarantine
-        destination_ip: ['any']
-        category: ['any']
-        application: ['any']
-        service: ['any']
-        location: top
-        action: deny
-        state: absent
-
-    - name: Delete Policy Rule OutIn Quarantine to Dynamic Address Group
-      paloaltonetworks.panos.panos_security_rule:
-        provider: "{{ panos_provider }}"
-        rule_name: "OutIn Quarantine"
-        description: "OutIn Quarantine Dynamic User Group"
-        source_zone: ['any']
-        destination_zone: ['any']
-        source_ip: ['any']
-        destination_ip: OutIn Quarantine
-        category: ['any']
-        application: ['any']
-        service: ['any']
-        location: top
-        action: deny
         state: absent
 
     - name: Delete Vulnerability Profile (custome)
